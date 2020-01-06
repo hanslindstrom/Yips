@@ -41,26 +41,7 @@
               <a class="nav-link" href="#">Contact</a>
             </li>
           </ul>
-          <form
-            name="loginform"
-            th:action="@{/login}"
-            class="form-inline ml-auto"
-            method="POST"
-          >
-            <input
-              type="text"
-              class="form-control mr-2"
-              placeholder="Username"
-              name="username"
-            />
-            <input
-              type="password"
-              class="form-control mr-2"
-              placeholder="Password"
-              name="password"
-            />
-            <button class="btn btn-outline-success">Log in</button>
-          </form>
+
         </div>
       </div>
     </nav>
@@ -75,6 +56,28 @@
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
           necessitatibus perspiciatis cum vitae, modi hic?
         </p>
+        <div class="container center">
+        <form
+                name="loginform"
+                th:action="@{/login}"
+                class="form-inline ml-auto"
+                method="POST"
+        >
+          <input
+                  type="text"
+                  class="form-control mr-2"
+                  placeholder="Username"
+                  name="username"
+          />
+          <input
+                  type="password"
+                  class="form-control mr-2"
+                  placeholder="Password"
+                  name="password"
+          />
+          <button class="btn btn-outline-success">Log in</button>
+        </form>
+        </div>
         <hr />
         <p>
           Log in to your account or create a new one using the button below!
