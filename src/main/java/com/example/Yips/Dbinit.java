@@ -12,25 +12,35 @@ import java.util.List;
 //This class is only used to add initial values to database.
 @Service
 public class Dbinit implements CommandLineRunner {
+
     private UserRepository userRepository;
     private PasswordEncoder encoder;
+    private GroupRepository groupRepository;
 
-    public Dbinit (UserRepository userRepository, PasswordEncoder encoder) {
+    public Dbinit (UserRepository userRepository, PasswordEncoder encoder, GroupRepository groupRepository) {
         this.userRepository=userRepository;
         this.encoder = encoder;
+        this.groupRepository = groupRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-
+        //Add users
         User dan = new User("dan", "dan@epost.com", encoder.encode("dan123"), "USER");
         User admin = new User("admin", "admin@epost.com", encoder.encode( "admin123"), "ADMIN");
         User hans = new User("hans", "hans@epost.com", encoder.encode("hans321"), "ADMIN");
         User duck = new User("donald", "donald@duck.se", encoder.encode("quack"), "USER");
 
-        List<User>users = Arrays.asList(dan,admin,hans, duck);
+        List<User> users = Arrays.asList(dan,admin,hans, duck);
 
         this.userRepository.saveAll(users);
+
+        //Add group
+
+        Group groupOne = new Group("our group", 3L, "löpning", "en testgrupp" );
+        List<Group> groups = Arrays.asList(groupOne);
+        this.groupRepository.saveAll(groups);
+
 
 
     }
