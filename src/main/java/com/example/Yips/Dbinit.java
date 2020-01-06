@@ -16,11 +16,13 @@ public class Dbinit implements CommandLineRunner {
     private UserRepository userRepository;
     private PasswordEncoder encoder;
     private GroupRepository groupRepository;
+    private WorkoutRepository workoutRepository;
 
-    public Dbinit (UserRepository userRepository, PasswordEncoder encoder, GroupRepository groupRepository) {
+    public Dbinit (UserRepository userRepository, PasswordEncoder encoder, GroupRepository groupRepository, WorkoutRepository workoutRepository) {
         this.userRepository=userRepository;
         this.encoder = encoder;
         this.groupRepository = groupRepository;
+        this.workoutRepository = workoutRepository;
     }
 
     @Override
@@ -40,6 +42,11 @@ public class Dbinit implements CommandLineRunner {
         Group groupOne = new Group("our group", 3L, "löpning", "en testgrupp" );
         List<Group> groups = Arrays.asList(groupOne);
         this.groupRepository.saveAll(groups);
+
+        //Add workout
+        Workout workout = new Workout("Långlöp", "Löpning");
+        //List <Workout> workouts = Arrays.asList(workout);
+        this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
 
 
 

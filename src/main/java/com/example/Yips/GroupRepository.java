@@ -80,7 +80,7 @@ public class GroupRepository {
             ps.executeUpdate();
 
             Long id = findByGroupname(group.getName()).getId();
-            connectionRepository.saveConnection(group, id);
+            connectionRepository.saveUserGroupConnection(group, id);
 
         } catch (SQLException e) {
             e.printStackTrace();
