@@ -44,8 +44,8 @@
 
 
             <div class="col">
-                <select>
-                    <option th:each="category : ${categories}" th:field="*{category}" th:value="${category}" th:text="${category}"></option>
+                <select th:field="*{category}">
+                    <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
                 </select>
             </div>
 
