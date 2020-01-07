@@ -9,6 +9,12 @@ font-family: 'Roboto', sans-serif;
 
 }
 
+a:hover, button:hover {
+color: #ff914c;
+background-color: #e2f7f3;
+}
+
+
 /* Klassen bestämmer bakgrundsfärgen och vi har kommit överrens om vilken text färg som blir utefter det. */
 
 .color-light {
@@ -44,5 +50,4 @@ border: none;
 background-color: #ff914c;
 color: #414141;
 border: none;
-
 }
