@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class GroupController {
@@ -34,11 +35,11 @@ public class GroupController {
     }
 
     @PostMapping("/newgroup")
-    public String createNewGroup(@ModelAttribute Group group, HttpSession httpSession, Authentication authentication) {
+    public String createNewGroup(@ModelAttribute Group group, HttpSession session, Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         Group addGroup = groupService.addGroup(group, user);
         System.out.println(group.getCategory());
-        httpSession.setAttribute("mygroup", addGroup);
+        session.setAttribute("mygroup", addGroup);
         if(addGroup==null){
             return "newgroup";
         } else {
@@ -47,11 +48,12 @@ public class GroupController {
     }
 
     @GetMapping("/group")
-    public String seeMyGroup(HttpSession httpSession) {
-        Group group = (Group)httpSession.getAttribute("mygroup");
-       // Group group = (Group)model.getAttribute("group");
+    public String seeMyGroup(HttpSession session) {
+        Group group = (Group)session.getAttribute("mygroup");
+        session.setAttribute("listOfMembers",groupRepository.getAllMembers(group));
+        // Group group = (Group)model.getAttribute("group");
         System.out.println("GetMapping for /group, name: " + group.getName());
-        httpSession.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
+        session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
         return "group";
     }
 

@@ -67,6 +67,35 @@ public class UserRepository {
         return user;
     }
 
+    public User findByUserId(Long userId) {
+        User user = new User();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM wauser WHERE id = ?")){
+            ps.setString(1, userId.toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                Long id = rs.getLong("id");
+                String name = rs.getString("username");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String roles = rs.getString("roles");
+                int active = rs.getInt("active");
+                user.setId(id);
+                user.setUsername(name);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setRoles(roles);
+                user.setActive(active);
+
+            } else {
+                user=null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public void saveUser(User user) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO wauser(USERNAME, EMAIL, PASSWORD, ROLES, ACTIVE) VALUES(?,?,?,?,?)")){

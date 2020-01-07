@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ public class GroupRepository {
     private DataSource dataSource;
     @Autowired
     private ConnectionRepository connectionRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public List<Group> findAll() {
         List<Group> groups = new ArrayList<>();
@@ -92,5 +95,27 @@ public class GroupRepository {
         for(Group group:groups) {
             saveGroup(group);
         }
+    }
+
+    public List<User> getAllMembers(Group group){
+        Group dbGroup = findByGroupname(group.getName().toLowerCase());
+        List<User> members = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT userid FROM usergroupconnection WHERE groupid = ?")){
+           ps.setString(1, dbGroup.getId().toString());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                long id = rs.getInt("userid");
+                System.out.println("Member id: " + id);
+                members.add(userRepository.findByUserId(id));
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("All members: " + members);
+        return members;
+
     }
 }
