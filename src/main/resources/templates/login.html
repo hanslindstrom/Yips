@@ -29,13 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="login">Home</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contact</a>
@@ -46,47 +40,59 @@
       </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container">
       <!-- JUMBOTRON -->
       <div class="jumbotron text-center">
         <h1 class="display-6">
-          Welcome To YIPS (formerly known as catxercise)!
+          Welcome To YIPS!
         </h1>
         <p class="lead">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-          necessitatibus perspiciatis cum vitae, modi hic?
+          The easiest way to track any training with friends!
         </p>
-        <div class="container center">
-        <form
-                name="loginform"
-                th:action="@{/login}"
-                class="form-inline ml-auto"
-                method="POST"
-        >
-          <input
-                  type="text"
-                  class="form-control mr-2"
-                  placeholder="Username"
-                  name="username"
-          />
-          <input
-                  type="password"
-                  class="form-control mr-2"
-                  placeholder="Password"
-                  name="password"
-          />
-          <button class="btn btn-outline-success">Log in</button>
-        </form>
-        </div>
+
         <hr />
         <p>
           Log in to your account or create a new one using the button below!
         </p>
-        <a class="btn btn-success btn-lg" href="newuser" role="button"
+        <div class="container">
+          <form
+                  name="loginform"
+                  th:action="@{/login}"
+                  method="POST"
+
+          >
+            <!--class="form-inline ml-auto"-->
+            <div class="form-row">
+              <div class="col">
+                <input
+                        type="text"
+                        class="form-control mr-2"
+                        placeholder="Username"
+                        name="username"
+                />
+              </div>
+              <div class="col">
+                <input
+                        type="password"
+                        class="form-control mr-2"
+                        placeholder="Password"
+                        name="password"
+                />
+              </div>
+            </div>
+            <button class="btn btn-outline-success btn-block mt-2">Log in</button>
+          </form>
+        </div>
+        <div class="container">
+        <a class="btn btn-success btn-sm btn-block mt-5" href="newuser" role="button"
           >New User</a
         >
+        </div>
       </div>
     </div>
+
+
+
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
