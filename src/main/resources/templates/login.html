@@ -13,6 +13,8 @@
       integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../static/mainstyle.css" th:href="@{/mainstyle.css}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Tajawal&display=swap" rel="stylesheet">
     <title>Document</title>
   </head>
   <body>
@@ -42,7 +44,7 @@
 
     <div class="container">
       <!-- JUMBOTRON -->
-      <div class="jumbotron text-center">
+      <div class="jumbotron text-center color-contrast">
         <h1 class="display-6">
           Welcome To YIPS!
         </h1>
@@ -80,11 +82,11 @@
                 />
               </div>
             </div>
-            <button class="btn btn-outline-success btn-block mt-2">Log in</button>
+            <button class="btn btn-outline-success btn-block mt-2 color-dark">Log in</button>
           </form>
         </div>
         <div class="container">
-        <a class="btn btn-success btn-sm btn-block mt-5" href="newuser" role="button"
+        <a class="btn btn-success btn-sm btn-block mt-5 color-dark" href="newuser" role="button"
           >New User</a
         >
         </div>

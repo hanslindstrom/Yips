@@ -1,0 +1,48 @@
+
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Tajawal', sans-serif;
+font-weight: bold;
+}
+
+body {
+font-family: 'Roboto', sans-serif;
+
+}
+
+/* Klassen bestämmer bakgrundsfärgen och vi har kommit överrens om vilken text färg som blir utefter det. */
+
+.color-light {
+background-color: #e2f7f3;
+color: #414141;
+border: none;
+
+}
+
+.color-medium {
+background-color: #4ed2ba;
+color: #414141;
+border: none;
+
+}
+
+.color-base {
+background-color: #9ee6d9;
+color: #414141;
+border: none;
+
+}
+
+.color-dark {
+background-color: #414141;
+color: #ff914c;
+border: none;
+
+
+}
+
+.color-contrast {
+background-color: #ff914c;
+color: #414141;
+border: none;
+
+}
