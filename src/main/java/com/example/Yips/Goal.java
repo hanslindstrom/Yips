@@ -1,9 +1,11 @@
 package com.example.Yips;
 
+import java.sql.Date;
+
 public class Goal {
     private Long id;
     private String name;
-    private String deadline;
+    private Date deadline;
     private Long groupId;
     private boolean completed;
 
@@ -11,6 +13,10 @@ public class Goal {
     public Goal(String name, boolean completed) {
         this.name = name;
         this.completed = completed;
+    }
+
+    public Goal() {
+
     }
 
     public Long getId() {
@@ -29,11 +35,11 @@ public class Goal {
         this.name = name;
     }
 
-    public String getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 

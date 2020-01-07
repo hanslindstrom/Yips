@@ -26,6 +26,7 @@
 <!-- List of members
 -->
 
+<h2 th:text="'Members: '"></h2>
 <ul class="list-group list-group-horizontal-sm" th:if="${session.listOfMembers != 0}" >
     <li class="list-group-item" th:each="member : ${session.listOfMembers}">
         <h2 th:text="${member.username}"></h2>

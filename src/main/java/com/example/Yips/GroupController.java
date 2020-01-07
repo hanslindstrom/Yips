@@ -15,12 +15,12 @@ public class GroupController {
 
     @Autowired
     GroupService groupService;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     GroupRepository groupRepository;
+    @Autowired
+    GoalRepository goalRepository;
 
     @Autowired
     Categories categories;
@@ -51,12 +51,12 @@ public class GroupController {
     public String seeMyGroup(HttpSession session) {
         Group group = (Group)session.getAttribute("mygroup");
         session.setAttribute("listOfMembers",groupRepository.getAllMembers(group));
-        // Group group = (Group)model.getAttribute("group");
         System.out.println("GetMapping for /group, name: " + group.getName());
         session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
+        session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
+        System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
         return "group";
     }
-
 
 
 }
