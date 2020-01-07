@@ -26,29 +26,28 @@
 <div class="container mb-5">
     <form
             name="newgroup"
-            th:action="@{/newgroup}"
             method="POST"
+            th:object="${group}"
 
     >
         <!--class="form-inline ml-auto"-->
         <div class="form-row">
             <div class="col">
-
                 <input
                         type="text"
                         class="form-control mr-2"
                         placeholder="Name of the group"
-                        name="groupname"
+                        name="name"
+                        th:field="*{name}"
                 />
             </div>
 
-            <!--
+
             <div class="col">
-                <select th:each="" th:field="*{category}"/>
-                    <option th:value="XX" th:text="XX"></option>
+                <select>
+                    <option th:each="category : ${categories}" th:field="*{category}" th:value="${category}" th:text="${category}"></option>
                 </select>
             </div>
-            -->
 
             <div class="col">
                 <input
@@ -56,36 +55,15 @@
                         class="form-control mr-2"
                         placeholder="Description"
                         name="description"
-                />
-            </div>
-
-            <!-- Add members-->
-            <div class="col">
-                <input
-                        type="text"
-
-                        class="form-control mr-2"
-                        placeholder="Add members"
-                        name="addmembers"
-                />
-            </div>
-
-
-
-
-            <div class="col">
-                <input
-                        type="text"
-                        class="form-control mr-2"
-                        placeholder="Description"
-                        name="description"
+                        th:field="*{description}"
                 />
             </div>
 
 
 
         </div>
-        <button class="btn btn-block mt-2 color-dark">Create group</button>
+        <input type="submit" value="Create group" class="btn btn-block mt-2 color-dark"/>
+
     </form>
 </div>
 
