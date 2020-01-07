@@ -32,10 +32,11 @@ public class GroupController {
     public String createNewGroup(@ModelAttribute Group group, Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         Group addGroup = groupService.addGroup(group, user);
+        System.out.println(group.getCategory());
         if(addGroup==null){
-            return "redirect:/group";
-        } else {
             return "newgroup";
+        } else {
+            return "group";
         }
     }
 
