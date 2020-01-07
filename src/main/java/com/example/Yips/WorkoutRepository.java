@@ -1,5 +1,6 @@
 package com.example.Yips;
 
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -64,6 +65,26 @@ public class WorkoutRepository {
         }
         return workout;
     }
+    public Long initiateWorkout() {
+        Workout workout = new Workout();
+        workout.setName("workoutinit"+Math.random());
+        try(Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO workout(NAME, WDATE, WTIME, PLACE, DESCRIPTION, CATEGORY) VALUES(?,?,?,?,?,?)")) {
+            ps.setString(1,workout.getName());
+            ps.setDate(2,null);
+            ps.setInt(3, 0);
+            ps.setString(4, null);
+            ps.setString(5, null);
+            ps.setString(6, null);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Workout workoutDb=findByWorkoutname(workout.getName());
+        return workoutDb.getId();
+    }
+
+
 
     public void saveWorkout(Workout workout, User user) {
         try (Connection conn = dataSource.getConnection();

@@ -14,12 +14,28 @@ public class ConnectionRepository {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    UserRepository userRepository;
+
     public void saveUserGroupConnection(Group group, Long userId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO usergroupconnection(USERID, GROUPID, USERROLE) VALUES(?,?,?)")){
             ps.setLong(1, group.getOwnerId());
             ps.setLong(2, userId);
             ps.setString(3, "GroupAdmin");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void userWorkoutConnect(String username, Long workoutId) {
+        User user = userRepository.findByUsername(username);
+        Long userId = user.getId();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO userworkoutconnection(USERID, WORKOUTID) VALUES (?,?)")) {
+            ps.setLong(1, userId);
+            ps.setLong(2, workoutId);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
