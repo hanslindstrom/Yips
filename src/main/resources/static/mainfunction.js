@@ -4,16 +4,16 @@ function run() {
     console.log("hej")
 }
 
-function sendInvite () {
+async function sendInvite () {
 //Spara värdet
     let memberName = document.getElementById("membername").value;
-    let result = getInformation("http://localhost:8081/rest/getUser/" + memberName)
+    let result = await getInformation("http://localhost:8081/rest/getUser/" + memberName)
     console.log("membername: " + memberName);
     console.log("result objekt element 0" + result[0]);
     
     let responseText = "";
     let responseTitle ="";
-    if(this.result === undefined){
+    if(result.username !== null ){
         responseTitle = "Successful!"
         responseText = "An invite has been sent to: " + memberName;
         
