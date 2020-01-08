@@ -53,8 +53,8 @@ public class GroupController {
         session.setAttribute("listOfMembers",groupRepository.getAllMembers(group));
         System.out.println("GetMapping for /group, name: " + group.getName());
         session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
-        session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
-        System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
+        //session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
+        //System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
         return "group";
     }
 

@@ -21,4 +21,11 @@ public class RController {
         return users;
     }
     //--------USERS---------------------
+
+    //@CrossOrigin
+    @GetMapping("/rest/getUser/{username}")
+    public User getUser(@PathVariable String username){
+
+        return userRepository.findByUsername(username);
+    }
 }
