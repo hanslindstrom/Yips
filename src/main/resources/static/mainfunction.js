@@ -27,27 +27,7 @@ async function sendInvite () {
 
 function sendNewModal(responseTitle, responseText){
     let newModal = document.getElementById("newModal");
-   /* newModal.innerHTML = `
-    <div class="modal fade" id="addMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">${responseTitle}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>${responseText}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="sendbutton">Add another member</button>
-                </div>
-            </div>
-        </div>
-    </div>`;
-*/
+
     newModal.innerHTML = `<h1>${responseText}</h1>`
 }
 
@@ -63,3 +43,5 @@ async function getInformation(url) {
     }
     else console.log("unexpected error", response)
 }
+
+

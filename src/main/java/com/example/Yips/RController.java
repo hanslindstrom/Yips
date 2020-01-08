@@ -3,6 +3,7 @@ package com.example.Yips;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -24,8 +25,15 @@ public class RController {
 
     //@CrossOrigin
     @GetMapping("/rest/getUser/{username}")
-    public User getUser(@PathVariable String username){
+    public User getUser(@PathVariable String username, HttpSession session){
         User user = userRepository.findByUsername(username);
+        Group group = (Group)session.getAttribute("mygroup");
+
+        Long groupId = group.getId();
+        Long userId = user.getId();
+        Long senderId = group.getOwnerId();
+
+
         if (user == null){
             return new User();
         }
