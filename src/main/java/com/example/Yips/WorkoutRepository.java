@@ -62,6 +62,7 @@ public class WorkoutRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            e.printStackTrace();
         }
         return workout;
     }

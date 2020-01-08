@@ -5,12 +5,16 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 
 @Repository
 public class GoalRepository {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    DateService dateService;
 
     public Goal getGoalByGroupId(Group group){
         Goal goal = new Goal();
@@ -21,13 +25,15 @@ public class GoalRepository {
             if(rs.next()) {
                 Long id = rs.getLong("id");
                 String name = rs.getString("goalname");
-                Date deadline = rs.getDate("deadline");
+                LocalDate deadline = dateService.convertToLocalDateViaInstant(rs.getDate("deadline"));
                 Long groupid = rs.getLong("groupid");
                 boolean completed = rs.getBoolean("completed");
 
                 goal.setId(id);
                 goal.setName(name);
                 goal.setDeadline(deadline);
+                goal.setGroupId(groupid);
+                goal.setCompleted(completed);
 
             } else {
                 goal=null;

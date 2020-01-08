@@ -1,11 +1,12 @@
 package com.example.Yips;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Goal {
     private Long id;
     private String name;
-    private Date deadline;
+    private LocalDate deadline;
     private Long groupId;
     private boolean completed;
 
@@ -35,11 +36,11 @@ public class Goal {
         this.name = name;
     }
 
-    public Date getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
