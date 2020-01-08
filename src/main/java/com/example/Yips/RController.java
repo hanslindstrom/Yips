@@ -13,6 +13,9 @@ public class RController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    InviteRepository inviteRepository;
+
 
 
     //--------USERS---------------------
@@ -30,13 +33,14 @@ public class RController {
         Group group = (Group)session.getAttribute("mygroup");
 
         Long groupId = group.getId();
-        Long userId = user.getId();
+        Long recipientId = user.getId();
         Long senderId = group.getOwnerId();
 
 
         if (user == null){
             return new User();
         }
+        inviteRepository.saveInvite(groupId, senderId, recipientId);
         return user;
     }
 }
