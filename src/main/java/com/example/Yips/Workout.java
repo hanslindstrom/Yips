@@ -1,5 +1,6 @@
 package com.example.Yips;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +9,7 @@ public class Workout {
 
     private Long id;
     private String name;
-    private Date date;
+    private LocalDate date;
     private int time;
     private String place;
     private String description;
@@ -20,7 +21,7 @@ public class Workout {
         this.category = category;
     }
 
-    public Workout(String name, Date date, int time, String place, String description, String category) {
+    public Workout(String name, LocalDate date, int time, String place, String description, String category) {
         this.name = name;
         this.date = date;
         this.time = time;
@@ -54,5 +55,37 @@ public class Workout {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

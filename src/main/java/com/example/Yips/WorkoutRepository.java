@@ -83,7 +83,16 @@ public class WorkoutRepository {
         Workout workoutDb=findByWorkoutname(workout.getName());
         return workoutDb.getId();
     }
+    public void updateWorkout(Workout workout) {
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME="+workout.getTime()+", PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
 
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     public void saveWorkout(Workout workout, User user) {
