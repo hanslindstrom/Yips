@@ -1,4 +1,4 @@
-document.getElementById("memberName").addEventListener("click", sendInvite);
+document.getElementById("sendbutton").addEventListener("click", sendInvite);
 
 function run() {
     console.log("hej")
@@ -10,13 +10,11 @@ function sendInvite () {
     let result = getInformation("http://localhost:8081/rest/getUser/" + memberName)
     console.log("membername: " + memberName);
     console.log("result objekt" + result);
-
+    
 }
 
 async function getInformation(url) {
-    let proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    let fullURL = proxyUrl + url
-    let response = await fetch(fullURL, {
+    let response = await fetch(url, {
         method: "GET"
     });
     if (response.status === 200) {

@@ -58,7 +58,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="sendbutton">Send invite</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="sendbutton">Send invite</button>
             </div>
         </div>
     </div>
@@ -66,40 +66,9 @@
 
 <!-- End of modal -->
 
-<script>
-
-    document.getElementById("sendbutton").addEventListener("click", sendInvite);
-
-function run() {
-    console.log("hej")
-}
-
-function sendInvite () {
-//Spara värdet
-    let memberName = document.getElementById("membername").value;
-    let result = getInformation("http://localhost:8081/rest/getUser/" + memberName)
-    console.log("membername: " + memberName);
-    console.log("result objekt" + result);
-
-}
-
-async function getInformation(url) {
-    let response = await fetch(url, {
-        method: "GET"
-    });
-    if (response.status === 200) {
-        let result = await response.json()
-        console.log(result)
-        //var objekt = JSON.parse(result)
-        return result
-    }
-    else console.log("unexpected error", response)
-}
-
+<script src="mainfunction.js">
 </script>
 
-<!-- <script src="../static/mainfunction.js" >
-</script>-->
 
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
