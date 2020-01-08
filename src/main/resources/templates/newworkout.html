@@ -35,6 +35,14 @@
     >
       <!--class="form-inline ml-auto"-->
       <div class="form-group">
+
+        <input
+                type="hidden"
+                class="form-control mb-2"
+                name="workoutid"
+                th:field="*{id}"
+        />
+      <div class="form-group">
           <label for="workoutname">Workout name</label>
           <input
                   type="text"
@@ -42,6 +50,7 @@
                   placeholder="Workout name"
                   id="workoutname"
                   name="workoutname"
+                  th:field="*{name}"
           />
         <label for="workoutdate">Workout Date</label>
         <input
@@ -50,6 +59,7 @@
                 placeholder="Workout Date"
                 id="workoutdate"
                 name="workoutdate"
+                th:field="*{date}"
         />
         <label for="timetocomplete">Minutes to complete workout</label>
         <input
@@ -58,6 +68,7 @@
                 placeholder="Minutes to complete workout"
                 id="timetocomplete"
                 name="timetocomplete"
+                th:field="*{time}"
         />
         <label for="place">Place</label>
         <input
@@ -66,6 +77,7 @@
                 placeholder="Place"
                 id="place"
                 name="place"
+                th:field="*{place}"
         />
         <label for="description">Description</label>
         <input
@@ -74,15 +86,13 @@
                 placeholder="Description"
                 id="description"
                 name="description"
+                th:field="*{description}"
         />
         <label for="category">Category</label>
-        <input
-                type="text"
-                class="form-control mb-2"
-                placeholder="Category"
-                id="category"
-                name="description"
-        />
+
+        <select multiple th:field="*{category}" >
+          <option th:each="category : ${categories}" th:value="${category}" th:text="${category}" id="category"></option>
+        </select>
 
       </div>
       <button class="btn btn-block mt-2 color-medium">Add exercise</button>
