@@ -28,6 +28,9 @@ public class userstatepageController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    InviteRepository inviteRepository;
+
     @GetMapping ("/userstartpage")
     public String showUserStartPage (Model model, Authentication authentication) {
         //Initierar lite mål för att få skriva ut nåt.
@@ -40,6 +43,18 @@ public class userstatepageController {
         System.out.println("My userId is: " + userId);
         model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));
         System.out.println("All my groups are: " + groupRepository.findAllMyGroups(userId));
+
+        //Hämtar alla invites för en person.
+        ArrayList<String> listOfGroupInvites = new ArrayList<>();
+        ArrayList<String> listOfSenders = new ArrayList<>();
+
+        model.addAttribute("listofInvites", inviteRepository.getAllInvitesWithUserId(userId));
+        for (Invite invite : inviteRepository.getAllInvitesWithUserId(userId)) {
+            listOfGroupInvites.add(groupRepository.findGroupById(invite.getGroupid()).getName());
+            listOfSenders.add(userRepository.findByUserId(invite.getSenderid()).getUsername());
+        }
+        model.addAttribute("listOfGroupInvites", listOfGroupInvites);
+        model.addAttribute("listOfSenders", listOfSenders);
 
         //Fixar med workout.
         Long workoutId = workoutRepository.initiateWorkout();

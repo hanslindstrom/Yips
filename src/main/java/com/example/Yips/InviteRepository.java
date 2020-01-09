@@ -3,16 +3,21 @@ package com.example.Yips;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class InviteRepository {
 
     @Autowired
     DataSource dataSource;
+
 
     public void saveInvite(Long groupId, Long senderId, Long recipientId) {
         try (Connection conn = dataSource.getConnection();
@@ -24,7 +29,26 @@ public class InviteRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-
+    public List<Invite> getAllInvitesWithUserId (Long userId) {
+        ArrayList<Invite> invites = new ArrayList<>();
+        Invite invite = new Invite();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM invite WHERE recipientid = ?")){
+            ps.setString(1, userId.toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                Long groupId = rs.getLong("groupid");
+                Long senderId = rs.getLong("senderid");
+                invite.setGroupid(groupId);
+                invite.setSenderid(senderId);
+                invite.setRecipientid(userId);
+                invites.add(invite);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return invites;
     }
 }

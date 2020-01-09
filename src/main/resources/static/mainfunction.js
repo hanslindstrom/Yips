@@ -9,8 +9,7 @@ async function sendInvite () {
     let memberName = document.getElementById("membername").value;
     let result = await getInformation("http://localhost:8081/rest/getUser/" + memberName)
     console.log("membername: " + memberName);
-    console.log("result objekt element 0" + result[0]);
-    
+
     let responseText = "";
     let responseTitle ="";
     if(result.username !== null ){
