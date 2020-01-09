@@ -38,7 +38,7 @@
                 <form
                         th:object="${workout}"
                         method="POST"
-                        action="/test"
+                        action="/postworkout"
                 >
                     <!--class="form-inline ml-auto"-->
                     <div class="form-group">
@@ -69,6 +69,14 @@
                                 name="workoutdate"
                                 th:field="*{date}"
                         />
+                        <label for="workouttype">Workout type</label>
+                            <select id="workouttype" th:field="*{type}" name="workouttype" class="form-control">
+                                <option value="none">None</option>
+                                <option value="amrap">Amrap</option>
+                                <option value="fortime">For time</option>
+                                <option value="emom">EMOM</option>
+
+                            </select>
                         <label for="timetocomplete">Minutes to complete workout</label>
                         <input
                                 type="number"
@@ -98,18 +106,17 @@
                         />
                         <label for="category">Category</label>
 
-                        <select multiple th:field="*{category}" >
+                        <select multiple th:field="*{category}" class="form-control mb-2">
                             <option th:each="category : ${categories}" th:value="${category}" th:text="${category}" id="category"></option>
                         </select>
 
                     </div>
-                    <button class="btn btn-block mt-2 color-medium">Add exercise</button>
+
                     <button class="btn btn-block mt-2 color-dark mb-2">Create workout</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="addworkout">Add workout</button>
             </div>
         </div>
     </div>

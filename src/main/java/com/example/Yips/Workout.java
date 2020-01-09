@@ -10,6 +10,7 @@ public class Workout {
     private Long id;
     private String name;
     private LocalDate date;
+    private String type;
     private int time;
     private String place;
     private String description;
@@ -21,9 +22,10 @@ public class Workout {
         this.category = category;
     }
 
-    public Workout(String name, LocalDate date, int time, String place, String description, String category) {
+    public Workout(String name, LocalDate date, String type, int time, String place, String description, String category) {
         this.name = name;
         this.date = date;
+        this.type=type;
         this.time = time;
         this.place = place;
         this.description = description;
@@ -87,5 +89,13 @@ public class Workout {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

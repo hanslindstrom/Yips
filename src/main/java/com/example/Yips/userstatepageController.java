@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @Controller
@@ -40,10 +41,11 @@ public class userstatepageController {
         return "userstartpage";
     }
 
-    @PostMapping("/test")
-    public String postWorkout2(@ModelAttribute Workout workout) {
+    @PostMapping("/postworkout")
+    public String postWorkout2(@ModelAttribute Workout workout, HttpSession session) {
         workoutRepository.updateWorkout(workout);
-        return "userStartPage";
+        session.setAttribute("workout", workout);
+        return "redirect:/workout";
     }
 
 
