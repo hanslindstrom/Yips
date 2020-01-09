@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class userstatepageController {
@@ -51,13 +52,28 @@ public class userstatepageController {
         ArrayList<String> listOfGroupInvites = new ArrayList<>();
         ArrayList<String> listOfSenders = new ArrayList<>();
 
+        List<String> groupSenderInvite = new ArrayList<>();
+        List<List> inviteInfo = new ArrayList<>();
+
+
+        String groupName;
+        String senderName;
+        Long inviteId;
+
         model.addAttribute("listofInvites", inviteRepository.getAllInvitesWithUserId(userId));
         for (Invite invite : inviteRepository.getAllInvitesWithUserId(userId)) {
-            listOfGroupInvites.add(groupRepository.findGroupById(invite.getGroupid()).getName());
-            listOfSenders.add(userRepository.findByUserId(invite.getSenderid()).getUsername());
+            groupName = groupRepository.findGroupById(invite.getGroupid()).getName();
+            senderName = userRepository.findByUserId(invite.getSenderid()).getUsername();
+            inviteId = invite.getId();
+
+            groupSenderInvite.add(groupName);
+            groupSenderInvite.add(senderName);
+            groupSenderInvite.add(inviteId.toString());
+
+            inviteInfo.add(groupSenderInvite);
+
         }
-        model.addAttribute("listOfGroupInvites", listOfGroupInvites);
-        model.addAttribute("listOfSenders", listOfSenders);
+        model.addAttribute("inviteInfo", inviteInfo);
 
         //Fixa med group modal.
         model.addAttribute("group", new Group());

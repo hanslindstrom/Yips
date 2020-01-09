@@ -17,13 +17,16 @@ public class UserController {
     UserService userService;
 
     //--------NEW USER---------------------
-    @PostMapping("/newuser")
+    @PostMapping("/plz")
     public String postUser(@ModelAttribute User user) {
         User addUser = userService.addUser(user);
+        System.out.println("Post mapping newuser");
         if(addUser==null) {
-            return"/login";
+            return"redirect:/login";
         } else {
-            return "redirect:/userStartPage";
+           // return "redirect:/userStartPage";
+            System.out.println("ELSE SATSEN");
+            return "redirect:/login";
         }
     }
 
@@ -40,12 +43,14 @@ public class UserController {
     //--------NEW USER---------------------
     //---------LOG IN----------------------
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @GetMapping("/")
-    public String start() {
+    public String start(Model model) {
+        model.addAttribute("user", new User());
         return ("/login");
     }
     //---------LOG IN----------------------

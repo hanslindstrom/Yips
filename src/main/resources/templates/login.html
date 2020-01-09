@@ -87,12 +87,88 @@
         </div>
 
         <div class="container">
-        <a class="btn btn-lg mt-5 color-dark" href="newuser" role="button"
-          >New User</a
-        >
+          <!-- BUTTON FOR MODAL -->
+          <button type="button" class="btn btn-lg mt-5 color-dark" data-toggle="modal" data-target="#newuser">New User</button>
+
         </div>
       </div>
     </div>
+
+<!-- Modal -->
+
+    <!-- MODAL new user POP UP -->
+    <div class="modal fade" id="newuser" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+      <div class="modal-dialog mw-100 w-75" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="groupModalLabel">New User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form
+                    th:object="${user}"
+                    method="POST"
+                    action="/plz"
+            >
+              <!--class="form-inline ml-auto"-->
+              <div class="form-user">
+
+                <input
+                        type="hidden"
+                        class="form-control mb-2"
+                        name="id"
+                        th:field="*{id}"
+                />
+              </div>
+                <!-- Username -->
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                        type="text"
+                        class="form-control mb-2"
+                        id="username"
+                        name="username"
+                        th:field="*{username}"
+                />
+
+              </div>
+
+              <!-- Email -->
+              <div class="form-user">
+                <label for="email">Email (optional)</label>
+                <input
+                        type="email"
+                        class="form-control mb-2"
+                        id="email"
+                        name="email"
+                        th:field="*{email}"
+                />
+
+              </div>
+              <!-- Password -->
+              <div class="form-user">
+                <label for="password">Password</label>
+                <input
+                        type="password"
+                        class="form-control mb-2"
+                        id="password"
+                        name="password"
+                        th:field="*{password}"
+                />
+
+              </div>
+              <button class="btn btn-block mt-2 color-dark mb-2">Register</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of modal -->
+
 
     <div class="container col-12 color-dark">
       <blockquote class="blockquote text-right">
