@@ -1,5 +1,7 @@
 package com.example.Yips;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,8 +9,11 @@ import java.util.List;
 
 public class Workout {
 
+
+
     private Long id;
     private String name;
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String type;
     private int time;
