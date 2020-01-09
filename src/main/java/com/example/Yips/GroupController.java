@@ -34,7 +34,7 @@ public class GroupController {
         return "newgroup";
     }
 
-    @PostMapping("/newgroup")
+    /*@PostMapping("/newgroup2")
     public String createNewGroup(@ModelAttribute Group group, HttpSession session, Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         Group addGroup = groupService.addGroup(group, user);
@@ -45,7 +45,7 @@ public class GroupController {
         } else {
             return "redirect:/group";
         }
-    }
+    }*/
 
     @GetMapping("/group")
     public String seeMyGroup(HttpSession session) {

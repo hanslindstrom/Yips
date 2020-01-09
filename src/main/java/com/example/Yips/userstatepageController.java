@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @Controller
@@ -37,6 +39,7 @@ public class userstatepageController {
         ArrayList<Goal> goalArrayList = new ArrayList<>();
         goalArrayList.add(new Goal("Vinterns utmaning", false));
         goalArrayList.add(new Goal("Sommarens utmaning", false));
+        model.addAttribute("listOfGoalsForUser", goalArrayList);
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
@@ -56,7 +59,11 @@ public class userstatepageController {
         model.addAttribute("listOfGroupInvites", listOfGroupInvites);
         model.addAttribute("listOfSenders", listOfSenders);
 
-        //Fixar med workout.
+        //Fixa med group modal.
+        model.addAttribute("group", new Group());
+
+
+        //Fixar med workout modal.
         Long workoutId = workoutRepository.initiateWorkout();
         Workout addWorkout = new Workout();
         addWorkout.setId(workoutId);
@@ -65,7 +72,6 @@ public class userstatepageController {
         connectionRepository.userWorkoutConnect(authentication.getName(), workoutId);
 
 
-        model.addAttribute("listOfGoalsForUser", goalArrayList);
         return "userstartpage";
     }
 
@@ -73,6 +79,15 @@ public class userstatepageController {
     public String postWorkout2(@ModelAttribute Workout workout) {
         workoutRepository.updateWorkout(workout);
         return "userStartPage";
+    }
+
+    @PostMapping("/newgroup")
+    public String createGroup (@ModelAttribute Group group, Authentication authentication, HttpSession session){
+        group.setOwnerId(userRepository.findByUsername(authentication.getName()).getId());
+        groupRepository.saveGroup(group);
+        System.out.println("This is the group created: " + group);
+        session.setAttribute("mygroup", group);
+        return "redirect:/group";
     }
 
 
