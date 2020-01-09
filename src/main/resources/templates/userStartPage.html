@@ -152,7 +152,13 @@
 
     <!--   Visa mina invites   -->
     <h2>My invites</h2>
-    <ul class="list-group list-group-horizontal-sm" th:if="${listofInvites != 0}" >
+    <div id="inviteContainer">
+
+
+    </div>
+
+
+   <!-- <ul class="list-group list-group-horizontal-sm" th:if="${listofInvites != 0}" >
 
         <li class="list-group-item" th:each="invite : ${inviteInfo}">
             <h2>Group:</h2>
@@ -162,7 +168,7 @@
             <button type="submit" formmethod="POST" formaction="/" class="btn mt-2 color-dark mb-2" id="acceptinvite" th:value="*{invite[2]}" >Accept</button>
             <button class="btn mt-2 color-dark mb-2" id="declineinvite" th:value="*{invite[2]}">Decline</button>
         </li>
-    </ul>
+    </ul>-->
 
     <!--   Skapa workout   -->
     <a class="btn btn-lg mt-5 color-dark" href="newworkout" role="button">New workout</a>
