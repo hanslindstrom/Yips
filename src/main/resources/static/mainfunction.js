@@ -8,6 +8,8 @@ function run() {
 async function showAllInvites() {
     let array = await getAllInvites("http://localhost:8081/rest/getAllInvites/")
     console.log("gets connection and this is the response : " + array[0].id);
+    console.log("this is the group name: " + array[1][0])
+    console.log("this is the sender name: " + array[2][0])
 }
 
 async function sendInvite () {

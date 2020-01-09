@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,8 @@ public class RController {
     @Autowired
     InviteRepository inviteRepository;
 
-
+    @Autowired
+    GroupRepository groupRepository;
 
     //--------USERS---------------------
     @GetMapping("/users")
@@ -44,11 +46,22 @@ public class RController {
         return user;
     }
     @GetMapping("/rest/getAllInvites")
-    public List<Invite> getAllInvites(HttpSession session, Authentication authentication){
+    public List<List> getAllInvites(HttpSession session, Authentication authentication){
         User user = userRepository.findByUsername(authentication.getName());
-        System.out.println("THe user is " + user);
+        ArrayList<String> listOfGroupInvites = new ArrayList<>();
+        ArrayList<String> listOfSenders = new ArrayList<>();
+        List<List> inviteInfoList = new ArrayList<>();
 
-        List<Invite> inviteList = inviteRepository.getAllInvitesWithUserId(user.getId());
-        return inviteList;
+
+        for (Invite invite : inviteRepository.getAllInvitesWithUserId(user.getId())) {
+            listOfGroupInvites.add(groupRepository.findGroupById(invite.getGroupid()).getName());
+            listOfSenders.add(userRepository.findByUserId(invite.getSenderid()).getUsername());
+        }
+
+        inviteInfoList.add(inviteRepository.getAllInvitesWithUserId(user.getId()));
+        inviteInfoList.add(listOfGroupInvites);
+        inviteInfoList.add(listOfSenders);
+        System.out.println(inviteInfoList);
+        return inviteInfoList;
     }
 }
