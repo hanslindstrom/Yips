@@ -64,4 +64,22 @@ public class RController {
         System.out.println(inviteInfoList);
         return inviteInfoList;
     }
+
+    @DeleteMapping("/rest/declineInvite/{inviteId}")
+    public void deleteInvite(@PathVariable Long inviteId) {
+        inviteRepository.deleteInviteWithId(inviteId);
+        System.out.println("Deleted invite with id " + inviteId);
+
+    }
+
+    @PutMapping("/rest/acceptInvite")
+    public void acceptInvite(@RequestBody Invite invite) {
+        System.out.println("requestbody: " + invite);
+        //deleteInvite(invite.getId());
+        System.out.println("Deleted invite with id " + invite.getId());
+
+
+    }
+
+
 }

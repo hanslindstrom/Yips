@@ -5,12 +5,41 @@ function run() {
     console.log("hej")
 }
 
+async function declineButtonfunction () {
+    console.log("Acessed declinebutton function.")
+    await declineInvite("http://localhost:8081/rest/declineInvite/" + document.getElementById("declineButton").value)
+    console.log("I think you deleted a invite now..")
+    showAllInvites();
+}
+async function acceptButtonFunction () {
+    console.log("Accesed accept button function")
+    await acceptInvite("http://localhost:8081/rest/acceptInvite", document.getElementById("acceptButton").value)
+    console.log("I think you accepted a invite now..")
+    showAllInvites();
+}
+
 async function showAllInvites() {
     let array = await getAllInvites("http://localhost:8081/rest/getAllInvites/")
-    console.log("gets connection and this is the response : " + array[0].id);
-    console.log("this is the group name: " + array[1][0])
-    console.log("this is the sender name: " + array[2][0])
+    let container = document.getElementById("inviteContainer")
+    if(array[0].length > 0) {
+    for(let i = 0; i < array[1].length; i++) {
+    container.innerHTML = 
+    `<h2>Sender</h2>
+    <h4>${array[2][i]}</h4>
+    <h2>Group</h2>
+    <h4>${array[1][i]}</h4>
+    <button type="button" class="btn btn-secondary" id="declineButton" value=${array[0][i].id} >Decline</button>
+    <button type="button" class="btn btn-secondary" id="acceptButton" value=${array[0][i]}  >Accept</button>
+     `
+    document.getElementById("declineButton").addEventListener("click", declineButtonfunction)
+    document.getElementById("acceptButton").addEventListener("click", acceptButtonFunction)
+        } 
+    }
+    else
+    container.innerHTML = 
+    `<h2> You have no invite girlfriend </h2>`
 }
+
 
 async function sendInvite () {
 //Spara värdet
@@ -51,6 +80,30 @@ async function getInformation(url) {
     else console.log("unexpected error", response)
 }
 
+async function declineInvite(url) {
+    let response = await fetch(url, {
+        method: "DELETE"
+    });
+    if (response.status === 200) {
+        console.log("Deleted" + url)
+    }
+    else console.log("unexpected error", response)
+}
+
+async function acceptInvite(url, data) {
+    console.log(data)
+
+    let response = await fetch(url, {
+        method: "PUT",
+        body: data 
+    });
+    if (response.status === 200) {
+        console.log("Accepeted " + url)
+    }
+    else console.log("unexpected error ", response)
+    
+}
+
 async function getAllInvites(url) {
     let response = await fetch(url, {
         method: "GET"
@@ -63,5 +116,6 @@ async function getAllInvites(url) {
     }
     else console.log("unexpected error", response)
 }
+
 
 

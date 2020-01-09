@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,4 +50,18 @@ public class InviteRepository {
         }
         return invites;
     }
+    public void deleteInviteWithId (Long inviteId) {
+        boolean rs = false;
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("DELETE FROM invite WHERE id = ?")){
+            ps.setString(1, inviteId.toString());
+            rs = ps.execute();
+            System.out.println("rs 1" +     rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(rs);
+
+    }
+
 }
