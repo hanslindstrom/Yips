@@ -20,7 +20,13 @@ public class userstatepageController {
     Categories categories;
 
     @Autowired
+    GroupRepository groupRepository;
+
+    @Autowired
     ConnectionRepository connectionRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping ("/userstartpage")
     public String showUserStartPage (Model model, Authentication authentication) {
@@ -28,6 +34,14 @@ public class userstatepageController {
         ArrayList<Goal> goalArrayList = new ArrayList<>();
         goalArrayList.add(new Goal("Vinterns utmaning", false));
         goalArrayList.add(new Goal("Sommarens utmaning", false));
+
+        //Hämtar alla grupper för en person.
+        Long userId = userRepository.findByUsername(authentication.getName()).getId();
+        System.out.println("My userId is: " + userId);
+        model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));
+        System.out.println("All my groups are: " + groupRepository.findAllMyGroups(userId));
+
+        //Fixar med workout.
         Long workoutId = workoutRepository.initiateWorkout();
         Workout addWorkout = new Workout();
         addWorkout.setId(workoutId);

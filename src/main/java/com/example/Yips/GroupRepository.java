@@ -118,4 +118,52 @@ public class GroupRepository {
         return members;
 
     }
+
+    public List<Group> findAllMyGroups(Long userId) {
+        List<Group> groups = new ArrayList<>();
+        List<Long> groupIds = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERGROUPCONNECTION WHERE USERID = ? ")) {
+            ps.setString(1, userId.toString());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                long groupId = rs.getInt("groupid");
+                groupIds.add(groupId);
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (Long groupId : groupIds) {
+            groups.add(findGroupById(groupId));
+        }
+        return groups;
+    }
+
+    public Group findGroupById(Long groupId) {
+        Group group = new Group();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM wagroup WHERE id = ?")){
+            ps.setString(1, groupId.toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                long id = rs.getInt("id");
+                String name = rs.getString("groupname");
+                long ownerId = rs.getInt("ownerid");
+                String category = rs.getString("category");
+                String description = rs.getString("description");
+                group.setId(id);
+                group.setName(name);
+                group.setOwnerId(ownerId);
+                group.setCategory(category);
+                group.setDescription(description);
+
+            } else {
+                group=null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return group;
+    }
 }
