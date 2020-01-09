@@ -31,15 +31,12 @@ public class RController {
     public User getUser(@PathVariable String username, HttpSession session){
         User user = userRepository.findByUsername(username);
         Group group = (Group)session.getAttribute("mygroup");
-
-        Long groupId = group.getId();
-        Long recipientId = user.getId();
-        Long senderId = group.getOwnerId();
-
-
         if (user == null){
             return new User();
         }
+        Long groupId = group.getId();
+        Long recipientId = user.getId();
+        Long senderId = group.getOwnerId();
         inviteRepository.saveInvite(groupId, senderId, recipientId);
         return user;
     }
