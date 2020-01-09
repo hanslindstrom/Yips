@@ -1,8 +1,10 @@
 package com.example.Yips;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -40,5 +42,13 @@ public class RController {
         Long senderId = group.getOwnerId();
         inviteRepository.saveInvite(groupId, senderId, recipientId);
         return user;
+    }
+    @GetMapping("/rest/getAllInvites")
+    public List<Invite> getAllInvites(HttpSession session, Authentication authentication){
+        User user = userRepository.findByUsername(authentication.getName());
+        System.out.println("THe user is " + user);
+
+        List<Invite> inviteList = inviteRepository.getAllInvitesWithUserId(user.getId());
+        return inviteList;
     }
 }

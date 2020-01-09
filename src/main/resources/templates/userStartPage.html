@@ -152,16 +152,7 @@
 
     <!--   Visa mina invites   -->
     <h2>My invites</h2>
-    <ul class="list-group list-group-horizontal-sm" th:if="${listofInvites != 0}" >
-        <h4>Sender</h4>
-        <li class="list-group-item" th:each="sendername : ${listOfSenders}">§
-            <h2 th:text="${sendername}"></h2>
-        </li>
-        <h4>Groupname</h4>
-        <li class="list-group-item" th:each="groupname : ${listOfGroupInvites}">§
-            <h2 th:text="${groupname}"></h2>
-        </li>
-    </ul>
+    <div id="inviteContainer"></div>
 
     <!--   Skapa workout   -->
     <a class="btn btn-lg mt-5 color-dark" href="newworkout" role="button">New workout</a>
@@ -239,7 +230,7 @@
     Detta ska ersättas av ett fragment footer när Spring Boot körs!
 </div>
 
-
+<script src="mainfunction.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -41,6 +41,8 @@ public class InviteRepository {
             if(rs.next()) {
                 Long groupId = rs.getLong("groupid");
                 Long senderId = rs.getLong("senderid");
+                Long inviteId = rs.getLong("id");
+                invite.setId(inviteId);
                 invite.setGroupid(groupId);
                 invite.setSenderid(senderId);
                 invite.setRecipientid(userId);
