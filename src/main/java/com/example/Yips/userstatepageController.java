@@ -40,7 +40,7 @@ public class userstatepageController {
         return "userstartpage";
     }
 
-    @PostMapping("/userstartpage")
+    @PostMapping("/test")
     public String postWorkout2(@ModelAttribute Workout workout) {
         workoutRepository.updateWorkout(workout);
         return "userStartPage";
