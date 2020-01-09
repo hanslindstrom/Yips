@@ -41,6 +41,17 @@ public class ConnectionRepository {
             e.printStackTrace();
         }
     }
+
+    public void userExerciseConnect(Long userId, Long exerciseId) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO userexerciseconnection(USERID, EXERCISEID) VALUES (?,?)")) {
+            ps.setLong(1, userId);
+            ps.setLong(2, exerciseId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
    /* public void saveUserWorkoutConnection(Workout workout, Long userId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO USERWORKOUTCONNECTION(USERID, WORKOUTID) VALUES(?,?)")){

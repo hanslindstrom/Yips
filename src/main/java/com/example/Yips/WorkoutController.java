@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class WorkoutController {
@@ -19,13 +20,26 @@ public class WorkoutController {
     ConnectionRepository connectionRepository;
 
     @Autowired
+    ExerciseRepository exerciseRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     Categories categories;
 
     @GetMapping("/workout")
-    public String getWorkout(Model model, HttpSession session) {
-        System.out.println("is this working?");
+    public String getWorkout(Model model, HttpSession session, Authentication authentication) {
+        Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
         model.addAttribute("workout", workout);
+        model.addAttribute("exercise", new Exercise());
+        List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);
+
+        //for loop to test functionality
+        for(String e:priorExercises) {
+            System.out.println(e);
+        }
         return "workout";
     }
 
