@@ -23,6 +23,7 @@ public class WorkoutController {
 
     @GetMapping("/workout")
     public String getWorkout(Model model, HttpSession session) {
+        System.out.println("is this working?");
         Workout workout = (Workout)session.getAttribute("workout");
         model.addAttribute("workout", workout);
         return "workout";
