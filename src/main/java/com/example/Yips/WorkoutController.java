@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class WorkoutController {
     @Autowired
@@ -19,7 +21,27 @@ public class WorkoutController {
     @Autowired
     Categories categories;
 
-    @GetMapping("/newworkout")
+    @GetMapping("/workout")
+    public String getWorkout(Model model, HttpSession session) {
+        Workout workout = (Workout)session.getAttribute("workout");
+        model.addAttribute("workout", workout);
+        return "workout";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*@GetMapping("/newworkout")
     public String getNewWorkout(Authentication authentication, Model model) {
         Long workoutId = workoutRepository.initiateWorkout();
         Workout addWorkout = new Workout();
@@ -34,6 +56,6 @@ public class WorkoutController {
     public String postWorkout(@ModelAttribute Workout workout) {
         workoutRepository.updateWorkout(workout);
         return "userStartPage";
-    }
+    }*/
 
 }

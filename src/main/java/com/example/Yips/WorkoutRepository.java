@@ -70,13 +70,15 @@ public class WorkoutRepository {
         Workout workout = new Workout();
         workout.setName("workoutinit"+Math.random());
         try(Connection conn = dataSource.getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO workout(NAME, WDATE, WTIME, PLACE, DESCRIPTION, CATEGORY) VALUES(?,?,?,?,?,?)")) {
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO workout(NAME, WDATE, WTYPE, WTIME, PLACE, DESCRIPTION, CATEGORY) VALUES(?,?,?,?,?,?,?)")) {
             ps.setString(1,workout.getName());
             ps.setDate(2,null);
-            ps.setInt(3, 0);
+            ps.setString(3, null);
+            ps.setInt(4, 0);
             ps.setString(4, null);
             ps.setString(5, null);
             ps.setString(6, null);
+            ps.setString(7, null);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,7 +88,7 @@ public class WorkoutRepository {
     }
     public void updateWorkout(Workout workout) {
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME="+workout.getTime()+", PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
+            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME="+workout.getTime()+", PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WTYPE='"+workout.getType()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
 
             ps.executeUpdate();
         } catch (SQLException e) {

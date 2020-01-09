@@ -75,10 +75,11 @@ public class userstatepageController {
         return "userstartpage";
     }
 
-    @PostMapping("/test")
-    public String postWorkout2(@ModelAttribute Workout workout) {
+    @PostMapping("/postworkout")
+    public String postWorkout2(@ModelAttribute Workout workout, HttpSession session) {
         workoutRepository.updateWorkout(workout);
-        return "userStartPage";
+        session.setAttribute("workout", workout);
+        return "redirect:/workout";
     }
 
     @PostMapping("/newgroup")
