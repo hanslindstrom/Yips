@@ -30,7 +30,7 @@ public class Dbinit implements CommandLineRunner {
         //Add users
         User dan = new User("dan", "dan@epost.com", encoder.encode("dan123"), "USER");
         User admin = new User("admin", "admin@epost.com", encoder.encode( "admin123"), "ADMIN");
-        User hans = new User("hans", "hans@epost.com", encoder.encode("hans321"), "ADMIN");
+        User hans = new User("a", "a@epost.com", encoder.encode("a"), "ADMIN");
         User duck = new User("donald", "donald@duck.se", encoder.encode("quack"), "USER");
 
         List<User> users = Arrays.asList(dan,admin,hans, duck);

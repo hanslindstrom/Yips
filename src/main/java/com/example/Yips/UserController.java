@@ -23,8 +23,13 @@ public class UserController {
         if(addUser==null) {
             return"/login";
         } else {
-            return "user";
+            return "redirect:/userStartPage";
         }
+    }
+
+    @GetMapping("/userStartPage")
+    public String userStartPage() {
+        return "userStartPage";
     }
 
     @GetMapping("/newuser")
