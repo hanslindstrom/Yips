@@ -1,4 +1,6 @@
 document.getElementById("sendbutton").addEventListener("click", sendInvite);
+document.getElementById("declineinvite").addEventListener("click", );
+document.getElementById("acceptinvite").addEventListener("click",  );
 
 function run() {
     console.log("hej")
