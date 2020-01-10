@@ -14,8 +14,7 @@ color: #ff914c;
 background-color: #e2f7f3;
 }
 
-
-/* Klassen bestämmer bakgrundsfärgen och vi har kommit överrens om vilken text färg som blir utefter det. */
+/* Klassen bestämmer bakgrundsfärgen och vi har kommit överens om vilken textfärg som blir utefter det. */
 
 .color-light {
 background-color: #e2f7f3;
@@ -52,3 +51,6 @@ color: #414141;
 border: none;
 }
 
+.text-color-contrast {
+color: #ff914c;
+}

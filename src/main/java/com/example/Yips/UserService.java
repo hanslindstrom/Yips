@@ -8,6 +8,7 @@ public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder encoder;
+    private String addUserMessage = "";
 
     public UserService(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
@@ -19,11 +20,15 @@ public class UserService {
         if(dbUser==null) {
             User addUser = new User(user.getUsername().toLowerCase(), user.getEmail(), encoder.encode(user.getPassword()), "USER");
             userRepository.saveUser(addUser);
-            System.out.println("User added: "+user.getUsername());
+            this.addUserMessage = "Awesome! You can now log in with username: " + user.getUsername();
             return user;
         } else {
-            System.out.println("User already exist: "+dbUser.getUsername());
+            this.addUserMessage =  "Oops! There is already a user with the username: " + dbUser.getUsername();
             return null;
         }
+    }
+
+    public String getAddUserMessage(){
+        return addUserMessage;
     }
 }
