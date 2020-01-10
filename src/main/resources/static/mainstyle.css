@@ -51,3 +51,14 @@ color: #414141;
 border: none;
 }
 
+
+.modal-dialog {
+          width: 360px;
+        }
+.modal-header {
+background-color: #414141;
+color: #ff914c;
+border: none;
+ }
+
+
