@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //The ** makes all files in the admin folder accessible to role ADMIN so we do not need more antMatchers
                 .antMatchers("/users","/h2","/h2**").hasRole("ADMIN")
-                .antMatchers("/newuser","/").permitAll()
+                .antMatchers("/newuser","/", "/static/images/background.jpg", "/static/mainstyle.css").permitAll()
                 .antMatchers("/user","/newgroup","/newworkout","/userstartpage", "/rest**").hasAnyRole("USER", "ADMIN")
                 .and()
                 //change defaultsuccessurl once we have one

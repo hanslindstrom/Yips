@@ -36,47 +36,39 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto|Tajawal&display=swap" rel="stylesheet">
 </div>
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm mb-3 opacity-header ">
         <div class="container">
-            <a class="navbar-brand" href="login">YIPS</a>
-            <button
-                    class="navbar-toggler"
-                    data-toggle="collapse"
-                    data-target="#navbarNav"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="userStartPage">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-
-            </div>
+          <a class="navbar-brand  text-color-medium" href="login">YIPS</a>
+          <button
+            class="navbar-toggler"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item" >
+                <a class="nav-link text-color-medium " href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-color-medium" href="#">Contact</a>
+              </li>
+            </ul>
+  
+          </div>
         </div>
-    </nav>
+      </nav>
 </div>
 
 <div th:fragments="footer">
-    <div class="container col-12 color-dark">
-        <blockquote class="blockquote text-right">
-            <div class="container">
-                <footer class="blockquote-footer color-dark">
-                    <cite title="Source Title"> CREATED BY .....</cite>
-                </footer>
-            </div>
-        </blockquote>
-    </div>
+    
+    <footer class="page-footer font-small footer mt-2">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-5 text-color-medium text-fix-font">© 2020 Copyright: Team Yips
+        </div>
+        <!-- Copyright --> 
+      </footer>
 </div>
 
 <!-- funkar ej? -->

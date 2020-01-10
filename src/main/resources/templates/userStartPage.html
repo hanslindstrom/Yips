@@ -20,9 +20,38 @@
 
     <title>Workout</title>
 </head>
-<body>
+<body class="bodyclass">
+    <div th:replace="fragments :: header">
+        Detta ska ersättas av ett fragment header när Spring Boot körs!
+    </div>
+
+    <h1 class="d-flex justify-content-center mt-5 pt-5">Workout</h1>
+    <!--Workout card - next workout-->
+    <div class="container">
+    <div class="row">
+<div class="col-sm">
+<div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Group title</h4>
+            <p class="card-text">This is a group for people working in the Sumpa area who wants to get fit.</p>
+        </div>
+</div>
+</div>
+
+<div class="col-sm">
+<!-- Workout card - previous workout -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Title</h4>
+            <p class="card-text">Text</p>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- End of workout cards-->
 <!-- New Workout Modal-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newworkout">Add workout</button>
+<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#newworkout">Add workout</button>
 
 <div class="modal fade" id="newworkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -123,11 +152,9 @@
 </div>
 <!-- End of modal -->
 
-<div th:replace="fragments :: header">
-    Detta ska ersättas av ett fragment footer när Spring Boot körs!
-</div>
 
-<div class="container">
+
+<div class="container ">
 
 <!-- Lista över mål för användare, får det ej att funka horisontellt. -->
     <ul class="list-group list-group-horizontal-sm" th:if="${listOfGoals != 0}" >
@@ -225,10 +252,10 @@
 
 
 
+
 <div th:replace="fragments :: footer">
     Detta ska ersättas av ett fragment footer när Spring Boot körs!
 </div>
-
 <script src="mainfunction.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
