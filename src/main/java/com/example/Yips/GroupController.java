@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.security.PublicKey;
 import java.util.List;
 
 @Controller
@@ -21,7 +22,8 @@ public class GroupController {
     GroupRepository groupRepository;
     @Autowired
     GoalRepository goalRepository;
-
+    @Autowired
+    InviteRepository inviteRepository;
     @Autowired
     Categories categories;
 
@@ -47,10 +49,12 @@ public class GroupController {
         }
     }*/
 
+
+
     @GetMapping("/group")
     public String seeMyGroup(HttpSession session) {
         Group group = (Group)session.getAttribute("mygroup");
-        session.setAttribute("listOfMembers",groupRepository.getAllMembers(group));
+        session.setAttribute("listOfMembers", groupRepository.getAllMembers(group));
         System.out.println("GetMapping for /group, name: " + group.getName());
         session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
         //session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));

@@ -46,7 +46,7 @@ public class RController {
         return user;
     }
     @GetMapping("/rest/getAllInvites")
-    public List<List> getAllInvites(HttpSession session, Authentication authentication){
+    public List<List> getAllInvites(Authentication authentication){
         User user = userRepository.findByUsername(authentication.getName());
         ArrayList<String> listOfGroupInvites = new ArrayList<>();
         ArrayList<String> listOfSenders = new ArrayList<>();
@@ -61,7 +61,7 @@ public class RController {
         inviteInfoList.add(inviteRepository.getAllInvitesWithUserId(user.getId()));
         inviteInfoList.add(listOfGroupInvites);
         inviteInfoList.add(listOfSenders);
-        System.out.println(inviteInfoList);
+        System.out.println("this is all the invites we return to JS" + inviteInfoList);
         return inviteInfoList;
     }
 
@@ -78,7 +78,17 @@ public class RController {
         //deleteInvite(invite.getId());
         System.out.println("Deleted invite with id " + invite.getId());
 
-
+    }
+    @GetMapping ("/rest/acceptInvite/{inviteId}")
+    public Group acceptInvite (@PathVariable Long inviteId){
+        System.out.println(inviteId);
+        Invite invite = inviteRepository.getInviteWithId(inviteId);
+        inviteRepository.deleteInviteWithId(inviteId);
+        return groupRepository.findGroupById(invite.getGroupid());
+    }
+    @GetMapping ("/rest/getAllGroups")
+    public List<Group> getAllGroupsForUser (Authentication authentication){
+        return groupRepository.findAllMyGroups(userRepository.findByUsername(authentication.getName()).getId());
     }
 
 

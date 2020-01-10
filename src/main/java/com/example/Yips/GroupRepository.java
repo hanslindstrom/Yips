@@ -102,7 +102,7 @@ public class GroupRepository {
         List<User> members = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT userid FROM usergroupconnection WHERE groupid = ?")){
-           ps.setString(1, dbGroup.getId().toString());
+            ps.setString(1, dbGroup.getId().toString());
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 long id = rs.getInt("userid");

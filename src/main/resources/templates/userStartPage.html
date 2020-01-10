@@ -144,11 +144,10 @@
         </ul>
 
     <!--   Visa mina grupper   -->
-    <ul class="list-group list-group-horizontal-sm" th:if="${listofGroups != 0}" >
-        <li class="list-group-item" th:each="group : ${listofGroups}">
-            <h2 th:text="${group.name}"></h2>
-        </li>
-    </ul>
+    <div id="groupContainer"></div>
+
+   
+
 
     <!--   Visa mina invites   -->
     <h2>My invites</h2>
