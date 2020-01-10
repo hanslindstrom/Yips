@@ -20,20 +20,12 @@ public class UserService {
         if(dbUser==null) {
             User addUser = new User(user.getUsername().toLowerCase(), user.getEmail(), encoder.encode(user.getPassword()), "USER");
             userRepository.saveUser(addUser);
-            addUserMessage = "Awesome! You can now log in with username: " + user.getUsername();
-            setAddUserMessage(addUserMessage);
-            System.out.println(addUserMessage);
+            this.addUserMessage = "Awesome! You can now log in with username: " + user.getUsername();
             return user;
         } else {
-            addUserMessage = "Oops! There is already a user with the username: " + dbUser.getUsername();
-            setAddUserMessage(addUserMessage);
-            System.out.println(addUserMessage);
+            this.addUserMessage =  "Oops! There is already a user with the username: " + dbUser.getUsername();
             return null;
         }
-    }
-
-    public void setAddUserMessage(String result){
-        this.addUserMessage = result;
     }
 
     public String getAddUserMessage(){
