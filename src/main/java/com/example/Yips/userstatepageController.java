@@ -35,7 +35,7 @@ public class userstatepageController {
     InviteRepository inviteRepository;
 
     @GetMapping ("/userstartpage")
-    public String showUserStartPage (Model model, Authentication authentication) {
+    public String showUserStartPage (Model model, Authentication authentication, HttpSession session) {
         //Initierar lite mål för att få skriva ut nåt.
         ArrayList<Goal> goalArrayList = new ArrayList<>();
         goalArrayList.add(new Goal("Vinterns utmaning", false));
@@ -47,6 +47,7 @@ public class userstatepageController {
         System.out.println("My userId is: " + userId);
         model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));
         System.out.println("All my groups are: " + groupRepository.findAllMyGroups(userId));
+
 
         //Hämtar alla invites för en person.
         ArrayList<String> listOfGroupInvites = new ArrayList<>();
@@ -102,7 +103,6 @@ public class userstatepageController {
     public String createGroup (@ModelAttribute Group group, Authentication authentication, HttpSession session){
         group.setOwnerId(userRepository.findByUsername(authentication.getName()).getId());
         groupRepository.saveGroup(group);
-        System.out.println("This is the group created: " + group);
         session.setAttribute("mygroup", group);
         return "redirect:/group";
     }

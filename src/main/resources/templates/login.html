@@ -45,7 +45,7 @@
     <div class="container">
       <div class="d-flex justify-content-center">
       <!-- JUMBOTRON -->
-      <div class="jumbotron text-center opacity mw-100 w-50">
+      <div class="jumbotron text-center color-base">
         <h1 class="display-6">
           Welcome To YIPS!
         </h1>
@@ -53,6 +53,10 @@
           The easiest way to track any training with friends!
         </p>
 
+        <hr />
+        <p th:if="${session.resultMessage} != ''">
+          <h6 class="text-color-contrast" th:text="${session.resultMessage}">Thymeleaf will print a result message here after New User Modal/form</h6>
+        </p>
         <div class="container">
           <form
                   name="loginform"
