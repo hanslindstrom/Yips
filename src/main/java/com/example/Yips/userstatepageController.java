@@ -87,7 +87,6 @@ public class userstatepageController {
     public String createGroup (@ModelAttribute Group group, Authentication authentication, HttpSession session){
         group.setOwnerId(userRepository.findByUsername(authentication.getName()).getId());
         groupRepository.saveGroup(group);
-        System.out.println("This is the group created: " + group);
         session.setAttribute("mygroup", group);
         return "redirect:/group";
     }
