@@ -47,6 +47,7 @@ public class ExerciseRepository {
         Long exerciseId=0L;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("INSERT INTO exercise(NAME, SECONDS, METERS, CALORIES, WEIGHT, REPS, SETS, CADENCE) VALUES(?,?,?,?,?,?,?,?)")) {
+
             ps.setString(1,exercise.getName());
             ps.setInt(2,exercise.getSeconds());
             ps.setInt(3, exercise.getMeters());

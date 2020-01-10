@@ -29,7 +29,14 @@
     <div class="card color-base text-grey mb-3">
         <div class="card-header" th:text="Workout"></div>
         <div class="card-body">
-            <h4 class="card-title" th:text="'Workout: '+*{name}"></h4>
+                <h4 class="card-title" th:text="'Workout: '+*{name}"></h4>
+                <h4 class="card-title" th:text="'Date: '+*{date}"></h4>
+            <span th:if="*{type}!='none'" th:text="*{type}"></span>
+            <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
+            <ul th:each="exercise:${exercises}">
+                <li th:text="${exercise.name}"></li>
+            </ul>
+
         </div>
 
     </div>

@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ConnectionRepository {
@@ -63,6 +66,32 @@ public class ConnectionRepository {
             e.printStackTrace();
         }
     }
+    public List<Exercise> findExercisesInWorkoutByWorkoutId (Long workoutId) {
+        List<Exercise> exercises = new ArrayList<>();
+        try(Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM exercise JOIN workoutexerciseconnection ON EXERCISE.ID=WORKOUTEXERCISECONNECTION.EXERCISEID WHERE WORKOUTID=?")){
+            ps.setLong(1,workoutId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Exercise exercise = new Exercise();
+                exercise.setId(rs.getLong("id"));
+                exercise.setName(rs.getString("name"));
+                exercise.setSeconds(rs.getInt("seconds"));
+                exercise.setMeters(rs.getInt("meters"));
+                exercise.setCalories(rs.getInt("calories"));
+                exercise.setWeight(rs.getInt("weight"));
+                exercise.setReps(rs.getInt("reps"));
+                exercise.setSets(rs.getInt("sets"));
+                exercise.setCadence(rs.getInt("cadence"));
+                exercises.add(exercise);
+            }
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exercises;
+    }
+
    /* public void saveUserWorkoutConnection(Workout workout, Long userId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO USERWORKOUTCONNECTION(USERID, WORKOUTID) VALUES(?,?)")){

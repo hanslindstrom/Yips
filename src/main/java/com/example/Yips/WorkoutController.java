@@ -37,10 +37,17 @@ public class WorkoutController {
         List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);
         model.addAttribute("priorexercises", priorExercises);
 
-        //for loop to test functionality
-        for(String e:priorExercises) {
-            System.out.println(e);
-        }
+        //Add all exercises connected to workout to list to be able to print them in workout
+        //1 get the workoutId from DB.
+        Long databaseWorkoutId = workoutRepository.findByWorkoutname(workout.getName()).getId();
+
+        //2 use the workoutId to get exercises.
+        List<Exercise>exercises = connectionRepository.findExercisesInWorkoutByWorkoutId(databaseWorkoutId);
+
+        //3 add list to model:
+        model.addAttribute("exercises", exercises);
+
+
         return "workout";
     }
     @PostMapping("/postexercise")
