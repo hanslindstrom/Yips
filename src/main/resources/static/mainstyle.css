@@ -47,6 +47,19 @@ background-color: none;
 font-weight: bold;
 }
 
+.button-add-workout:hover {
+  background-color: #ff8438;
+color: #414141;
+font-weight: bolder;
+font-family: 'Tajawal', sans-serif;
+}
+
+.button-add-workout {
+font-family: 'Tajawal', sans-serif;
+font-size: large;
+font-weight: bold;
+}
+
 /* Klassen bestämmer bakgrundsfärgen och vi har kommit överens om vilken textfärg som blir utefter det. */
 
 .color-light {
@@ -108,10 +121,18 @@ color: #ff914c;
 border: none;
  }
 
- .text-color-medium {
+.text-color-medium {
    color: #4ed2ba;
    border: none;
- }
+}
 
+.text-color-light {
+  color: #e2f7f3;
+  border: none;
+}
+
+.card-text {
+  font-style: italic;
+}
  
 
