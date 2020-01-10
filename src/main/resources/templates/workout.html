@@ -61,12 +61,78 @@
                                     name="exerciseid"
                                     th:field="*{id}"
                             />
+
+                            <label for="exercise">Choose one of your prior exercises</label>
+                            <select id="exercise" th:field="*{name}" name="exercisename" class="form-control">
+                                <option value="New Exercise">New exercise</option>
+                                <option th:each="ename:${priorexercises}" th:value="${ename}" th:text="${ename}"></option>
+                            </select>
+
+                            <label for="newexercisename">Or enter a new exercise below</label>
+                            <input
+                                    type="text"
+                                    class="form-control mb-2"
+                                    placeholder="New exercise"
+                                    id="newexercisename"
+                                    name="newexercisename"
+                                    th:field="*{name}"
+                            />
+
+                            <label for="seconds">Seconds</label>
+                            <input
+                                    type="number"
+                                    class="form-control mb-2"
+                                    id="seconds"
+                                    th:field="*{seconds}"
+                            />
+                            <label for="meters">Meters</label>
+                            <input
+                                    type="number"
+                                    class="form-control mb-2"
+                                    id="meters"
+                                    th:field="*{meters}"
+                            />
+                            <label for="calories">Calories</label>
+                            <input
+                                    type="number"
+                                    class="form-control mb-2"
+                                    id="calories"
+                                    th:field="*{calories}"
+                            />
+                            <label for="weight">Weight</label>
+                            <input
+                                type="number"
+                                class="form-control mb-2"
+                                id="weight"
+                                th:field="*{weight}"
+                            />
+                            <label for="reps">Reps</label>
+                            <input
+                                    type="number"
+                                    class="form-control mb-2"
+                                    id="reps"
+                                    th:field="*{reps}"
+                            />
+                            <label for="sets">Sets</label>
+                            <input
+                                    type="number"
+                                    class="form-control mb-2"
+                                    id="sets"
+                                    th:field="*{sets}"
+                            />
+                            <label for="cadence">Cadence</label>
+                            <input
+                                    type="number"
+                                    class="form-control mb-2"
+                                    id="cadence"
+                                    th:field="*{cadence}"
+                            />
+
                         </div>
-
-
 
                         <button class="btn btn-block mt-2 color-dark mb-2">Add exercise</button>
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

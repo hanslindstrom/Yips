@@ -35,12 +35,23 @@ public class WorkoutController {
         model.addAttribute("workout", workout);
         model.addAttribute("exercise", new Exercise());
         List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);
+        model.addAttribute("priorexercises", priorExercises);
 
         //for loop to test functionality
         for(String e:priorExercises) {
             System.out.println(e);
         }
         return "workout";
+    }
+    @PostMapping("/postexercise")
+    public String postExercise(@ModelAttribute Exercise exercise, Authentication authentication,HttpSession session) {
+        Long userId = userRepository.findByUsername(authentication.getName()).getId();
+        Workout workout = (Workout)session.getAttribute("workout");
+        exerciseRepository.addExercise(exercise, userId);
+        Long workoutId = workout.getId();
+        Long exerciseId = exerciseRepository.findExerciseIdByExerciseName(exercise);
+        connectionRepository.workoutExerciseConnect(workoutId,exerciseId);
+        return "redirect:/workout";
     }
 
 

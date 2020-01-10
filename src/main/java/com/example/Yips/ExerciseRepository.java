@@ -56,19 +56,34 @@ public class ExerciseRepository {
             ps.setInt(7, exercise.getSets());
             ps.setInt(8, exercise.getCadence());
             ps.executeUpdate();
-            try (Connection conn2 = dataSource.getConnection();
+            /*try (Connection conn2 = dataSource.getConnection();
             PreparedStatement ps2 = conn2.prepareStatement("SELECT ID FROM EXERCISE WHERE NAME=?")){
                 ps2.setString(1, exercise.getName());
                 ResultSet rs2=ps2.executeQuery();
                 if(rs2.next()) {
                     exerciseId= rs2.getLong("ID");
                 }
-            }
+            }*/
+            exerciseId = findExerciseIdByExerciseName(exercise);
             connectionRepository.userExerciseConnect(userId, exerciseId);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+    public Long findExerciseIdByExerciseName (Exercise exercise) {
+        Long exerciseId=0L;
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("SELECT ID FROM exercise WHERE NAME=?")){
+            ps.setString(1,exercise.getName());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                exerciseId = rs.getLong("ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exerciseId;
     }
 }
