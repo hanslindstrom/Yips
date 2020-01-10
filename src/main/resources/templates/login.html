@@ -44,7 +44,7 @@
 
     <div class="container">
       <!-- JUMBOTRON -->
-      <div class="jumbotron text-center color-contrast">
+      <div class="jumbotron text-center color-base">
         <h1 class="display-6">
           Welcome To YIPS!
         </h1>
@@ -53,8 +53,8 @@
         </p>
 
         <hr />
-        <p>
-          Log in to your account or create a new one using the button below!
+        <p th:if="${session.resultMessage} != ''">
+          <h6 class="text-color-contrast" th:text="${session.resultMessage}">Thymeleaf will print a result message here after New User Modal/form</h6>
         </p>
         <div class="container">
           <form

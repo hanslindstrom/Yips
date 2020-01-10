@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 public class UserController {
@@ -18,14 +20,13 @@ public class UserController {
 
     //--------NEW USER---------------------
     @PostMapping("/plz")
-    public String postUser(@ModelAttribute User user) {
+    public String postUser(@ModelAttribute User user, HttpSession session) {
         User addUser = userService.addUser(user);
-        System.out.println("Post mapping newuser");
+        String resultNewUser = userService.getAddUserMessage();
+        session.setAttribute("resultMessage", resultNewUser);
         if(addUser==null) {
             return"redirect:/login";
         } else {
-           // return "redirect:/userStartPage";
-            System.out.println("ELSE SATSEN");
             return "redirect:/login";
         }
     }
@@ -41,6 +42,8 @@ public class UserController {
         return "newuser";
     }
     //--------NEW USER---------------------
+
+
     //---------LOG IN----------------------
     @GetMapping("/login")
     public String login(Model model){
