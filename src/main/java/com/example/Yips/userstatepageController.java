@@ -43,15 +43,17 @@ public class userstatepageController {
         goalArrayList.add(new Goal("Sommarens utmaning", false));
         model.addAttribute("listOfGoalsForUser", goalArrayList);
 
+        //WORKOUTS
         List<Workout> workouts = workoutRepository.workoutDateList();
-        System.out.println("Not sorted arraylist");
+        /*System.out.println("Not sorted arraylist");
         for(int i = 0; i < workouts.size(); i++)
-            System.out.println(workouts.get(i).getDate());
+            System.out.println(workouts.get(i).getDate());*/
         Collections.sort(workouts);
-        System.out.println("Sorted arraylist");
+        /*System.out.println("Sorted arraylist");
         for(int i = 0; i < workouts.size(); i++) {
             System.out.println(workouts.get(i).getDate());
-        }
+        }*/
+        model.addAttribute("workouts", workouts);
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();

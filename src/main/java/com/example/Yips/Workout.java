@@ -103,6 +103,6 @@ public class Workout implements Comparable<Workout> {
 
     @Override
     public int compareTo(Workout workout) {
-        return 
+        return this.date.compareTo(workout.getDate());
     }
 }

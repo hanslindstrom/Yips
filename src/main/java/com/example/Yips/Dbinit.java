@@ -1,6 +1,7 @@
 package com.example.Yips;
 
 
+import org.hibernate.jdbc.Work;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,12 +73,10 @@ public class Dbinit implements CommandLineRunner {
         this.workoutRepository.updateWorkout(workoutDB3);
 
         //TESTPRINT
-        List<LocalDate>workoutDates=workoutRepository.workoutDateList();
-
-        for(LocalDate date:workoutDates) {
-            System.out.println("DATE FROM SQL TO JOEL IS "+date);
+        List<Workout> workoutDates = workoutRepository.workoutDateList();
+        for (int i = 0; i < workoutDates.size(); i++) {
+            System.out.println(workoutDates.get(i).getDate());
         }
-
 
         //Add exercise
         Exercise exercise = new Exercise();
