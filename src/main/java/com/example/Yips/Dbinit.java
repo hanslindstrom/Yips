@@ -53,12 +53,23 @@ public class Dbinit implements CommandLineRunner {
 
         //Add workout
         Workout workout = new Workout("Långlöp", "Löpning");
+        Workout workout2 = new Workout("Långsim", "Simning");
+        Workout workout3 = new Workout("Kortlöp", "Löpning");
+
 
         //List <Workout> workouts = Arrays.asList(workout);
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
         Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
         workoutDB.setDate(LocalDate.of(2020,6,15));
         this.workoutRepository.updateWorkout(workoutDB);
+        this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("dan"));
+        Workout workoutDB2 = workoutRepository.findByWorkoutname(workout2.getName());
+        workoutDB2.setDate(LocalDate.of(2020,3,10));
+        this.workoutRepository.updateWorkout(workoutDB2);
+        this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("dan"));
+        Workout workoutDB3 = workoutRepository.findByWorkoutname(workout3.getName());
+        workoutDB3.setDate(LocalDate.of(2020,1,10));
+        this.workoutRepository.updateWorkout(workoutDB3);
 
         //TESTPRINT
         List<LocalDate>workoutDates=workoutRepository.workoutDateList();
@@ -66,6 +77,7 @@ public class Dbinit implements CommandLineRunner {
         for(LocalDate date:workoutDates) {
             System.out.println("DATE FROM SQL TO JOEL IS "+date);
         }
+
 
         //Add exercise
         Exercise exercise = new Exercise();
