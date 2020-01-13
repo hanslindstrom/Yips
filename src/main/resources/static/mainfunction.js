@@ -58,11 +58,27 @@ async function showAllGroups(){
     let textToPrint = "";
    
     if(array.length > 0) {
-        textToPrint += `<h1> Your groups: </h1>`
         for(let i = 0; i < array.length; i++) {
-            textToPrint += `<h3>${array[i].name}</h3>`
-            textToPrint += `<h4>${array[i].description}</h4>`
-            textToPrint += `<h4>${array[i].category}</h4>`
+            textToPrint += `<a href="#">
+            <div class="card color-medium cardGroup">
+                <div class="card-body">
+                    <h4 class="card-title">${array[i].name.toUpperCase()}</h4>
+                    <hr/>
+                    <p class="card-text">${array[i].description}</p>
+                    
+                    <div class="members">
+                        <hr/>
+                        <h5 class="members-headline">Members</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">First item</li>
+                            <li class="list-group-item">Second item</li>
+                            <li class="list-group-item">Third item</li>
+                            <li class="list-group-item">Fourth item</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </a>`
 
         }
     
