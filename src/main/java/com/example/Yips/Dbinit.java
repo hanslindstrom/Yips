@@ -77,12 +77,15 @@ public class Dbinit implements CommandLineRunner {
         exercise.setSets(5);
         exercise.setReps(5);
         this.exerciseRepository.addExercise(exercise,4L);
+        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExerciseName(exercise));
 
         exercise = new Exercise();
         exercise.setName("double unders");
         exercise.setSeconds(120);
         exercise.setReps(100);
         this.exerciseRepository.addExercise(exercise,4L);
+        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExerciseName(exercise));
+
 
 
     }

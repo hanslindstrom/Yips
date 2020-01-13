@@ -57,24 +57,24 @@
                         <h4 class="card-title d-flex justify-content-center">UPCOMING WORKOUT</h4>
 <!--                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>-->
                         <hr/>
-                        <h5 th:text="*{id}">LÖPNING 60MIN</h5>
+                        <h5  th:if="${name != null}" th:text="*{name}">LÖPNING 60MIN</h5>
                         <p class="card-text" th:if="${description != null}" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
                         <h6>JOHANS LÖPGRUPP</h6>
                         <hr/>
-                        <div>
-                            <h5 class="mt-3">Exercise 1</h5>
-                            <p>Namn på exerc</p>
-                            <p>Kategori</p>
-                            <div id="exercisecontainer">More info about exercise here</div>
-                            <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise">More info</button>
+                        <div  th:if="${exerciseList_mostRecent != null}" th:each="exercise : ${exerciseList_mostRecent}">
+                            <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
+                            <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise${exercise.id}">More info</button>
+                            <div id="exercisecontainer">
+                                <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
+                                <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
+                                <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
+                                <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
+                                <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
+                                <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
+                                <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
+                            </div>
                         </div>
-                        <div>
-                            <h5 class="mt-3">Exercise 1</h5>
-                            <p>Namn på exerc</p>
-                            <p>Kategori</p>
-                            <div id="exercisecontainer">More info about exercise here</div>
-                            <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise">More info</button>
-                        </div>
+                
                         <hr/>
                         <h5 th:text="*{date}">2020-02-02</h5>
                         

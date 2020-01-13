@@ -55,9 +55,12 @@ public class userstatepageController {
         }*/
         System.out.println("Most recent workout name: " + workouts.get(workouts.size()-1).getName() + " id: " + workouts.get(workouts.size()-1).getId());
         model.addAttribute("workout_mostRecent", workouts.get(workouts.size()-1));
+        model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workouts.get(workouts.size()-1).getId()));
 
         System.out.println("Next workout: " + workouts.get(0).getName() + " id: " + workouts.get(0).getId());
         model.addAttribute("workout_next", workouts.get(0));
+        model.addAttribute("exerciseList_workout_next", connectionRepository.findExercisesInWorkoutByWorkoutId(workouts.get(0).getId()));
+
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();

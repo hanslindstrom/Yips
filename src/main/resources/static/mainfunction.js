@@ -1,7 +1,7 @@
 showAllInvites();
 showAllGroups();
 document.getElementById("sendbutton").addEventListener("click", sendInvite)
-
+document.getElementById("")
 function run() {
     console.log("hej")
 }
