@@ -37,6 +37,7 @@ public class ConnectionRepository {
         Long userId = user.getId();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO userworkoutconnection(USERID, WORKOUTID) VALUES (?,?)")) {
+
             ps.setLong(1, userId);
             ps.setLong(2, workoutId);
             ps.executeUpdate();
@@ -50,6 +51,17 @@ public class ConnectionRepository {
              PreparedStatement ps = conn.prepareStatement("INSERT INTO userexerciseconnection(USERID, EXERCISEID) VALUES (?,?)")) {
             ps.setLong(1, userId);
             ps.setLong(2, exerciseId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void groupWorkoutConnect(Long groupId, Long workoutId) {
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO groupworkoutconnection(GROUPID, WORKOUTID) VALUES (?,?)")) {
+            ps.setLong(1, groupId);
+            ps.setLong(2, workoutId);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
