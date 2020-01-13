@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-public class Workout {
+public class Workout implements Comparable<Workout> {
 
 
 
@@ -99,5 +99,10 @@ public class Workout {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public int compareTo(Workout workout) {
+        return 
     }
 }

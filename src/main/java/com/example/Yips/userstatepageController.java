@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -41,6 +42,16 @@ public class userstatepageController {
         goalArrayList.add(new Goal("Vinterns utmaning", false));
         goalArrayList.add(new Goal("Sommarens utmaning", false));
         model.addAttribute("listOfGoalsForUser", goalArrayList);
+
+        List<Workout> workouts = workoutRepository.workoutDateList();
+        System.out.println("Not sorted arraylist");
+        for(int i = 0; i < workouts.size(); i++)
+            System.out.println(workouts.get(i).getDate());
+        Collections.sort(workouts);
+        System.out.println("Sorted arraylist");
+        for(int i = 0; i < workouts.size(); i++) {
+            System.out.println(workouts.get(i).getDate());
+        }
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();

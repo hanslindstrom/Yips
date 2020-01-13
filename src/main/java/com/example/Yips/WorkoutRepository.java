@@ -42,15 +42,19 @@ public class WorkoutRepository {
 
         return workouts;
     }
-    public List<LocalDate>workoutDateList () {
-        List<LocalDate>workoutDateList = new ArrayList<>();
+    public List<Workout>workoutDateList () {
+        List<Workout>workoutDateList = new ArrayList<>();
+        Workout workout = null;
         try (Connection conn = dataSource.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT WDATE FROM workout")) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Date date = rs.getDate("WDATE");
+                Long id = rs.getLong("id");
+                workout.setId(id);
                 LocalDate lDate=date.toLocalDate();
-                workoutDateList.add(lDate);
+                workout.setDate(lDate);
+                workoutDateList.add(workout);
             }
         } catch (SQLException e) {
             e.printStackTrace();
