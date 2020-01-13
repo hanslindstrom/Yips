@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +28,13 @@ public class WorkoutController {
     UserRepository userRepository;
 
     @Autowired
+    GroupRepository groupRepository;
+
+    @Autowired
     Categories categories;
+
+    @Autowired
+    WorkoutService workoutService;
 
     @GetMapping("/workout")
     public String getWorkout(Model model, HttpSession session, Authentication authentication) {
@@ -36,6 +44,7 @@ public class WorkoutController {
         model.addAttribute("exercise", new Exercise());
         List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);
         model.addAttribute("priorexercises", priorExercises);
+
 
         //Add all exercises connected to workout to list to be able to print them in workout
         //1 get the workoutId from DB.
@@ -47,6 +56,9 @@ public class WorkoutController {
         //3 add list to model:
         model.addAttribute("exercises", exercises);
 
+        // Send user groups to html to be able to share workout
+        List<Group>groups = groupRepository.findAllMyGroups(userId);
+        model.addAttribute("groups", groups);
 
         return "workout";
     }
@@ -58,6 +70,14 @@ public class WorkoutController {
         Long workoutId = workout.getId();
         Long exerciseId = exerciseRepository.findExerciseIdByExerciseName(exercise);
         connectionRepository.workoutExerciseConnect(workoutId,exerciseId);
+        return "redirect:/workout";
+    }
+
+    @PostMapping("/postgroupsfromworkout")
+    public String postGroupsFromWorkout(@RequestParam String sendGroups,HttpSession session) {
+        Workout workout = (Workout)session.getAttribute("workout");
+        Long workoutId = workout.getId();
+        workoutService.sendWorkoutToGroups(sendGroups, workoutId);
         return "redirect:/workout";
     }
 

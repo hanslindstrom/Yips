@@ -42,6 +42,7 @@
     </div>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newexercise">Add exercise</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendtogroup">Send workout to group</button>
 
     <div class="modal fade" id="newexercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -139,6 +140,45 @@
 
                         <button class="btn btn-block mt-2 color-dark mb-2">Add exercise</button>
                     </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Exercisemodal -->
+    <!-- Groupmodal -->
+    <div class="modal fade" id="sendtogroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Send to group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!--we need to send users list of groups with ids to form-->
+                <div class="modal-body">
+                    <form
+                            method="POST"
+                            action="/postgroupsfromworkout"
+
+                    >
+
+                        <div class="form-group">
+
+                            <label for="usergroups">Choose groups to send workout to</label>
+                            <select multiple id="usergroups"name="sendGroups" class="form-control">
+                                <option th:each="usergroup:${groups}" th:value="${usergroup.name}" th:text="${usergroup.name}"></option>
+                            </select>
+
+                            <button class="btn btn-block mt-2 color-dark mb-2">Send to group</button>
+                        </div>
+                    </form>
+
 
                 </div>
                 <div class="modal-footer">
