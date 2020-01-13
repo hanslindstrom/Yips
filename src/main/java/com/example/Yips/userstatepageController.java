@@ -53,7 +53,11 @@ public class userstatepageController {
         for(int i = 0; i < workouts.size(); i++) {
             System.out.println(workouts.get(i).getDate());
         }*/
-        model.addAttribute("workouts", workouts);
+        System.out.println("Most recent workout name: " + workouts.get(workouts.size()-1).getName() + " id: " + workouts.get(workouts.size()-1).getId());
+        model.addAttribute("workout_mostRecent", workouts.get(workouts.size()-1));
+
+        System.out.println("Next workout: " + workouts.get(0).getName() + " id: " + workouts.get(0).getId());
+        model.addAttribute("workout_next", workouts.get(0));
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();

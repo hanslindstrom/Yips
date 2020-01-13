@@ -43,7 +43,7 @@ public class WorkoutRepository {
         return workouts;
     }
     public List<Workout>workoutDateList () {
-        List<Workout>workoutDateList = new ArrayList<>();
+        List<Workout> workoutDateList = new ArrayList<>();
         Workout workout = new Workout();
         try (Connection conn = dataSource.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout")) {
@@ -51,14 +51,19 @@ public class WorkoutRepository {
             while(rs.next()) {
                 long id = rs.getInt("id");
                 Date date = rs.getDate("WDATE");
+                String name = rs.getString("NAME");
+                String description = rs.getString("DESCRIPTION");
+
                 if(date == null)
                     continue; //Sometimes empty workouts are created, and this becomes a null pointer exception
                 workout.setId(id);
+                workout.setName(name);
                 LocalDate lDate=date.toLocalDate();
-
                 workout.setDate(lDate);
                 workoutDateList.add(workout);
-            }
+                for(Workout workout1: workoutDateList)
+                    System.out.println(workout1.getId());
+                }
         } catch (SQLException e) {
             e.printStackTrace();
         }

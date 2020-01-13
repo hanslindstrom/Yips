@@ -52,31 +52,24 @@ public class Dbinit implements CommandLineRunner {
         groupOne = groupRepository.findByGroupname("our group");
         this.connectionRepository.connectNewMemberToGroup(groupOne,userRepository.findByUsername("dan").getId());
 
-        //Add workout
+        //Add some initial workouts...
         Workout workout = new Workout("Långlöp", "Löpning");
-        Workout workout2 = new Workout("Långsim", "Simning");
-        Workout workout3 = new Workout("Kortlöp", "Löpning");
-
-
-        //List <Workout> workouts = Arrays.asList(workout);
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
         Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
         workoutDB.setDate(LocalDate.of(2020,6,15));
         this.workoutRepository.updateWorkout(workoutDB);
+
+        Workout workout2 = new Workout("Långsim", "Simning");
         this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("dan"));
         Workout workoutDB2 = workoutRepository.findByWorkoutname(workout2.getName());
-        workoutDB2.setDate(LocalDate.of(2020,3,10));
+        workoutDB2.setDate(LocalDate.of(2020,7,10));
         this.workoutRepository.updateWorkout(workoutDB2);
+
+        Workout workout3 = new Workout("Kortlöp", "Löpning");
         this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("dan"));
         Workout workoutDB3 = workoutRepository.findByWorkoutname(workout3.getName());
         workoutDB3.setDate(LocalDate.of(2020,1,10));
         this.workoutRepository.updateWorkout(workoutDB3);
-
-        //TESTPRINT
-        List<Workout> workoutDates = workoutRepository.workoutDateList();
-        for (int i = 0; i < workoutDates.size(); i++) {
-            System.out.println(workoutDates.get(i).getDate());
-        }
 
         //Add exercise
         Exercise exercise = new Exercise();

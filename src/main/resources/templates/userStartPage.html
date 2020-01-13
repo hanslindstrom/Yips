@@ -51,15 +51,14 @@
     <!--Workout card - next workout-->
     <div class="container">
         <div class="row mt-5 pt-3">
-            
             <div class="col-sm">
                 <div class="card color-contrast" >
-                    <div class="card-body" th:object="${workout}">
+                    <div class="card-body" th:object="${workout_mostRecent}">
                         <h4 class="card-title d-flex justify-content-center">UPCOMING WORKOUT</h4>
-                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>
+<!--                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>-->
                         <hr/>
-                        <h5>LÖPNING 60MIN</h5>
-                        <p class="card-text">This is a workout for people working in the Sumpa area who wants to get fit.</p>
+                        <h5 th:text="*{id}">LÖPNING 60MIN</h5>
+                        <p class="card-text" th:if="${description != null}" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
                         <h6>JOHANS LÖPGRUPP</h6>
                         <hr/>
                         <div>
@@ -77,7 +76,7 @@
                             <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise">More info</button>
                         </div>
                         <hr/>
-                        <h5>2020-02-02</h5>
+                        <h5 th:text="*{date}">2020-02-02</h5>
                         
                     </div>
                 </div>
@@ -86,12 +85,12 @@
             <!-- Workout card - previous workout -->
             <div class="col-sm">
                 <div class="card color-contrast">
-                    <div class="card-body">
+                    <div class="card-body" th:object="${workout_next}">
                         <h4 class="card-title d-flex justify-content-center">UPCOMING WORKOUT</h4>
                         <h6 class="card-title d-flex justify-content-center">IN 3 DAYS</h6>
                         <hr/>
                         <h5>LÖPNING 60MIN</h5>
-                        <p class="card-text">This is a workout for people working in the Sumpa area who wants to get fit.</p>
+                        <p class="card-text" th:if="${description != null}" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
                         <h6>JOHANS LÖPGRUPP</h6>
                         <hr/>
                         <div>
@@ -102,7 +101,7 @@
                             <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise">More info</button>
                         </div>
                         <hr/>
-                        <h5>2020-02-02</h5>
+                        <h5 th:if="${date != null}" th:text="*{date}">2020-02-02</h5>
                         
                     </div>
                 </div>
