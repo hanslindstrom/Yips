@@ -52,10 +52,21 @@ async function showAllInvites() {
     container.innerHTML = 
     `<h2> You have no invite girlfriend </h2>`
 }
-
-async function printText(array, membersInGroup) {
+async function showAllGroups(){
+    let array = await getAllGroups("http://localhost:8081/rest/getAllGroups")
+    let container = document.getElementById("groupContainer")
     let textToPrint = "";
-    textToPrint += `<a href="#">
+   
+    if(array.length > 0) {
+        for(let i = 0; i < array.length; i++) {
+            let membersInGroup = await getAllMembersInGroup("http://localhost:8081/rest/getAllGroupMembers/" + array[i].id)
+            console.log("id " + membersInGroup[0].username)
+            console.log("id " + membersInGroup[1].username)
+
+          
+
+
+            textToPrint += `<a href="#">
             <div class="card color-medium cardGroup">
                 <div class="card-body">
                     <h4 class="card-title">${array[i].name.toUpperCase()}</h4>
@@ -66,7 +77,7 @@ async function printText(array, membersInGroup) {
                         <h5 class="members-headline">Members</h5>
                         <ul class="list-group list-group-flush">`
                     for(let a = 0; a < membersInGroup.length; a++) {
-                        textToPrint += `<li class="list-group-item">${membersInGroup[a].username}</li>`
+                         textToPrint += `<li class="list-group-item">${membersInGroup[a].username}</li>`
                     }
                     textToPrint += `
                     </ul>
@@ -74,25 +85,15 @@ async function printText(array, membersInGroup) {
                     </div>
                     </div>
                     </a>`                   
-            container.innerHTML = textToPrint;
 
         }
     
+            container.innerHTML = textToPrint;
              
-
-async function showAllGroups(){
-    let array = await getAllGroups("http://localhost:8081/rest/getAllGroups")
-    let container = document.getElementById("groupContainer")
-   
-    if(array.length > 0) {
-        for(let i = 0; i < array.length; i++) {
-            let membersInGroup = await getAllMembersInGroup("http://localhost:8081/rest/getAllGroupMembers/" + array[i].id)
-            nestedFunction = () =>  await printText(array, membersInGroup)
         }
-    }
-    else
-    container.innerHTML = `<h2> You have no groups girlfriend </h2>`
-            
+        else
+        container.innerHTML = 
+        `<h2> You have no groups girlfriend </h2>`
 }
 
 
