@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +89,15 @@ public class RController {
     public List<Group> getAllGroupsForUser (Authentication authentication){
         return groupRepository.findAllMyGroups(userRepository.findByUsername(authentication.getName()).getId());
     }
+
+
+    @GetMapping ("/rest/getAllGroupMembers/{groupid}")
+    public List<User> getAllGroupsMembers (@PathVariable Long groupid){
+        for(User user : groupRepository.getAllMembersWithGroupId(groupid))
+            System.out.println("user in group " + user.getUsername());
+        return groupRepository.getAllMembersWithGroupId(groupid);
+    }
+
 
 
 }
