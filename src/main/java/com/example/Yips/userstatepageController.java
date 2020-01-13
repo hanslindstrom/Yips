@@ -93,7 +93,14 @@ public class userstatepageController {
     }
 
     @PostMapping("/postworkout")
-    public String postWorkout2(@ModelAttribute Workout workout, HttpSession session) {
+    public String postWorkout2(@ModelAttribute Workout workout, HttpSession session, Authentication authentication) {
+        /*
+        REMOVE WHEN WORKING
+        Long workoutId = workoutRepository.initiateWorkout();
+        Workout addWorkout = new Workout();
+        addWorkout.setId(workoutId);
+        connectionRepository.userWorkoutConnect(authentication.getName(), workoutId);
+        */
         workoutRepository.updateWorkout(workout);
         session.setAttribute("workout", workout);
         return "redirect:/workout";

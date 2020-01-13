@@ -140,6 +140,7 @@ public class GroupRepository {
         return groups;
     }
 
+
     public Group findGroupById(Long groupId) {
         Group group = new Group();
         try (Connection conn = dataSource.getConnection();
