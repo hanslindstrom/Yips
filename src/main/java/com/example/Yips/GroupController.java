@@ -4,8 +4,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.security.PublicKey;
@@ -29,6 +27,7 @@ public class GroupController {
 
 
 
+
     @GetMapping("/newgroup")
     public String openNewGroup(Model model) {
         model.addAttribute("categories", categories.getCategories());
@@ -49,8 +48,7 @@ public class GroupController {
         }
     }*/
 
-
-
+    // PostMapping for /group is in userstartpageController
     @GetMapping("/group")
     public String seeMyGroup(HttpSession session) {
         Group group = (Group)session.getAttribute("mygroup");
