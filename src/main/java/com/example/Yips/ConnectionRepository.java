@@ -20,12 +20,24 @@ public class ConnectionRepository {
     @Autowired
     UserRepository userRepository;
 
-    public void saveUserGroupConnection(Group group, Long userId) {
+    public void saveUserGroupOwnerConnection(Group group, Long groupId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO usergroupconnection(USERID, GROUPID, USERROLE) VALUES(?,?,?)")){
             ps.setLong(1, group.getOwnerId());
-            ps.setLong(2, userId);
+            ps.setLong(2, groupId);
             ps.setString(3, "GroupAdmin");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void connectNewMemberToGroup(Group group, Long memberId) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("INSERT INTO usergroupconnection(USERID, GROUPID, USERROLE) VALUES(?,?,?)")){
+            ps.setLong(1, memberId);
+            ps.setLong(2, group.getId());
+            ps.setString(3, "GroupMember");
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

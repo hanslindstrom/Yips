@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class WorkoutService {
     @Autowired
     ConnectionRepository connectionRepository;
 
-    public void sendWorkoutToGroups(String sendGroups, Long workoutId) {
+    public void sendWorkoutToGroups(String sendGroups, Long workoutId, Long userId) {
         String[]groupNameArray = sendGroups.split(",");
         for(String groupName:groupNameArray) {
             Group group = groupRepository.findByGroupname(groupName);
@@ -29,9 +30,15 @@ public class WorkoutService {
             //Connect users to workout
             for(User user:usersInGroup){
 
+                if(user.getId()!=userId) {
+                    System.out.println("user " + user.getId()+" is now connected to workout " +workoutId);
                     connectionRepository.userWorkoutConnect(user.getUsername(), workoutId);
+                } else {
+                    System.out.println("user " + user.getId()+" allready connected to workout "+workoutId);
+                }
 
             }
         }
     }
+
 }

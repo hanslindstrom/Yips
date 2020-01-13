@@ -82,8 +82,8 @@ public class GroupRepository {
             ps.setString(4, group.getDescription());
             ps.executeUpdate();
 
-            Long id = findByGroupname(group.getName()).getId();
-            connectionRepository.saveUserGroupConnection(group, id);
+            Long groupId = findByGroupname(group.getName()).getId();
+            connectionRepository.saveUserGroupOwnerConnection(group, groupId);
 
         } catch (SQLException e) {
             e.printStackTrace();

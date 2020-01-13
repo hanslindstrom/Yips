@@ -1,9 +1,11 @@
 package com.example.Yips;
 
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,13 +20,15 @@ public class Dbinit implements CommandLineRunner {
     private GroupRepository groupRepository;
     private WorkoutRepository workoutRepository;
     private ExerciseRepository exerciseRepository;
+    private ConnectionRepository connectionRepository;
 
-    public Dbinit (UserRepository userRepository, PasswordEncoder encoder, GroupRepository groupRepository, WorkoutRepository workoutRepository, ExerciseRepository exerciseRepository) {
+    public Dbinit (UserRepository userRepository, PasswordEncoder encoder, GroupRepository groupRepository, WorkoutRepository workoutRepository, ExerciseRepository exerciseRepository, ConnectionRepository connectionRepository) {
         this.userRepository=userRepository;
         this.encoder = encoder;
         this.groupRepository = groupRepository;
         this.workoutRepository = workoutRepository;
         this.exerciseRepository = exerciseRepository;
+        this.connectionRepository = connectionRepository;
     }
 
     @Override
@@ -44,11 +48,24 @@ public class Dbinit implements CommandLineRunner {
         Group groupOne = new Group("our group", 3L, "löpning", "en testgrupp" );
         List<Group> groups = Arrays.asList(groupOne);
         this.groupRepository.saveAll(groups);
+        groupOne = groupRepository.findByGroupname("our group");
+        this.connectionRepository.connectNewMemberToGroup(groupOne,userRepository.findByUsername("dan").getId());
 
         //Add workout
         Workout workout = new Workout("Långlöp", "Löpning");
+
         //List <Workout> workouts = Arrays.asList(workout);
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
+        Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
+        workoutDB.setDate(LocalDate.of(2020,6,15));
+        this.workoutRepository.updateWorkout(workoutDB);
+
+        //TESTPRINT
+        List<LocalDate>workoutDates=workoutRepository.workoutDateList();
+
+        for(LocalDate date:workoutDates) {
+            System.out.println("DATE FROM SQL TO JOEL IS "+date);
+        }
 
         //Add exercise
         Exercise exercise = new Exercise();
