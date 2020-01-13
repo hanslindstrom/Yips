@@ -91,5 +91,10 @@ public class RController {
         return groupRepository.findAllMyGroups(userRepository.findByUsername(authentication.getName()).getId());
     }
 
+    @GetMapping ("/rest/getAllGroupMembers/{groupid}")
+    public List<User> getAllGroupsMembers (@PathVariable Long groupid){
+        return groupRepository.getAllMembersWithGroupid(groupid);
+    }
+
 
 }

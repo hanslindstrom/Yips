@@ -118,6 +118,24 @@ public class GroupRepository {
         return members;
 
     }
+    public List<User> getAllMembersWithGroupid(Long groupid){
+        List<User> members = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT userid FROM usergroupconnection WHERE groupid = ?")){
+            ps.setString(1, groupid.toString());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                long id = rs.getInt("userid");
+                members.add(userRepository.findByUserId(id));
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("All members: " + members);
+        return members;
+    }
 
     public List<Group> findAllMyGroups(Long userId) {
         List<Group> groups = new ArrayList<>();

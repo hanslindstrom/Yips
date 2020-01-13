@@ -1,5 +1,6 @@
 package com.example.Yips;
 
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 public class userstatepageController {
@@ -41,6 +42,19 @@ public class userstatepageController {
         goalArrayList.add(new Goal("Vinterns utmaning", false));
         goalArrayList.add(new Goal("Sommarens utmaning", false));
         model.addAttribute("listOfGoalsForUser", goalArrayList);
+
+        //Hämtar info om workouts
+        /*List<Workout> workouts = workoutRepository.findAll();
+        System.out.println("Not sorted arraylist");
+        for(int i = 0; i < workouts.size(); i++)
+            System.out.println(workouts.get(i).getDate());
+        Collections.sort(workouts);
+        System.out.println("Sorted arraylist");
+        for(int i = 0; i < workouts.size(); i++) {
+            System.out.println(workouts.get(i).getDate());
+            System.out.println("Days to workout for this workout: " + workouts.get(i).getDaysToWorkout());
+        }*/
+
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();

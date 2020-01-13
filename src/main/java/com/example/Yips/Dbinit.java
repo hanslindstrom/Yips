@@ -1,9 +1,12 @@
 package com.example.Yips;
 
+import org.hibernate.jdbc.Work;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,8 +50,23 @@ public class Dbinit implements CommandLineRunner {
 
         //Add workout
         Workout workout = new Workout("Långlöp", "Löpning");
+        Workout workout1 = new Workout("Kortlöp", "Löpning");
+        Workout workout2 = new Workout("Simmning superlångt", "Simning");
         //List <Workout> workouts = Arrays.asList(workout);
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
+        Workout workoutDb=workoutRepository.findByWorkoutname(workout.getName());
+        workoutDb.setDate(LocalDate.of(2020,6,30));
+        workoutRepository.updateWorkout(workoutDb);
+
+        this.workoutRepository.saveWorkout(workout1, userRepository.findByUsername("dan"));
+        Workout workoutDb2=workoutRepository.findByWorkoutname(workout1.getName());
+        workoutDb2.setDate(LocalDate.of(2020,1,30));
+        workoutRepository.updateWorkout(workoutDb2);
+
+        this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("dan"));
+        Workout workoutDb3=workoutRepository.findByWorkoutname(workout2.getName());
+        workoutDb3.setDate(LocalDate.of(2020,1,5));
+        workoutRepository.updateWorkout(workoutDb3);
 
         //Add exercise
         Exercise exercise = new Exercise();

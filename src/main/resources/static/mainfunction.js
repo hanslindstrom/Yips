@@ -60,9 +60,29 @@ async function showAllGroups(){
     if(array.length > 0) {
         textToPrint += `<h1> Your groups: </h1>`
         for(let i = 0; i < array.length; i++) {
-            textToPrint += `<h3>${array[i].name}</h3>`
-            textToPrint += `<h4>${array[i].description}</h4>`
-            textToPrint += `<h4>${array[i].category}</h4>`
+            let membersInGroup = await getAllMembersInGroup("http://localhost:8081/rest/getAllGroupMembers/" + array[i].id)
+            console.log(membersInGroup[0].name)
+            textToPrint += `
+            <a href="#">
+                <div class="card color-medium cardGroup">
+                    <div class="card-body">
+                        <h4 class="card-title">${array[i].name}</h4>
+                        <hr/>
+                        <p class="card-text">${array[i].description}</p>
+
+                        <div class="members">
+                            <hr/>
+                            <h5 class="members-headline">Members</h5>
+                            <ul class="list-group list-group-flush">`
+                            for(let ii = 0; i < membersInGroup.length; ii++) {
+                                textToPrint += `<li class="list-group-item">${membersInGroup[ii].username}</li>`
+                            }
+                            textToPrint += `
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </a>`
 
         }
     
@@ -163,5 +183,18 @@ async function getAllGroups(url){
     }
     else console.log("unexpected error", response)
 
+}
+
+async function getAllMembersInGroup(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        let result = await response.json()
+        console.log(result)
+        //var objekt = JSON.parse(result)
+        return result
+    }
+    else console.log("unexpected error", response)
 }
 
