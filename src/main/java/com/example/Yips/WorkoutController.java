@@ -74,10 +74,11 @@ public class WorkoutController {
     }
 
     @PostMapping("/postgroupsfromworkout")
-    public String postGroupsFromWorkout(@RequestParam String sendGroups,HttpSession session) {
+    public String postGroupsFromWorkout(@RequestParam String sendGroups,HttpSession session, Authentication authentication) {
+        Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
         Long workoutId = workout.getId();
-        workoutService.sendWorkoutToGroups(sendGroups, workoutId);
+        workoutService.sendWorkoutToGroups(sendGroups, workoutId, userId);
         return "redirect:/workout";
     }
 

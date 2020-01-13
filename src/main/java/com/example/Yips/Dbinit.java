@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,8 +48,12 @@ public class Dbinit implements CommandLineRunner {
 
         //Add workout
         Workout workout = new Workout("Långlöp", "Löpning");
+
         //List <Workout> workouts = Arrays.asList(workout);
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
+        Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
+        workoutDB.setDate(LocalDate.of(2020,6,15));
+        this.workoutRepository.updateWorkout(workoutDB);
 
         //Add exercise
         Exercise exercise = new Exercise();

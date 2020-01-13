@@ -103,6 +103,7 @@ public class WorkoutRepository {
              PreparedStatement ps = conn.prepareStatement("INSERT INTO workout(NAME, CATEGORY) VALUES(?,?)")){
             ps.setString(1,workout.getName());
             ps.setString(2, workout.getCategory());
+
             ps.executeUpdate();
             //connectionRepository.saveUserWorkoutConnection(workout, user.getId());
         } catch (SQLException e) {
