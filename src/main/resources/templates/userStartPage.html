@@ -108,11 +108,12 @@
                 </div>
         </div>
     </div>
-    <!-- End of workout cards-->
+    <!-- End of workout cards -->
 
-    <!-- New Workout Modal-->
+    <!-- Button for NEW WORKOUT -->
     <button type="button" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkout">ADD WORKOUT</button>
 
+    <!-- New Workout Modal-->
     <div class="modal fade" id="newworkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -123,8 +124,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
-                <div class="modal-body">
+                <div class="modal-body mt-0">
                     <form th:object="${workout}" method="POST" action="/postworkout">
                         <!--class="form-inline ml-auto"-->
                         <div class="form-group">
@@ -133,13 +133,13 @@
                         </div>
                         <div class="form-group">
                             <label for="workoutname">Workout name</label>
-                            <input type="text" class="form-control mb-2" placeholder="Workout name" id="workoutname"
+                            <input type="text" class="form-control mb-2" placeholder="My workout" id="workoutname"
                                 name="workoutname" th:field="*{name}" />
                             <label for="workoutdate">Workout Date</label>
                             <input type="date" class="form-control mb-2" placeholder="Workout Date" id="workoutdate"
                                 name="workoutdate" th:field="*{date}" />
                             <label for="workouttype">Workout type</label>
-                            <select id="workouttype" th:field="*{type}" name="workouttype" class="form-control">
+                            <select id="workouttype" th:field="*{type}" name="workouttype" class="form-control mb-2">
                                 <option value="none">None</option>
                                 <option value="amrap">Amrap</option>
                                 <option value="fortime">For time</option>
@@ -147,13 +147,13 @@
 
                             </select>
                             <label for="timetocomplete">Minutes to complete workout</label>
-                            <input type="number" class="form-control mb-2" placeholder="Minutes to complete workout"
+                            <input type="number" class="form-control mb-2" placeholder="45"
                                 id="timetocomplete" name="timetocomplete" th:field="*{time}" />
                             <label for="place">Place</label>
-                            <input type="text" class="form-control mb-2" placeholder="Place" id="place" name="place"
+                            <input type="text" class="form-control mb-2" placeholder="Kista Nod" id="place" name="place"
                                 th:field="*{place}" />
                             <label for="description">Description</label>
-                            <input type="text" class="form-control mb-2" placeholder="Description" id="description"
+                            <input type="text" class="form-control mb-2" placeholder="Long distance running..." id="description"
                                 name="description" th:field="*{description}" />
                             <label for="category">Category</label>
 
@@ -163,12 +163,12 @@
 
                         </div>
 
-                        <button class="btn btn-block mt-2 color-dark mb-2">Create workout</button>
+                        <button class="btn btn-block mt-2 color-contrast text-color-dark mb-2 mt-4">Create workout</button>
                     </form>
+
+                    
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -331,7 +331,7 @@
 
     <!-- END OF GROUPS-->
 
-     <!--   Skapa grupp   -->
+     <!--   Skapa grupp modal  -->
      <div class="container">
         <button type="button" class="btn btn-block mt-3 mb-3 pt-3 pb-3 button-add-group" data-toggle="modal" data-target="#newgroup">CREATE GROUP</button>
 
@@ -339,10 +339,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="groupModalLabel">New Group</h5>
+                        <h5 class="modal-title text-color-medium" id="groupModalLabel">New Group</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </button> 
                     </div>
 
                     <div class="modal-body">
@@ -354,19 +354,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="groupname">Group name</label>
-                                <input type="text" class="form-control mb-2" placeholder="Group name" id="groupname"
+                                <input type="text" class="form-control mb-2" placeholder="Yips group" id="groupname"
                                     name="groupname" th:field="*{name}" />
-                                <label for="category">Category</label>
 
-                                <select multiple th:field="*{category}">
+                                <label for="category">Category</label>
+                                <select th:field="*{category}" class="form-control mb-2">
                                     <option th:each="category : ${categories}" th:value="${category}"
                                         th:text="${category}" id="groupCategory"></option>
                                 </select>
+
                                 <label for="description">Description</label>
-                                <input type="text" class="form-control mb-2" placeholder="Description"
+                                <input type="text" class="form-control mb-2" placeholder="My group description..."
                                     id="groupDescription" name="description" th:field="*{description}" />
                             </div>
-                            <button class="btn btn-block mt-2 color-dark mb-2">Create group 1</button>
+                            <button class="btn btn-block mt-2 color-medium text-color-dark mb-2 mt-4">Create group</button>
 
                         </form>
                     </div>
@@ -379,74 +380,7 @@
 <!-- End of group button-->
 
 <!-- INVITES -->
-<div class="container">
-    <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast"> INVITES </h1>
-    <div class="invite-container"> 
-
-        <div th:if="${invites > 0 }">
-            <h4 class="d-flex justify-content-center text-color-contrast">You have 3 invites</h4>
-            <div class="card-columns">
-                <div th:each="${invite : invites}">
-                
-                        <!-- thymeleaf if: One card for one invite: clickable -->
-                        <a href="#">
-                            <div class="card color-contrast cardInvite">
-                                <div class="card-body">
-                                    <h4 class="card-title">Invited to join: GRUPP 3</h4>
-                                    <hr/>
-                                    <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                                    
-                                    <hr/>
-                                    <h5>Invited by: SAMI</h5>
-                                    <button class="btn btn-sm color-dark mb-3 mt-3" >ACCEPT</button>
-                                    <button class="btn btn-sm color-dark mb-3 mt-3">DECLINE</button>
-                                </div> 
-                            </div>
-                        </a>
-                        <!-- END OF group card -->
-            
-                    
-                </div>
-                <!-- END OF group columns -->
-                    
-            </div>
-        </div >
-  
-
-        <div th:if="${invites = 0 }">
-            <h4 class="d-flex justify-content-center text-color-contrast">You have no invites</h4>
-        </div>
-    </div>
-</div>
-
-
-
-    
-
-        <!-- Lista över mål för användare, får det ej att funka horisontellt. 
-            <ul class="list-group list-group-horizontal-sm" th:if="${listOfGoals != 0}">
-                <li class="list-group-item" th:each="goal : ${listOfGoalsForUser}">
-                    <h2 th:text="${goal.name}"></h2>
-                    <p th:text="${goal.completed}"></p>
-                </li>
-            </ul>
-        -->
-
-        <!--   Visa senaste workoutsen (plural, men hur många?) -->
-        <ul class="list-group list-group-horizontal-sm" th:if="${listofmostrecentWorkouts != 0}">
-            <li class="list-group-item" th:each="workout : ${listofmostrecentWorkouts}">
-                <h2 th:text="${workout.name}">Behövs senare</h2>
-            </li>
-        </ul>
-
-        <!--   Visa mina grupper   -->
-        <div id="groupContainer"></div>
-
-        <!--   Visa mina invites   -->
-        <h2>My invites</h2>
-        <div id="inviteContainer"></div>   
-
-
+        
 
 
     <div th:replace="fragments :: footer">

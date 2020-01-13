@@ -41,6 +41,13 @@ background-color: none;
 font-weight: bold;
 }
 
+
+.btn:hover {
+  color: #414141;
+  background-color: none;
+  font-weight: bold;
+  }
+
 .button-add-workout:hover {
   background-color: #ff8438;
 color: #414141;
@@ -115,7 +122,6 @@ border: none;
   width: 360px;
 
 }
-
 .modal-header {
   color: #ff914c;
   border:none;  
@@ -124,10 +130,11 @@ border: none;
   background-color: rgba(65,65,65,1);
   color: #e2f7f3;
   border:none;
+  line-height: normal;
 }
 .text-color-contrast {
-color: #ff914c;
-border: none;
+  color: #ff914c;
+  border: none;
  }
 
 .text-color-medium {
@@ -163,4 +170,8 @@ color: #414141;
 border: none;
 font-size: small;
 font-family: 'Roboto', sans-serif;
+}
+
+::placeholder {
+  font-style: italic;
 }
