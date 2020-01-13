@@ -53,10 +53,10 @@
         <div class="row mt-5 pt-3">
             
             <div class="col-sm">
-                <div class="card color-contrast">
-                    <div class="card-body">
+                <div class="card color-contrast" >
+                    <div class="card-body" th:object="${workout}">
                         <h4 class="card-title d-flex justify-content-center">UPCOMING WORKOUT</h4>
-                        <h6 class="card-title d-flex justify-content-center">IN 3 DAYS</h6>
+                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>
                         <hr/>
                         <h5>LÖPNING 60MIN</h5>
                         <p class="card-text">This is a workout for people working in the Sumpa area who wants to get fit.</p>
