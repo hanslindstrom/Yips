@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,22 @@ public class WorkoutRepository {
 
         return workouts;
     }
+    public List<LocalDate>workoutDateList () {
+        List<LocalDate>workoutDateList = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("SELECT WDATE FROM workout")) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Date date = rs.getDate("WDATE");
+                LocalDate lDate=date.toLocalDate();
+                workoutDateList.add(lDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return workoutDateList;
+    }
 
     public Workout findByWorkoutname(String workoutName) {
         Workout workout = new Workout();
@@ -56,6 +73,7 @@ public class WorkoutRepository {
                 workout.setId(id);
                 workout.setName(name);
                 workout.setCategory(category);
+
 
             } else {
                 workout=null;

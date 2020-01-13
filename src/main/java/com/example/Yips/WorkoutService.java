@@ -29,11 +29,12 @@ public class WorkoutService {
 
             //Connect users to workout
             for(User user:usersInGroup){
+
                 if(user.getId()!=userId) {
-                    System.out.println("user " + userId+" is now connected to workout " +workoutId);
+                    System.out.println("user " + user.getId()+" is now connected to workout " +workoutId);
                     connectionRepository.userWorkoutConnect(user.getUsername(), workoutId);
                 } else {
-                    System.out.println("user " + userId+" allready connected to workout "+workoutId);
+                    System.out.println("user " + user.getId()+" allready connected to workout "+workoutId);
                 }
 
             }
