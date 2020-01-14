@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 
@@ -49,6 +50,17 @@ public class GroupController {
     @GetMapping("/group")
     public String seeMyGroup(HttpSession session) {
         Group group = (Group)session.getAttribute("mygroup");
+        session.setAttribute("listOfMembers", groupRepository.getAllMembersWithGroup(group));
+        System.out.println("GetMapping for /group, name: " + group.getName());
+        session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
+        //session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
+        //System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
+        return "group";
+    }
+
+    @GetMapping("/group/{groupId}")
+    public String seeMyGroupViaPathvariable(HttpSession session, @PathVariable long groupId) {
+        Group group = groupRepository.findGroupById(groupId);
         session.setAttribute("listOfMembers", groupRepository.getAllMembersWithGroup(group));
         System.out.println("GetMapping for /group, name: " + group.getName());
         session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));

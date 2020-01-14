@@ -66,7 +66,7 @@ async function showAllGroups(){
           
 
 
-            textToPrint += `<a href="#">
+            textToPrint += `<a class="color-medium" href="/group/${array[i].id}">
             <div class="card color-medium cardGroup">
                 <div class="card-body">
                     <h4 class="card-title">${array[i].name.toUpperCase()}</h4>

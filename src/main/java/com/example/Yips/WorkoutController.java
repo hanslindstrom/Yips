@@ -33,7 +33,7 @@ public class WorkoutController {
     @Autowired
     WorkoutService workoutService;
 
-   /* @GetMapping("/workout")
+    @GetMapping("/workout")
     public String getWorkout(Model model, HttpSession session, Authentication authentication) {
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
@@ -58,7 +58,7 @@ public class WorkoutController {
         model.addAttribute("groups", groups);
 
         return "workout";
-    }*/
+    }
 
     @GetMapping("/workout/{workoutId}")
     public String getWorkout(@PathVariable Long workoutId, Model model, HttpSession session, Authentication authentication) {
