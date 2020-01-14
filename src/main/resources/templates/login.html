@@ -25,15 +25,17 @@
     <div class="container">
       <div class="d-flex justify-content-center">
       <!-- JUMBOTRON -->
-      <div class="jumbotron text-center opacity ">
+      <div class="jumbotron text-center opacity mt-5">
         <h1 class="display-6">
-          Welcome To YIPS!
+          WELCOME TO YIPS
         </h1>
         <p class="lead">
-          The easiest way to track any training with friends!
+          Track your individual training, together.
+          <hr/>
         </p>
 
-        <hr />
+        
+
         <p th:if="${session.resultMessage} != ''">
           <h6 class="text-color-contrast" th:text="${session.resultMessage}">Thymeleaf will print a result message here after New User Modal/form</h6>
         </p>
@@ -63,13 +65,13 @@
                 />
               </div>
             </div>
-            <button class="btn btn-block mt-2 color-dark">Log in</button>
+            <button class="btn btn-block mt-3 color-base">Log in</button>
           </form>
         </div>
 
         <div class="container">
           <!-- BUTTON FOR MODAL -->
-          <button type="button" class="btn btn-lg mt-5 color-dark" data-toggle="modal" data-target="#newuser">New User</button>
+          <button type="button" class="btn btn-lg mt-5 color-contrast" data-toggle="modal" data-target="#newuser">NEW USER</button>
 
         </div>
       </div>
@@ -83,7 +85,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="groupModalLabel">New User</h5>
+            <h5 class="modal-title text-color-medium" id="groupModalLabel">New User</h5>
             <button type="button" class="close text-remove-shadow" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -145,8 +147,7 @@
               </div>
 
               
-              <button class="btn btn-block mt-2 color-dark mb-2 background-darker mt-5" style="border: 2px solid grey; border-radius: 5px;
-              ">Register</button>
+              <button class="btn btn-block button-add-user mt-2 mt-5">Register</button>
               
 
             </form>
