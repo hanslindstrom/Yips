@@ -65,8 +65,8 @@
                         <hr/>
                         <div  th:if="${exerciseList_mostRecent != null}" th:each="exercise : ${exerciseList_mostRecent}">
                             <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
-                            <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise${exercise.id}">More info</button>
-                            <div id="exercisecontainer">
+                            <button class="btn btn-sm color-dark mb-3 mt-3 more-info-exercise">More info</button>
+                            <div class="exercisecontainer">
                                 <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
                                 <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
                                 <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
@@ -99,8 +99,8 @@
                         <hr/>
                         <div  th:if="${exerciseList_workout_next != null}" th:each="exercise : ${exerciseList_workout_next}">
                             <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
-                            <button class="btn btn-sm color-dark mb-3 mt-3" id="infoexercise${exercise.id}">More info</button>
-                            <div id="exercisecontainer">
+                            <button class="btn btn-sm color-dark mb-3 mt-3 more-info-exercise">More info</button>
+                            <div class="exercisecontainer">
                                 <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
                                 <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
                                 <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>

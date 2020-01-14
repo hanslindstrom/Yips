@@ -175,3 +175,11 @@ font-family: 'Roboto', sans-serif;
 ::placeholder {
   font-style: italic;
 }
+
+.exercisecontainer {
+  display: none;
+}
+
+.more-info-exercise:hover + .exercisecontainer {
+  display: block;
+}
