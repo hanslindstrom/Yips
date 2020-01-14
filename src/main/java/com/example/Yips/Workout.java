@@ -17,6 +17,7 @@ public class Workout {
     private String place;
     private String description;
     private String category;
+    private String newDoingDone;
 
 
     public Workout(String name, String category) {
@@ -99,5 +100,13 @@ public class Workout {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getNewDoingDone() {
+        return newDoingDone;
+    }
+
+    public void setNewDoingDone(String newDoingDone) {
+        this.newDoingDone = newDoingDone;
     }
 }

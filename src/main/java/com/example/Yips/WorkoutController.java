@@ -66,6 +66,7 @@ public class WorkoutController {
     public String postExercise(@ModelAttribute Exercise exercise, Authentication authentication,HttpSession session) {
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
+
         exerciseRepository.addExercise(exercise, userId);
         Long workoutId = workout.getId();
         Long exerciseId = exerciseRepository.findExerciseIdByExerciseName(exercise);

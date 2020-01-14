@@ -101,6 +101,7 @@ public class userstatepageController {
         addWorkout.setId(workoutId);
         connectionRepository.userWorkoutConnect(authentication.getName(), workoutId);
         */
+        workout.setNewDoingDone("NEW");
         workoutRepository.updateWorkout(workout);
         session.setAttribute("workout", workout);
         return "redirect:/workout";

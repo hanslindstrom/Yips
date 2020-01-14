@@ -45,6 +45,21 @@ public class ExerciseRepository {
 
     public void addExercise(Exercise exercise, Long userId) {
         Long exerciseId=0L;
+
+
+        String[] exerciseNameArray = exercise.getName().split(",");
+        System.out.println("size"+exerciseNameArray.length);
+        for(String exName:exerciseNameArray){
+            System.out.println(exName);
+        }
+        String exName="";
+        if(exerciseNameArray.length==1) {
+            exName=exerciseNameArray[0];
+        } else {
+            exName=exerciseNameArray[1];
+        }
+        exercise.setName(exName);
+
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("INSERT INTO exercise(NAME, SECONDS, METERS, CALORIES, WEIGHT, REPS, SETS, CADENCE) VALUES(?,?,?,?,?,?,?,?)")) {
 
@@ -75,15 +90,22 @@ public class ExerciseRepository {
     }
     public Long findExerciseIdByExerciseName (Exercise exercise) {
         Long exerciseId=0L;
+        List<Long>exerciseIdList = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT ID FROM exercise WHERE NAME=?")){
             ps.setString(1,exercise.getName());
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                exerciseId = rs.getLong("ID");
+            while(rs.next()) {
+                Long exerciseIdDB = rs.getLong("ID");
+                exerciseIdList.add(exerciseIdDB);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        for(Long id:exerciseIdList) {
+            if(id>exerciseId) {
+                exerciseId=id;
+            }
         }
         return exerciseId;
     }

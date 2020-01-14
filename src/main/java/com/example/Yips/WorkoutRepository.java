@@ -106,7 +106,7 @@ public class WorkoutRepository {
     }
     public void updateWorkout(Workout workout) {
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME="+workout.getTime()+", PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WTYPE='"+workout.getType()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
+            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME='"+workout.getTime()+"', NEWDOINGDONE='"+workout.getNewDoingDone()+"', PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WTYPE='"+workout.getType()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
 
             ps.executeUpdate();
         } catch (SQLException e) {
