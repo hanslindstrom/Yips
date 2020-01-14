@@ -13,23 +13,25 @@
 <body>
 
 <div class="container">
-<h1 th:text="${session.mygroup.name}"></h1>
-</div>
-<!-- List of members
--->
 
-<h2>Members: </h2>
-<ul class="list-group list-group-horizontal-sm" th:if="${session.listOfMembers != 0}" >
-    <li class="list-group-item" th:each="member : ${session.listOfMembers}">
-        <h2 th:text="${member.username}"></h2>
-        <br>
-    </li>
-</ul>
+    <div class="jumbotron onegroup color-medium mt-5 mb-4">
+        <!-- GROUP NAME -->
+        <h2 class="mb-4" th:text="${session.mygroup.name}">MY RUNNING GROUP</h2> 
+    
+        <!-- List of members -->
+        <h5>Members</h5> 
+        <ul class="list-group list-group-horizontal-sm color-medium" th:if="${session.listOfMembers != 0}" >
+            <li class="list-group-item list-members" th:each="member : ${session.listOfMembers}">
+                <h6 th:text="${member.username}">Sami The Cyclist</h6>
+
+            </li>
+        </ul>
+     <!-- BUTTON FOR add member MODAL -->
+     <button type="button" class="btn color-dark text-color-medium mt-5 button-add-member" data-toggle="modal" data-target="#addMember">Add member to group</button>
+
+    </div>
 
 <!-- Modal to add member-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMember">Add member to group</button>
-
-
 <div class="modal fade" id="addMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,8 +55,6 @@
     </div>
 </div>
 <!-- End of modal -->
-
-<div id="newModal">
     
 
 </div>
