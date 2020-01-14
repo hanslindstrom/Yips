@@ -160,6 +160,12 @@ border: none;
   border: none;
 }
 
+
+.text-color-dark {
+  color: #636363;
+  border: none;
+}
+
 .card-text {
   font-style: italic;
 }
