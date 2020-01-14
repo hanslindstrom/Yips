@@ -152,6 +152,7 @@ public class userstatepageController {
     public String createGroup (@ModelAttribute Group group, Authentication authentication, HttpSession session){
         group.setOwnerId(userRepository.findByUsername(authentication.getName()).getId());
         groupRepository.saveGroup(group);
+        group = groupRepository.findByGroupname(group.getName()); //Kommer faila om flera grupper har samma namn
         session.setAttribute("mygroup", group);
         return "redirect:/group";
     }
