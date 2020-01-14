@@ -20,6 +20,7 @@ public class Workout implements Comparable<Workout> {
     private String place;
     private String description;
     private String category;
+    private String newDoingDone;
     private int daysToWorkout;
 
 
@@ -121,8 +122,17 @@ public class Workout implements Comparable<Workout> {
         this.type = type;
     }
 
+    public String getNewDoingDone() {
+        return newDoingDone;
+    }
+
+    public void setNewDoingDone(String newDoingDone) {
+        this.newDoingDone = newDoingDone;
+    }
+
     @Override
     public int compareTo(Workout workout) {
         return this.date.compareTo(workout.getDate());
     }
+
 }

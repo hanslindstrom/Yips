@@ -19,6 +19,37 @@ public class WorkoutRepository {
     @Autowired
     ConnectionRepository connectionRepository;
 
+    public List<Workout> findNewWorkoutsWithUserId (Long userId) {
+        List<Workout>newWorkouts = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM WORKOUT JOIN USERWORKOUTCONNECTION ON WORKOUT.ID=USERWORKOUTCONNECTION.WORKOUTID WHERE USERID=?")){
+            ps.setLong(1,userId);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Workout workout=new Workout();
+                workout.setId(rs.getLong("ID"));
+                workout.setName(rs.getString("NAME"));
+                workout.setDate(rs.getDate("WDATE").toLocalDate());
+                workout.setType(rs.getString("TYPE"));
+                workout.setTime(rs.getInt("WTIME"));
+                workout.setPlace(rs.getString("PLACE"));
+                workout.setDescription(rs.getString("DESCRIPTION"));
+                workout.setCategory(rs.getString("CATEGORY"));
+                workout.setNewDoingDone(rs.getString("NEWDOINGDONE"));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return newWorkouts;
+    }
+
+
+
     public List<Workout> findAll() {
         List<Workout> workouts = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
@@ -145,12 +176,14 @@ public class WorkoutRepository {
     }
     public void updateWorkout(Workout workout) {
         try(Connection conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME="+workout.getTime()+", PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WTYPE='"+workout.getType()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
+            PreparedStatement ps = conn.prepareStatement("UPDATE workout SET NAME='"+workout.getName()+"', WTIME='"+workout.getTime()+"', NEWDOINGDONE='"+workout.getNewDoingDone()+"', PLACE='"+workout.getPlace()+"', DESCRIPTION='"+workout.getDescription()+"', CATEGORY='"+workout.getCategory()+"', WTYPE='"+workout.getType()+"', WDATE='"+workout.getDate()+"' WHERE ID="+workout.getId())) {
 
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //Add delete all workouts where name starts with workoutinit...
 
     }
 

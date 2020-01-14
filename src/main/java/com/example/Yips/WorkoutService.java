@@ -24,6 +24,7 @@ public class WorkoutService {
             List<User>usersInGroup = groupRepository.getAllMembersWithGroup(group);
 
             //Connect users to workout
+
             for(User user:usersInGroup){
 
                 if(user.getId()!=userId) {
