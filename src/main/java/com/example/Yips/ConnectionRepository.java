@@ -119,7 +119,7 @@ public class ConnectionRepository {
         return exercises;
     }
 
-    public List<Long> findGroupConnectedToWorkoutByWorkoutId (Long workoutId) {
+    public List<Long> findGroupIdConnectedToWorkoutByWorkoutId(Long workoutId) {
         List<Long> groupIds = new ArrayList<>();
         Long groupId = null;
         try (Connection conn = dataSource.getConnection();

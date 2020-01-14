@@ -5,7 +5,14 @@ document.getElementById("")
 function run() {
     console.log("hej")
 }
+function declineInviteWorkout (value) {
+    console.log("value in decline" + value)
 
+}
+
+function acceptInviteWorkout (value) {
+    console.log("value in accept" + value)
+}
 async function declineButtonfunction (value) {
     console.log("Acessed declinebutton function.")
     console.log("value " + value)

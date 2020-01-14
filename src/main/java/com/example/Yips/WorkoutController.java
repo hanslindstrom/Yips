@@ -65,6 +65,7 @@ public class WorkoutController {
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
 //        Workout workout = (Workout)session.getAttribute("workout");
         Workout workout = workoutRepository.findByWorkoutId(workoutId);
+        session.setAttribute("workout", workout);
         model.addAttribute("workout", workout);
         model.addAttribute("exercise", new Exercise());
         List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);

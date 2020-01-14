@@ -30,13 +30,16 @@ public class WorkoutRepository {
                 Workout workout=new Workout();
                 workout.setId(rs.getLong("ID"));
                 workout.setName(rs.getString("NAME"));
+                if ( rs.getDate("WDATE") == null)
+                    continue;
                 workout.setDate(rs.getDate("WDATE").toLocalDate());
-                workout.setType(rs.getString("TYPE"));
+                workout.setType(rs.getString("WTYPE"));
                 workout.setTime(rs.getInt("WTIME"));
                 workout.setPlace(rs.getString("PLACE"));
                 workout.setDescription(rs.getString("DESCRIPTION"));
                 workout.setCategory(rs.getString("CATEGORY"));
                 workout.setNewDoingDone(rs.getString("NEWDOINGDONE"));
+                newWorkouts.add(workout);
             }
 
 

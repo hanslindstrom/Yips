@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -37,27 +37,33 @@ public class userstatepageController {
 
     @GetMapping ("/userstartpage")
     public String showUserStartPage (Model model, Authentication authentication, HttpSession session) {
+        //USER ID
+        Long userId = userRepository.findByUsername(authentication.getName()).getId();
+
+
         //Initierar lite mål för att få skriva ut nåt.
         ArrayList<Goal> goalArrayList = new ArrayList<>();
         goalArrayList.add(new Goal("Vinterns utmaning", false));
         goalArrayList.add(new Goal("Sommarens utmaning", false));
         model.addAttribute("listOfGoalsForUser", goalArrayList);
 
+        //INVITE TO WORKOUT
+        int listLength = workoutRepository.findNewWorkoutsWithUserId(userId).size();
+        List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserId(userId);
+
+        model.addAttribute("invitesToWorkout", workoutsInvite);
+        model.addAttribute("invitesToWorkoutLength", listLength);
+
+
         //WORKOUTS
         List<Workout> workouts = workoutRepository.workoutDateList();
-        /*System.out.println("Not sorted arraylist");
-        for(int i = 0; i < workouts.size(); i++)
-            System.out.println(workouts.get(i).getDate());*/
         Collections.sort(workouts);
-        /*System.out.println("Sorted arraylist");
-        for(int i = 0; i < workouts.size(); i++) {
-            System.out.println(workouts.get(i).getDate());
-        }*/
+
         Workout workoutMostRecent = workouts.get(workouts.size()-1);
-        List<Long> groupIds = connectionRepository.findGroupConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
+        List<Long> groupIds = connectionRepository.findGroupIdConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
         List<Group> groupList = new ArrayList<>();
         if(groupIds.size() > 0) {
-            System.out.println("test " + connectionRepository.findGroupConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
+            System.out.println("test " + connectionRepository.findGroupIdConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
             for (int i = 0; i < groupIds.size(); i++)
                 groupList.add(groupRepository.findGroupById(groupIds.get(i)));
             model.addAttribute("groupName_mostRecent_workout", groupList);
@@ -70,7 +76,7 @@ public class userstatepageController {
 
 
         Workout workoutNext = workouts.get(0);
-        List<Long> groupIds2 = connectionRepository.findGroupConnectedToWorkoutByWorkoutId(workoutNext.getId());
+        List<Long> groupIds2 = connectionRepository.findGroupIdConnectedToWorkoutByWorkoutId(workoutNext.getId());
         List<Group> groupList2 = new ArrayList<>();
         if(groupIds2.size() > 0) {
             for (int i = 0; i < groupIds2.size(); i++)
@@ -84,7 +90,6 @@ public class userstatepageController {
 
 
         //Hämtar alla grupper för en person.
-        Long userId = userRepository.findByUsername(authentication.getName()).getId();
         System.out.println("My userId is: " + userId);
         model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));
         System.out.println("All my groups are: " + groupRepository.findAllMyGroups(userId));
@@ -155,6 +160,19 @@ public class userstatepageController {
         group = groupRepository.findByGroupname(group.getName()); //Kommer faila om flera grupper har samma namn
         session.setAttribute("mygroup", group);
         return "redirect:/group";
+    }
+
+    @PostMapping ("/declineWorkout")
+    public String declineWorkout (@RequestParam int workoutIdDecline ) {
+        System.out.println("this workout we want to decline " + workoutIdDecline);
+        return "redirect:/userStartPage";
+
+    }
+
+    @PostMapping ("/acceptWorkout")
+    public String acceptWorkout (@RequestParam int workoutIdAccept ) {
+        System.out.println("this workout we want to accept " + workoutIdAccept);
+        return "redirect:/userStartPage";
     }
 
 
