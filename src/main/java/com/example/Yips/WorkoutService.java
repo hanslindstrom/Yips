@@ -1,12 +1,8 @@
 package com.example.Yips;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,7 +21,7 @@ public class WorkoutService {
             Group group = groupRepository.findByGroupname(groupName);
             connectionRepository.groupWorkoutConnect(group.getId(), workoutId);
             //Find users connected to group
-            List<User>usersInGroup = groupRepository.getAllMembers(group);
+            List<User>usersInGroup = groupRepository.getAllMembersWithGroup(group);
 
             //Connect users to workout
 

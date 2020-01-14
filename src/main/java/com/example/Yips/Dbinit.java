@@ -1,6 +1,7 @@
 package com.example.Yips;
 
 
+import org.hibernate.jdbc.Work;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,22 +52,25 @@ public class Dbinit implements CommandLineRunner {
         groupOne = groupRepository.findByGroupname("our group");
         this.connectionRepository.connectNewMemberToGroup(groupOne,userRepository.findByUsername("dan").getId());
 
-        //Add workout
+        //Add some initial workouts...
         Workout workout = new Workout("Långlöp", "Löpning");
-
-        //List <Workout> workouts = Arrays.asList(workout);
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
         Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
         workoutDB.setDate(LocalDate.of(2020,6,15));
         //workoutDB.setNewDoingDone("new");
         this.workoutRepository.updateWorkout(workoutDB);
 
-        //TESTPRINT
-        List<LocalDate>workoutDates=workoutRepository.workoutDateList();
+        Workout workout2 = new Workout("Långsim", "Simning");
+        this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("dan"));
+        Workout workoutDB2 = workoutRepository.findByWorkoutname(workout2.getName());
+        workoutDB2.setDate(LocalDate.of(2020,7,10));
+        this.workoutRepository.updateWorkout(workoutDB2);
 
-        for(LocalDate date:workoutDates) {
-            System.out.println("DATE FROM SQL TO JOEL IS "+date);
-        }
+        Workout workout3 = new Workout("Kortlöp", "Löpning");
+        this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("dan"));
+        Workout workoutDB3 = workoutRepository.findByWorkoutname(workout3.getName());
+        workoutDB3.setDate(LocalDate.of(2020,1,10));
+        this.workoutRepository.updateWorkout(workoutDB3);
 
         //Add exercise
         Exercise exercise = new Exercise();
@@ -74,12 +78,15 @@ public class Dbinit implements CommandLineRunner {
         exercise.setSets(5);
         exercise.setReps(5);
         this.exerciseRepository.addExercise(exercise,4L);
+        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExerciseName(exercise));
 
         exercise = new Exercise();
         exercise.setName("double unders");
         exercise.setSeconds(120);
         exercise.setReps(100);
         this.exerciseRepository.addExercise(exercise,4L);
+        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExerciseName(exercise));
+
 
 
     }

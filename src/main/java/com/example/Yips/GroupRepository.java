@@ -97,7 +97,7 @@ public class GroupRepository {
         }
     }
 
-    public List<User> getAllMembers(Group group){
+    public List<User> getAllMembersWithGroup(Group group){
         Group dbGroup = findByGroupname(group.getName().toLowerCase());
         List<User> members = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
@@ -115,6 +115,24 @@ public class GroupRepository {
         }
 
         System.out.println("All members: " + members);
+        return members;
+
+    }
+
+    public List<User> getAllMembersWithGroupId(long groupId){
+        List<User> members = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT userid FROM usergroupconnection WHERE groupid = ?")){
+            ps.setString(1, String.valueOf(groupId));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                long id = rs.getInt("userid");
+                members.add(userRepository.findByUserId(id));
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
         return members;
 
     }

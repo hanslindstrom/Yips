@@ -90,6 +90,7 @@ public class ConnectionRepository {
             e.printStackTrace();
         }
     }
+
     public List<Exercise> findExercisesInWorkoutByWorkoutId (Long workoutId) {
         List<Exercise> exercises = new ArrayList<>();
         try(Connection conn = dataSource.getConnection();

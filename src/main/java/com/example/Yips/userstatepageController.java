@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -41,6 +42,25 @@ public class userstatepageController {
         goalArrayList.add(new Goal("Vinterns utmaning", false));
         goalArrayList.add(new Goal("Sommarens utmaning", false));
         model.addAttribute("listOfGoalsForUser", goalArrayList);
+
+        //WORKOUTS
+        List<Workout> workouts = workoutRepository.workoutDateList();
+        /*System.out.println("Not sorted arraylist");
+        for(int i = 0; i < workouts.size(); i++)
+            System.out.println(workouts.get(i).getDate());*/
+        Collections.sort(workouts);
+        /*System.out.println("Sorted arraylist");
+        for(int i = 0; i < workouts.size(); i++) {
+            System.out.println(workouts.get(i).getDate());
+        }*/
+        System.out.println("Most recent workout name: " + workouts.get(workouts.size()-1).getName() + " id: " + workouts.get(workouts.size()-1).getId());
+        model.addAttribute("workout_mostRecent", workouts.get(workouts.size()-1));
+        model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workouts.get(workouts.size()-1).getId()));
+
+        System.out.println("Next workout: " + workouts.get(0).getName() + " id: " + workouts.get(0).getId());
+        model.addAttribute("workout_next", workouts.get(0));
+        model.addAttribute("exerciseList_workout_next", connectionRepository.findExercisesInWorkoutByWorkoutId(workouts.get(0).getId()));
+
 
         //Hämtar alla grupper för en person.
         Long userId = userRepository.findByUsername(authentication.getName()).getId();

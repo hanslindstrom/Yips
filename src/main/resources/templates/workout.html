@@ -26,7 +26,7 @@
 </div>
 
 <div class="container mt-5 float-lg-none" th:object="${workout}">
-    <div class="card color-base text-grey mb-3">
+    <div class="card color-contrast mb-3">
         <div class="card-header" th:text="Workout"></div>
         <div class="card-body">
                 <h4 class="card-title" th:text="'Workout: '+*{name}"></h4>
@@ -41,8 +41,8 @@
 
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newexercise">Add exercise</button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendtogroup">Send workout to group</button>
+    <button type="button" class="btn color-contrast mr-2" data-toggle="modal" data-target="#newexercise">Add exercise</button>
+    <button type="button" class="btn color-contrast ml-2" data-toggle="modal" data-target="#sendtogroup">Send workout to group</button>
 
     <div class="modal fade" id="newexercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -70,13 +70,13 @@
                                     th:field="*{id}"
                             />
 
-                            <label for="exercise">Choose one of your prior exercises</label>
+                            <label for="exercise">Choose a prior exercise</label>
                             <select id="exercise" th:field="*{name}" name="exercisename" class="form-control">
                                 <option value="New Exercise">New exercise</option>
                                 <option th:each="ename:${priorexercises}" th:value="${ename}" th:text="${ename}"></option>
                             </select>
 
-                            <label for="newexercisename">Or enter a new exercise below</label>
+                            <label class="mt-2" for="newexercisename">Or enter new exercise</label>
                             <input
                                     type="text"
                                     class="form-control mb-2"
@@ -138,23 +138,21 @@
 
                         </div>
 
-                        <button class="btn btn-block mt-2 color-dark mb-2">Add exercise</button>
+                        <button class="btn btn-block mt-2 color-contrast mb-2 mt-4">Add exercise</button>
                     </form>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- End of Exercisemodal -->
-    <!-- Groupmodal -->
+
+    <!-- Send to Group modal -->
     <div class="modal fade" id="sendtogroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Send to group</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">Send workout to group</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -170,19 +168,16 @@
 
                         <div class="form-group">
 
-                            <label for="usergroups">Choose groups to send workout to</label>
+                            <label for="usergroups">Hold in <b>shift</b> to choose multiple groups!</label>
                             <select multiple id="usergroups"name="sendGroups" class="form-control">
                                 <option th:each="usergroup:${groups}" th:value="${usergroup.name}" th:text="${usergroup.name}"></option>
                             </select>
 
-                            <button class="btn btn-block mt-2 color-dark mb-2">Send to group</button>
+                            <button class="btn btn-block mt-4 color-contrast mb-2">Send workout</button>
                         </div>
                     </form>
 
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
