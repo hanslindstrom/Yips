@@ -96,6 +96,33 @@ public class WorkoutRepository {
         }
         return workout;
     }
+
+    public Workout findByWorkoutId(Long workoutId) {
+        Workout workout = new Workout();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout WHERE id = ?")){
+            ps.setString(1, workoutId.toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                long id = rs.getInt("id");
+                String name = rs.getString("name");
+                String category = rs.getString("category");
+
+                workout.setId(id);
+                workout.setName(name);
+                workout.setCategory(category);
+
+
+            } else {
+                workout=null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            e.printStackTrace();
+        }
+        return workout;
+    }
+
     public Long initiateWorkout() {
         Workout workout = new Workout();
         workout.setName("workoutinit"+Math.random());

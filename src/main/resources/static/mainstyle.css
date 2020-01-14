@@ -146,6 +146,10 @@ border: none;
   color: #e2f7f3;
   border: none;
 }
+.text-color-dark {
+  color: #414141;
+  border: none;
+}
 
 .card-text {
   font-style: italic;
@@ -182,4 +186,11 @@ font-family: 'Roboto', sans-serif;
 
 .more-info-exercise:hover + .exercisecontainer {
   display: block;
+}
+
+.workout-hover:hover {
+color:#414141;
+background-color: #ff8438;
+display: block;
+text-decoration: none;
 }

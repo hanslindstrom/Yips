@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -36,10 +33,38 @@ public class WorkoutController {
     @Autowired
     WorkoutService workoutService;
 
-    @GetMapping("/workout")
+   /* @GetMapping("/workout")
     public String getWorkout(Model model, HttpSession session, Authentication authentication) {
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
+        model.addAttribute("workout", workout);
+        model.addAttribute("exercise", new Exercise());
+        List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);
+        model.addAttribute("priorexercises", priorExercises);
+
+
+        //Add all exercises connected to workout to list to be able to print them in workout
+        //1 get the workoutId from DB.
+        Long databaseWorkoutId = workoutRepository.findByWorkoutname(workout.getName()).getId();
+
+        //2 use the workoutId to get exercises.
+        List<Exercise>exercises = connectionRepository.findExercisesInWorkoutByWorkoutId(databaseWorkoutId);
+
+        //3 add list to model:
+        model.addAttribute("exercises", exercises);
+
+        // Send user groups to html to be able to share workout
+        List<Group>groups = groupRepository.findAllMyGroups(userId);
+        model.addAttribute("groups", groups);
+
+        return "workout";
+    }*/
+
+    @GetMapping("/workout/{workoutId}")
+    public String getWorkout(@PathVariable Long workoutId, Model model, HttpSession session, Authentication authentication) {
+        Long userId = userRepository.findByUsername(authentication.getName()).getId();
+//        Workout workout = (Workout)session.getAttribute("workout");
+        Workout workout = workoutRepository.findByWorkoutId(workoutId);
         model.addAttribute("workout", workout);
         model.addAttribute("exercise", new Exercise());
         List<String> priorExercises = exerciseRepository.findExerciseUserId(userId);
