@@ -53,13 +53,34 @@ public class userstatepageController {
         for(int i = 0; i < workouts.size(); i++) {
             System.out.println(workouts.get(i).getDate());
         }*/
-        System.out.println("Most recent workout name: " + workouts.get(workouts.size()-1).getName() + " id: " + workouts.get(workouts.size()-1).getId());
-        model.addAttribute("workout_mostRecent", workouts.get(workouts.size()-1));
-        model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workouts.get(workouts.size()-1).getId()));
+        Workout workoutMostRecent = workouts.get(workouts.size()-1);
+        List<Long> groupIds = connectionRepository.findGroupConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
+        List<Group> groupList = new ArrayList<>();
+        if(groupIds.size() > 0) {
+            System.out.println("test " + connectionRepository.findGroupConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
+            for (int i = 0; i < groupIds.size(); i++)
+                groupList.add(groupRepository.findGroupById(groupIds.get(i)));
+            model.addAttribute("groupName_mostRecent_workout", groupList);
+        }
+        else
+            model.addAttribute("groupName_mostRecent_workout",  null);
+        model.addAttribute("workout_mostRecent", workoutMostRecent);
+        model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutMostRecent.getId()));
 
-        System.out.println("Next workout: " + workouts.get(0).getName() + " id: " + workouts.get(0).getId());
-        model.addAttribute("workout_next", workouts.get(0));
-        model.addAttribute("exerciseList_workout_next", connectionRepository.findExercisesInWorkoutByWorkoutId(workouts.get(0).getId()));
+
+
+        Workout workoutNext = workouts.get(0);
+        List<Long> groupIds2 = connectionRepository.findGroupConnectedToWorkoutByWorkoutId(workoutNext.getId());
+        List<Group> groupList2 = new ArrayList<>();
+        if(groupIds2.size() > 0) {
+            for (int i = 0; i < groupIds2.size(); i++)
+                groupList2.add(groupRepository.findGroupById(groupIds2.get(i)));
+            model.addAttribute("groupName_mostRecent_workout", groupList2);
+        }
+        else
+            model.addAttribute("groupName_next_workout",  null);
+        model.addAttribute("workout_next", workoutNext);
+        model.addAttribute("exerciseList_workout_next", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutNext.getId()));
 
 
         //Hämtar alla grupper för en person.

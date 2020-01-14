@@ -50,7 +50,7 @@ public class Dbinit implements CommandLineRunner {
         List<Group> groups = Arrays.asList(groupOne);
         this.groupRepository.saveAll(groups);
         groupOne = groupRepository.findByGroupname("our group");
-        this.connectionRepository.connectNewMemberToGroup(groupOne,userRepository.findByUsername("dan").getId());
+        this.connectionRepository.connectNewMemberToGroup(groupOne, userRepository.findByUsername("dan").getId());
 
         //Add some initial workouts...
         Workout workout = new Workout("Långlöp", "Löpning");

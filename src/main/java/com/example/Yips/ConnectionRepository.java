@@ -20,6 +20,8 @@ public class ConnectionRepository {
     @Autowired
     UserRepository userRepository;
 
+
+
     public void saveUserGroupOwnerConnection(Group group, Long groupId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO usergroupconnection(USERID, GROUPID, USERROLE) VALUES(?,?,?)")){
@@ -115,6 +117,25 @@ public class ConnectionRepository {
         }
 
         return exercises;
+    }
+
+    public List<Long> findGroupConnectedToWorkoutByWorkoutId (Long workoutId) {
+        List<Long> groupIds = new ArrayList<>();
+        Long groupId = null;
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM GROUPWORKOUTCONNECTION WHERE WORKOUTID=?")) {
+            ps.setLong(1, workoutId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                groupId = rs.getLong("groupid");
+                groupIds.add(groupId);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return groupIds;
     }
 
    /* public void saveUserWorkoutConnection(Workout workout, Long userId) {
