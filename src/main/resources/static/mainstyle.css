@@ -6,6 +6,7 @@
 .opacity-header {
   background-color: rgba(158,230,217,0.5);
   color: #e2f7f3;
+  font-weight: bold;
 }
 
 .footer {
@@ -54,6 +55,9 @@ font-weight: bold;
   border: none;
 }
 
+.button-add-member:hover {
+  color: #9ee6d9;
+}
 
 .button-add-user:hover {
   background-color: #ff914c;
@@ -160,9 +164,14 @@ border: none;
   border: none;
 }
 
-
 .text-color-dark {
   color: #636363;
+  border: none;
+}
+
+
+.text-color-base {
+  color: #4ed2ba;
   border: none;
 }
 
@@ -190,6 +199,15 @@ border: none;
 font-size: small;
 font-family: 'Roboto', sans-serif;
 }
+
+
+.list-members {
+  background-color: #4ed2ba;
+  color: #414141;
+  border: none;
+  font-size: small;
+  font-family: 'Roboto', sans-serif;
+  }
 
 ::placeholder {
   font-style: italic;
