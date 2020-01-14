@@ -34,7 +34,7 @@
             <span th:if="*{type}!='none'" th:text="*{type}"></span>
             <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
             <ul th:each="exercise:${exercises}">
-                <li th:text="${exercise.name}"></li>
+                <li th:text="${exercise.reps}+' '+${exercise.name}"></li>
             </ul>
 
         </div>
