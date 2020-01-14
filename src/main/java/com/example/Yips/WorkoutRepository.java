@@ -49,20 +49,20 @@ public class WorkoutRepository {
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout")) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
+                workout = new Workout();
                 long id = rs.getInt("id");
                 Date date = rs.getDate("WDATE");
                 String name = rs.getString("NAME");
                 String description = rs.getString("DESCRIPTION");
 
                 if(date == null)
-                    continue; //Sometimes empty workouts are created, and this becomes a null pointer exception
+                    continue;   //Sometimes empty workouts are created, and this becomes a null pointer exception
                 workout.setId(id);
                 workout.setName(name);
                 LocalDate lDate=date.toLocalDate();
                 workout.setDate(lDate);
                 workoutDateList.add(workout);
-                for(Workout workout1: workoutDateList)
-                    System.out.println(workout1.getId());
+
                 }
         } catch (SQLException e) {
             e.printStackTrace();
