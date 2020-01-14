@@ -21,6 +21,9 @@ public class ConnectionRepository {
     UserRepository userRepository;
 
 
+    public void saveWorkoutAsActiveworkout (long workoutId){
+
+    }
 
     public void saveUserGroupOwnerConnection(Group group, Long groupId) {
         try (Connection conn = dataSource.getConnection();

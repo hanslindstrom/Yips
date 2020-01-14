@@ -30,6 +30,15 @@ public class RController {
     //--------USERS---------------------
 
     //@CrossOrigin
+
+    @GetMapping ("/rest/declineWorkoutInvite/{workoutId}")
+    public void declineWorkoutInvite (@PathVariable long workoutId) {
+
+    }
+    @GetMapping ("/rest/acceptWorkoutInvite/{workoutId}")
+    public void acceptWorkoutInvite (@PathVariable long workoutId) {
+    }
+
     @GetMapping("/rest/getUser/{username}")
     public User getUser(@PathVariable String username, HttpSession session){
         User user = userRepository.findByUsername(username);
@@ -97,6 +106,8 @@ public class RController {
             System.out.println("user in group " + user.getUsername());
         return groupRepository.getAllMembersWithGroupId(groupid);
     }
+
+
 
 
 

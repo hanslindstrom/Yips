@@ -48,40 +48,33 @@
 
     <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast">WORKOUTS</h1>
 
-    <div th:if="${invitesToWorkoutLength > 0 }">
+        <div th:if="${invitesToWorkoutLength > 0 }" th:data-arg1="${invitesToWorkoutLength}" onloadstart="showNumberOfWorkoutInvites()">
          <!-- Button for NEW WORKOUT INVITE -->
-         <div th:each="workout : ${invitesToWorkout}">
-            <button type="button" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" th:data-target="'#newworkoutinvite' + ${workout.id}">Woop woop! You have a new workout. Check it out!</button>
+            <button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkoutinvite"></button>
             <hr/>
             <!-- New WORKOUT INVITE Modal-->
-        <div class="modal fade" th:id="'newworkoutinvite'  + ${workout.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-
-                        <h5 class="modal-title" id="exampleModalLabel">YOUR NEW WORKOUT</h5>
-                   
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            <div class="modal fade" th:id="newworkoutinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">YOUR NEW WORKOUTS</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class="modal-body mt-0">
+                                <div th:each="workout : ${invitesToWorkout}" th:id="'workoutInviteContainer' + ${workout.id}" >
+                                    <h5 th:text="${workout.name}"></h5>
+                                    <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
+                                    <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${workout.id}" onclick="acceptInviteWorkout()">ACCEPT</button>
+                                    <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${workout.id}" onclick="declineInviteWorkout()">DECLINE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                    <div class="modal-body mt-0">
-                        <h5 th:text="${workout.name}"></h5>
-                    <form action="/acceptWorkout" method="POST" name="workoutIdAccept">
-                        <button class="btn btn-sm button-add-user mt-2 mt-5"  th:value="${workout.id}">ACCEPT</button>
-                    </form>
-                    <form action="/declineWorkout" method="POST">
-                        <button class="btn btn-sm button-add-user mt-2 mt-5"  th:value="${workout.id}">DECLINE</button>
-                    </form>
-                </div>
+<!-- End of WORKOUT INVITE modal -->
             </div>
         </div>
-    </div>
-<!-- End of WORKOUT INVITE modal -->
-        </div>
-    
-    </div>
     <!-- END OF NEW INVITES TO WORKOUT-->
 
     <!--Workout card - next workout-->
@@ -225,7 +218,8 @@
 
     <!-- GROUPS -->
     <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-medium">GROUPS</h1>
-
+    <div class="container" id="inviteContainer">
+    </div>
 
     <div class="container">
         <div class="card-columns">

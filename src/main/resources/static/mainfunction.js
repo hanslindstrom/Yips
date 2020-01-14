@@ -1,18 +1,27 @@
 showAllInvites();
 showAllGroups();
 document.getElementById("sendbutton").addEventListener("click", sendInvite)
-document.getElementById("")
 function run() {
     console.log("hej")
 }
-function declineInviteWorkout (value) {
-    console.log("value in decline" + value)
-
+function declineInviteWorkout () {
+    let arg1 = event.target.getAttribute('data-arg1');
+    console.log("workoutInviteContainer" + arg1);
+    let container = document.getElementById("workoutInviteContainer" + arg1)
+    container.innerHTML = `<h6 class="modal-title">Yeah, you´re right, this workout wasn´t really you.</h6>`
 }
 
-function acceptInviteWorkout (value) {
-    console.log("value in accept" + value)
+function acceptInviteWorkout () {
+    let arg1 = event.target.getAttribute('data-arg1');
+    
 }
+
+function showNumberOfWorkoutInvites() {
+    let arg1 = event.target.getAttribute('data-arg1');
+    let container = document.getElementById("showNumberOfWorkoutInvites")
+    container.innerHTML = `Woop woop! You have ${arg1} new workouts.`
+}
+
 async function declineButtonfunction (value) {
     console.log("Acessed declinebutton function.")
     console.log("value " + value)
