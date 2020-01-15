@@ -47,7 +47,7 @@ public class RController {
 
     @GetMapping ("/rest/acceptWorkoutInvite/{workoutId}")
     public void acceptWorkoutInvite (@PathVariable long workoutId, Authentication authentication) {
-        System.out.println("Workout id to accept " + workoutId);
+        System.out.println("AAA Workout id to accept " + workoutId);
         Workout newWorkout = workoutRepository.findByWorkoutId(workoutId);
         newWorkout.setNewDoingDone("Doing");
         System.out.println("Date in newWorkout " + newWorkout.getDate());
@@ -67,8 +67,9 @@ public class RController {
         for (Exercise newExercise : newExerciselist) {
             exerciseRepository.addExercise(newExercise, currentUser.getId());
             newExercise.setId(exerciseRepository.findExerciseIdByExerciseName(newExercise));
-            connectionRepository.workoutExerciseConnect(newExercise.getId(), newWorkout.getId());
-            connectionRepository.userExerciseConnect(currentUser.getId(), newExercise.getId());
+            connectionRepository.workoutExerciseConnect(newWorkout.getId(), newExercise.getId());
+
+            //user exercise connection happens when adding exercise, no need to connect.
         }
 //        //FINDING ORIG GROUPID - FULA VÄGEN
 //        List<Long> groupListId = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutId);
