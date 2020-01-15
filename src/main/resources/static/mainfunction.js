@@ -1,3 +1,9 @@
+function showNumberOfWorkoutInvites() {
+    let arg1 = event.target.getAttribute('data-arg1');
+    console.log("Number of workoutInvites " + arg1)
+    let container = document.getElementById("showNumberOfWorkoutInvites")
+    container.innerHTML = `Woop woop! You have ${arg1} new workouts.`
+}
 showAllInvites();
 showAllGroups();
 document.getElementById("sendbutton").addEventListener("click", sendInvite)
@@ -13,14 +19,13 @@ function declineInviteWorkout () {
 
 function acceptInviteWorkout () {
     let arg1 = event.target.getAttribute('data-arg1');
-    
+    getmappingAcceptInviteWorkout("http://localhost:8081/rest/acceptWorkoutInvite/" + arg1)
+    let container = document.getElementById("workoutInviteContainer" + arg1)
+    container.innerHTML = `<h6 class="modal-title">Yes, you'll crush this one!</h6>`
+
 }
 
-function showNumberOfWorkoutInvites() {
-    let arg1 = event.target.getAttribute('data-arg1');
-    let container = document.getElementById("showNumberOfWorkoutInvites")
-    container.innerHTML = `Woop woop! You have ${arg1} new workouts.`
-}
+
 
 async function declineButtonfunction (value) {
     console.log("Acessed declinebutton function.")
@@ -213,6 +218,16 @@ async function getAllMembersInGroup(url) {
         console.log(result)
         //var objekt = JSON.parse(result)
         return result
+    }
+    else console.log("unexpected error", response)
+}
+
+async function getmappingAcceptInviteWorkout(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        console.log("Sucess in acceptInviteWorkout")
     }
     else console.log("unexpected error", response)
 }

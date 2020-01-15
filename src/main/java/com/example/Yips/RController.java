@@ -21,6 +21,15 @@ public class RController {
     @Autowired
     GroupRepository groupRepository;
 
+    @Autowired
+    WorkoutRepository workoutRepository;
+
+    @Autowired
+    ConnectionRepository connectionRepository;
+
+    @Autowired
+    ExerciseRepository exerciseRepository;
+
     //--------USERS---------------------
     @GetMapping("/users")
     public List<User> getAllUsers() {
@@ -35,8 +44,41 @@ public class RController {
     public void declineWorkoutInvite (@PathVariable long workoutId) {
 
     }
+
     @GetMapping ("/rest/acceptWorkoutInvite/{workoutId}")
-    public void acceptWorkoutInvite (@PathVariable long workoutId) {
+    public void acceptWorkoutInvite (@PathVariable long workoutId, Authentication authentication) {
+        System.out.println("Workout id to accept " + workoutId);
+        Workout newWorkout = workoutRepository.findByWorkoutId(workoutId);
+        newWorkout.setNewDoingDone("Doing");
+        System.out.println("Date in newWorkout " + newWorkout.getDate());
+        List<Exercise> newExerciselist = connectionRepository.findExercisesInWorkoutByWorkoutId(newWorkout.getId());
+        User currentUser = userRepository.findByUsername(authentication.getName());
+
+        //Duplicating workout.
+        workoutRepository.saveWorkout(newWorkout, currentUser);
+        Long newWorkoutId = workoutRepository.findWorkoutIdByWorkoutName(newWorkout);
+        newWorkout.setId(newWorkoutId);
+        workoutRepository.updateWorkout(newWorkout);
+        connectionRepository.userWorkoutConnect(currentUser.getUsername(), newWorkoutId);
+
+        //REMOVING ORIG EXERCISES FROM USEREXERCISESCONNECTION
+
+
+        for (Exercise newExercise : newExerciselist) {
+            exerciseRepository.addExercise(newExercise, currentUser.getId());
+            newExercise.setId(exerciseRepository.findExerciseIdByExerciseName(newExercise));
+            connectionRepository.workoutExerciseConnect(newExercise.getId(), newWorkout.getId());
+            connectionRepository.userExerciseConnect(currentUser.getId(), newExercise.getId());
+        }
+//        //FINDING ORIG GROUPID - FULA VÄGEN
+//        List<Long> groupListId = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutId);
+//        for(Long groupId : groupListId) {
+//            connectionRepository.connectNewWorkoutOrigWorkout(workoutId, newWorkoutId, groupId);
+//        }
+
+
+
+
     }
 
     @GetMapping("/rest/getUser/{username}")

@@ -1,6 +1,5 @@
 package com.example.Yips;
 
-import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -141,7 +140,8 @@ public class WorkoutRepository {
                 long id = rs.getInt("id");
                 String name = rs.getString("name");
                 String category = rs.getString("category");
-
+                LocalDate date = rs.getDate("WDATE").toLocalDate();
+                workout.setDate(date);
                 workout.setId(id);
                 workout.setName(name);
                 workout.setCategory(category);
@@ -204,11 +204,27 @@ public class WorkoutRepository {
         }
     }
 
-    //To add testgroups in DBinit....
-    /*public void saveAll(List<Workout> workouts) {
-        for(Workout workout:workouts) {
-            saveWorkout(workout);
+    public Long findWorkoutIdByWorkoutName (Workout workout) {
+        Long workoutId=0L;
+        List<Long>workoutIdList = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT ID FROM workout WHERE NAME=?")){
+            ps.setString(1,workout.getName());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Long workoutIdDb = rs.getLong("ID");
+                workoutIdList.add(workoutIdDb);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    }*/
+        for(Long id:workoutIdList) {
+            if(id>workoutId) {
+                workoutId=id;
+            }
+        }
+        return workoutId;
+    }
+
 
 }

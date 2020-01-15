@@ -96,6 +96,7 @@ public class ConnectionRepository {
         }
     }
 
+
     public List<Exercise> findExercisesInWorkoutByWorkoutId (Long workoutId) {
         List<Exercise> exercises = new ArrayList<>();
         try(Connection conn = dataSource.getConnection();
@@ -122,7 +123,7 @@ public class ConnectionRepository {
         return exercises;
     }
 
-    public List<Long> findGroupIdConnectedToWorkoutByWorkoutId(Long workoutId) {
+    public List<Long> findGroupsIdsConnectedToWorkoutByWorkoutId(Long workoutId) {
         List<Long> groupIds = new ArrayList<>();
         Long groupId = null;
         try (Connection conn = dataSource.getConnection();
@@ -141,17 +142,17 @@ public class ConnectionRepository {
         return groupIds;
     }
 
-   /* public void saveUserWorkoutConnection(Workout workout, Long userId) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement("INSERT INTO USERWORKOUTCONNECTION(USERID, WORKOUTID) VALUES(?,?)")){
-            ps.setLong(1, userId);
-            ps.setLong(2, workout.getId());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
-
+    public void connectNewWorkoutOrigWorkout(Long origWorkoutId, Long newWorkoutId, Long origGroupid){
+       try (Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO ACTIVEWORKOUTS(NEWWORKOUTID, ORIGWORKOUTID, ORIGGROUPID) VALUES(?,?,?)")) {
+           ps.setLong(1, newWorkoutId);
+           ps.setLong(2, origWorkoutId);
+           ps.setLong(3, origGroupid);
+           ps.executeUpdate();
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+    }
 
 
 

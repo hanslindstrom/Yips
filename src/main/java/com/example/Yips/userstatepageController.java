@@ -57,10 +57,10 @@ public class userstatepageController {
         Collections.sort(workouts);
 
         Workout workoutMostRecent = workouts.get(workouts.size()-1);
-        List<Long> groupIds = connectionRepository.findGroupIdConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
+        List<Long> groupIds = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
         List<Group> groupList = new ArrayList<>();
         if(groupIds.size() > 0) {
-            System.out.println("test " + connectionRepository.findGroupIdConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
+            System.out.println("test " + connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
             for (int i = 0; i < groupIds.size(); i++)
                 groupList.add(groupRepository.findGroupById(groupIds.get(i)));
             model.addAttribute("groupName_mostRecent_workout", groupList);
@@ -73,7 +73,7 @@ public class userstatepageController {
 
 
         Workout workoutNext = workouts.get(0);
-        List<Long> groupIds2 = connectionRepository.findGroupIdConnectedToWorkoutByWorkoutId(workoutNext.getId());
+        List<Long> groupIds2 = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutNext.getId());
         List<Group> groupList2 = new ArrayList<>();
         if(groupIds2.size() > 0) {
             for (int i = 0; i < groupIds2.size(); i++)
