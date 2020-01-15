@@ -155,5 +155,25 @@ public class ConnectionRepository {
     }
 
 
+    public void deleteUserExerciseConnection(Long userId, Long oldExerciseId) {
+        try (Connection conn = dataSource.getConnection();
+        PreparedStatement ps = conn.prepareStatement("DELETE FROM USEREXERCISECONNECTION  WHERE USERID=? AND EXERCISEID=?;")){
+            ps.setLong(1,userId);
+            ps.setLong(2,oldExerciseId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void deleteUserWorkoutConnection(Long userId, Long oldWorkoutId) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("DELETE FROM USERWORKOUTCONNECTION WHERE USERID=? AND WORKOUTID=?;")){
+            ps.setLong(1,userId);
+            ps.setLong(2,oldWorkoutId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
