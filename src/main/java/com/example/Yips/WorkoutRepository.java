@@ -87,6 +87,7 @@ public class WorkoutRepository {
                 Date date = rs.getDate("WDATE");
                 String name = rs.getString("NAME");
                 String description = rs.getString("DESCRIPTION");
+                String newDoingDone = rs.getString("NEWDOINGDONE");
 
                 if(date == null)
                     continue;   //Sometimes empty workouts are created, and this becomes a null pointer exception
@@ -94,6 +95,7 @@ public class WorkoutRepository {
                 workout.setName(name);
                 LocalDate lDate=date.toLocalDate();
                 workout.setDate(lDate);
+                workout.setNewDoingDone(newDoingDone);
                 workoutDateList.add(workout);
 
                 }

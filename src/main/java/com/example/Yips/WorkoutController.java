@@ -1,5 +1,6 @@
 package com.example.Yips;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -91,22 +92,26 @@ public class WorkoutController {
     public String postExercise(@ModelAttribute Exercise exercise, Authentication authentication, HttpSession session) {
         System.out.println("HANS Inside postmapping postexer, before, ex. name: " + exercise.getName());
         System.out.println("Inside postmapping postexer, ex. id: " + exercise.getId());
-
+        String oldWoName = "";
         //exercise.setId(exerciseRepository.findExerciseIdByExerciseName(exercise.getName()));
 
         System.out.println("AFTER: Inside postmapping postexer, after, ex. id: " + exercise.getId());
+
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
-        if(exercise.getId() == null){
+        //if(exercise.getId() == null){
+        System.out.println("NEW WO????   "+workout.getNewDoingDone());
+            //if(workout.getNewDoingDone() == "NEW"){
+
             exerciseRepository.addExercise(exercise, userId);
             System.out.println("added exercise with name " + exercise.getName() + " with id " + exerciseRepository.findExerciseIdByExercise(exercise));
             Long workoutId = workout.getId();
             Long exerciseId = exerciseRepository.findExerciseIdByExercise(exercise);
             connectionRepository.workoutExerciseConnect(workoutId,exerciseId);
-        }else {
-            exerciseRepository.updateExercise(exercise);
-            System.out.println("ELSE Ex update" + exercise.getName());
-        }
+        //}else {
+            //exerciseRepository.updateExercise(exercise);
+            //System.out.println("ELSE Ex update" + exercise.getName());
+        //}
 //        Exercise origExerciseId = exerciseRepository.findExerciseById(exercise.getId());
 
         return "redirect:/workout";
@@ -119,6 +124,16 @@ public class WorkoutController {
         Long workoutId = workout.getId();
         workoutService.sendWorkoutToGroups(sendGroups, workoutId, userId);
         return "redirect:/workout";
+    }
+
+    @PostMapping("/doneworkout")
+    public String doneWorkout(HttpSession session) {
+        Workout workout = (Workout)session.getAttribute("workout");
+        System.out.println(workout.getName());
+        workout.setNewDoingDone("DONE");
+        workoutRepository.updateWorkout(workout);
+
+        return "redirect:/userstartpage";
     }
 
 

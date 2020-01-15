@@ -35,7 +35,7 @@
             <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
             <ul th:each="exercise:${exercises}">
                     <!-- Title = link to edit exercise -->
-                    <h5 class="mt-3"  onclick="editexercise()" th:data-arg1="${exercise.name}"  data-toggle="modal" data-target="#newexercise" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
+                    <h5 class="mt-3"  th:data-arg1="${exercise.name}"  th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
                     <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
                     <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
                     <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
@@ -52,7 +52,14 @@
 
     <button type="button" class="btn color-contrast mr-2" data-toggle="modal" data-target="#newexercise">Add exercise</button>
     <button type="button" class="btn color-contrast ml-2" data-toggle="modal" data-target="#sendtogroup">Send workout to group</button>
-    <button type="button" class="btn color-contrast ml-2" data-target="#" href="userstartpage.html">Done</button>
+
+
+    <form method="post" action="/doneworkout" th:object="${workout}">
+
+    <button type="submit" class="btn color-contrast ml-2">Done</button>
+    </form>
+
+
 
     <div class="modal fade" id="newexercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

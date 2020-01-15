@@ -54,20 +54,23 @@ public class Dbinit implements CommandLineRunner {
         Workout workout = new Workout("Långlöp", "Löpning");
         this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
         Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
-        workoutDB.setDate(LocalDate.of(2020,6,15));
-        //workoutDB.setNewDoingDone("new");
+        workoutDB.setDate(LocalDate.of(2020,1,1));
+        workoutDB.setNewDoingDone("DONE");
         this.workoutRepository.updateWorkout(workoutDB);
+
 
         Workout workout2 = new Workout("Långsim", "Simning");
         this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("dan"));
         Workout workoutDB2 = workoutRepository.findByWorkoutname(workout2.getName());
         workoutDB2.setDate(LocalDate.of(2020,7,10));
+        workoutDB2.setNewDoingDone("DOING");
         this.workoutRepository.updateWorkout(workoutDB2);
 
         Workout workout3 = new Workout("Kortlöp", "Löpning");
         this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("dan"));
         Workout workoutDB3 = workoutRepository.findByWorkoutname(workout3.getName());
         workoutDB3.setDate(LocalDate.of(2020,1,10));
+        workoutDB3.setNewDoingDone("DOING");
         this.workoutRepository.updateWorkout(workoutDB3);
 
         //Add exercise

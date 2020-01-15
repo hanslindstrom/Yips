@@ -1,5 +1,6 @@
 package com.example.Yips;
 
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -54,8 +55,22 @@ public class userstatepageController {
         //WORKOUTS
         List<Workout> workouts = workoutRepository.workoutDateList();
         Collections.sort(workouts);
+        List<Workout> doneWorkouts = new ArrayList<>();
+        List<Workout> nextWorkouts = new ArrayList<>();
+        for(Workout workout: workouts) {
+            if(workout.getNewDoingDone()==null) {
+                System.out.println("GOODBYE");
+                System.out.println(workout.getName());
+            }
+            if (workout.getNewDoingDone().equalsIgnoreCase("DONE")) {
+                doneWorkouts.add(workout);
+            } else if (workout.getNewDoingDone().equalsIgnoreCase("DOING")) {
+                nextWorkouts.add(workout);
+            }
+        }
 
-        Workout workoutMostRecent = workouts.get(workouts.size()-1);
+
+        Workout workoutMostRecent = doneWorkouts.get(doneWorkouts.size()-1);
         List<Long> groupIds = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
         List<Group> groupList = new ArrayList<>();
         if(groupIds.size() > 0) {
@@ -69,9 +84,13 @@ public class userstatepageController {
         model.addAttribute("workout_mostRecent", workoutMostRecent);
         model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutMostRecent.getId()));
 
+        Workout workoutNext = new Workout();
+        if(nextWorkouts.size()>0) {
+            workoutNext = nextWorkouts.get(0);
+        } else {
 
+        }
 
-        Workout workoutNext = workouts.get(0);
         List<Long> groupIds2 = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutNext.getId());
         List<Group> groupList2 = new ArrayList<>();
         if(groupIds2.size() > 0) {
@@ -157,6 +176,8 @@ public class userstatepageController {
         session.setAttribute("mygroup", group);
         return "redirect:/group";
     }
+
+
 
 
 
