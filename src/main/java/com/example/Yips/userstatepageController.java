@@ -48,6 +48,8 @@ public class userstatepageController {
         int listLength = workoutRepository.findNewWorkoutsWithUserId(userId).size();
         List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserId(userId);
 
+        System.out.println("This is the listlength : " + listLength);
+
         model.addAttribute("invitesToWorkout", workoutsInvite);
         model.addAttribute("invitesToWorkoutLength", listLength);
 

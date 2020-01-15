@@ -1,28 +1,41 @@
-function showNumberOfWorkoutInvites() {
-    let arg1 = event.target.getAttribute('data-arg1');
-    console.log("Number of workoutInvites " + arg1)
-    let container = document.getElementById("showNumberOfWorkoutInvites")
-    container.innerHTML = `Woop woop! You have ${arg1} new workouts.`
-}
+
 showAllInvites();
 showAllGroups();
+showNumberOfWorkoutInvites();
 document.getElementById("sendbutton").addEventListener("click", sendInvite)
 function run() {
     console.log("hej")
+}
+function showNumberOfWorkoutInvites() {
+    let arg1 = document.getElementById("bodyTest").getAttribute('data-arg1')
+    let container = document.getElementById("showNumberOfWorkoutInvites")
+    if(arg1 == 1) {
+        container.innerHTML = `Woop woop! You have 1 new workout.`
+    }
+    else if(arg1 > 1) {
+        container.innerHTML = `Woop woop! You have ${arg1} new workouts.`
+    }
+    else 
+    container.innerHTML = `I´m sorry, no new workouts yet.. You can create your own if you'd like.`
 }
 function declineInviteWorkout () {
     let arg1 = event.target.getAttribute('data-arg1');
     console.log("workoutInviteContainer" + arg1);
     let container = document.getElementById("workoutInviteContainer" + arg1)
-    container.innerHTML = `<h6 class="modal-title">Yeah, you´re right, this workout wasn´t really you.</h6>`
+    container.innerHTML = ` <div class="modal-body mt-0"><h6 class="modal-title">Yeah, you´re right, this workout wasn´t really you.</h6></div>`
+    setTimeout( () => test(container), 1000)
+}
+
+function test(container) {
+    container.innerHTML = ``
 }
 
 function acceptInviteWorkout () {
     let arg1 = event.target.getAttribute('data-arg1');
     getmappingAcceptInviteWorkout("http://localhost:8081/rest/acceptWorkoutInvite/" + arg1)
     let container = document.getElementById("workoutInviteContainer" + arg1)
-    container.innerHTML = `<h6 class="modal-title">Yes, you'll crush this one!</h6>`
-
+    container.innerHTML = ` <div class="modal-body mt-0"> <h6 class="modal-title">Yes, you'll crush this one!</h6> </div>`
+    setTimeout( () => test(container), 1000)
 }
 
 
