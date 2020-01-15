@@ -53,7 +53,7 @@ public class userstatepageController {
 
 
         //WORKOUTS
-        List<Workout> workouts = workoutRepository.workoutDateList();
+        List<Workout> workouts = workoutRepository.workoutDateList(userId);
         Collections.sort(workouts);
         List<Workout> doneWorkouts = new ArrayList<>();
         List<Workout> nextWorkouts = new ArrayList<>();
@@ -69,27 +69,26 @@ public class userstatepageController {
             }
         }
 
+        if(doneWorkouts.size()>0) {
+            Workout workoutMostRecent = doneWorkouts.get(doneWorkouts.size() - 1);
 
-        Workout workoutMostRecent = doneWorkouts.get(doneWorkouts.size()-1);
-        List<Long> groupIds = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
-        List<Group> groupList = new ArrayList<>();
-        if(groupIds.size() > 0) {
-            System.out.println("test " + connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
-            for (int i = 0; i < groupIds.size(); i++)
-                groupList.add(groupRepository.findGroupById(groupIds.get(i)));
-            model.addAttribute("groupName_mostRecent_workout", groupList);
+            List<Long> groupIds = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
+
+            List<Group> groupList = new ArrayList<>();
+            if (groupIds.size() > 0) {
+                System.out.println("test " + connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
+                for (int i = 0; i < groupIds.size(); i++)
+                    groupList.add(groupRepository.findGroupById(groupIds.get(i)));
+                model.addAttribute("groupName_mostRecent_workout", groupList);
+            } else
+                model.addAttribute("groupName_mostRecent_workout", null);
+            model.addAttribute("workout_mostRecent", workoutMostRecent);
+            model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutMostRecent.getId()));
         }
-        else
-            model.addAttribute("groupName_mostRecent_workout",  null);
-        model.addAttribute("workout_mostRecent", workoutMostRecent);
-        model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutMostRecent.getId()));
-
         Workout workoutNext = new Workout();
         if(nextWorkouts.size()>0) {
             workoutNext = nextWorkouts.get(0);
-        } else {
 
-        }
 
         List<Long> groupIds2 = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutNext.getId());
         List<Group> groupList2 = new ArrayList<>();
@@ -103,7 +102,7 @@ public class userstatepageController {
         model.addAttribute("workout_next", workoutNext);
         model.addAttribute("exerciseList_workout_next", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutNext.getId()));
 
-
+        }
         //Hämtar alla grupper för en person.
         System.out.println("My userId is: " + userId);
         model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));

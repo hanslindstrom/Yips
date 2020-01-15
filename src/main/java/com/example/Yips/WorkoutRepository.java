@@ -75,11 +75,12 @@ public class WorkoutRepository {
 
         return workouts;
     }
-    public List<Workout>workoutDateList () {
+    public List<Workout>workoutDateList (Long userId) {
         List<Workout> workoutDateList = new ArrayList<>();
         Workout workout = new Workout();
         try (Connection conn = dataSource.getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout")) {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout JOIN USERWORKOUTCONNECTION ON WORKOUT.ID=USERWORKOUTCONNECTION.WORKOUTID WHERE USERID=?")) {
+            ps.setLong(1,userId);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 workout = new Workout();
