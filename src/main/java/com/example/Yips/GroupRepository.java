@@ -98,15 +98,19 @@ public class GroupRepository {
     }
 
     public List<User> getAllMembersWithGroup(Group group){
-        Group dbGroup = findByGroupname(group.getName().toLowerCase());
+        System.out.println("function getAllMembersWithGroupObject - group id: " + group.getId() + "group in parameter name: " + group.getName());
+//        Group dbGroup = findByGroupname(group.getName().toLowerCase());
+//        System.out.println("DB GROUP?!?!?!??!?: " + dbGroup);
+//        String groupId = dbGroup.getId().toString();
+//        System.out.println("function getAllMembersWithGroupObject - dBgroup findgroupbygroupname: " + dbGroup.getName());
         List<User> members = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT userid FROM usergroupconnection WHERE groupid = ?")){
-            ps.setString(1, dbGroup.getId().toString());
+            ps.setString(1, group.getId().toString());
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 long id = rs.getInt("userid");
-                System.out.println("Member id: " + id);
+                System.out.println("getAllMembersWithGroupObject - Member id: " + id);
                 members.add(userRepository.findByUserId(id));
             }
 

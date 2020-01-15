@@ -49,12 +49,14 @@ public class GroupController {
     // PostMapping for /group is in userstartpageController
     @GetMapping("/group")
     public String seeMyGroup(HttpSession session) {
-        Group group = (Group)session.getAttribute("mygroup");
+        Group group = (Group)session.getAttribute("onegroup");
+        System.out.println("Getmapping /group with id: " + group.getId());
         session.setAttribute("listOfMembers", groupRepository.getAllMembersWithGroup(group));
         System.out.println("GetMapping for /group, name: " + group.getName());
-        session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
+        session.setAttribute("onegroup", groupRepository.findByGroupname(group.getName()));
         //session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
         //System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
+        System.out.println("session set attribute onegroup---" + groupRepository.findByGroupname(group.getName()));
         return "group";
     }
 
@@ -63,7 +65,7 @@ public class GroupController {
         Group group = groupRepository.findGroupById(groupId);
         session.setAttribute("listOfMembers", groupRepository.getAllMembersWithGroup(group));
         System.out.println("GetMapping for /group, name: " + group.getName());
-        session.setAttribute("mygroup", groupRepository.findByGroupname(group.getName()));
+        session.setAttribute("onegroup", groupRepository.findByGroupname(group.getName()));
         //session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
         //System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
         return "group";
