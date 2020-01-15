@@ -41,8 +41,17 @@ public class RController {
     //@CrossOrigin
 
     @GetMapping ("/rest/declineWorkoutInvite/{workoutId}")
-    public void declineWorkoutInvite (@PathVariable long workoutId) {
+    public void declineWorkoutInvite (@PathVariable long workoutId, Authentication authentication) {
+        Long oldWorkoutId = workoutId;
+        Workout newWorkout = workoutRepository.findByWorkoutId(workoutId);
+        List<Exercise> newExerciselist = connectionRepository.findExercisesInWorkoutByWorkoutId(newWorkout.getId());
+        User currentUser = userRepository.findByUsername(authentication.getName());
 
+        for (Exercise newExercise : newExerciselist) {
+            Long oldExerciseId=newExercise.getId();
+            connectionRepository.deleteUserExerciseConnection(currentUser.getId(),oldExerciseId);
+        }
+        connectionRepository.deleteUserWorkoutConnection(currentUser.getId(), oldWorkoutId);
     }
 
     @GetMapping ("/rest/acceptWorkoutInvite/{workoutId}")
@@ -70,11 +79,12 @@ public class RController {
             Long oldExerciseId=newExercise.getId();
             //Delete old connections
             connectionRepository.deleteUserExerciseConnection(currentUser.getId(),oldExerciseId);
-            connectionRepository.deleteUserWorkoutConnection(currentUser.getId(), oldWorkoutId);
+
             newExercise.setId(exerciseRepository.findExerciseIdByExerciseName(newExercise));
             connectionRepository.workoutExerciseConnect(newWorkout.getId(), newExercise.getId());
             //user exercise connection happens when adding exercise, no need to connect.
         }
+        connectionRepository.deleteUserWorkoutConnection(currentUser.getId(), oldWorkoutId);
 //        //FINDING ORIG GROUPID - FULA VÄGEN
 //        List<Long> groupListId = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutId);
 //        for(Long groupId : groupListId) {
