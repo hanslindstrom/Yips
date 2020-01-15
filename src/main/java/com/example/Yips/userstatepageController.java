@@ -151,10 +151,15 @@ public class userstatepageController {
 
     @PostMapping("/newgroup")
     public String createGroup (@ModelAttribute Group group, Authentication authentication, HttpSession session){
+        System.out.println("Postmapping NEWGROUP group in param id: " + group.getId());
         group.setOwnerId(userRepository.findByUsername(authentication.getName()).getId());
         groupRepository.saveGroup(group);
+        System.out.println("Group saved...");
         group = groupRepository.findByGroupname(group.getName()); //Kommer faila om flera grupper har samma namn
-        session.setAttribute("mygroup", group);
+        System.out.println("SAMI get group by name - result id: " + group.getId());
+        session.setAttribute("onegroup", group);
+        System.out.println("added this group to session, id is: " + group.getId());
+        System.out.println("----LEAVING POSTMAPPING redirect -----");
         return "redirect:/group";
     }
 
