@@ -6,8 +6,11 @@ document.getElementById("sendbutton").addEventListener("click", sendInvite)
 function run() {
     console.log("hej")
 }
-function showNumberOfWorkoutInvites() {
+function showNumberOfWorkoutInvites(value) {
     let arg1 = document.getElementById("bodyTest").getAttribute('data-arg1')
+    if(value == -1) {
+        arg1 = arg1-1;
+    }
     let container = document.getElementById("showNumberOfWorkoutInvites")
     if(arg1 == 1) {
         container.innerHTML = `Woop woop! You have 1 new workout.`
@@ -20,10 +23,14 @@ function showNumberOfWorkoutInvites() {
 }
 function declineInviteWorkout () {
     let arg1 = event.target.getAttribute('data-arg1');
+    getmappingDeclineInviteWorkout("http://localhost:8081/rest/declineWorkoutInvite/" + arg1)
     console.log("workoutInviteContainer" + arg1);
     let container = document.getElementById("workoutInviteContainer" + arg1)
     container.innerHTML = ` <div class="modal-body mt-0"><h6 class="modal-title">Yeah, you´re right, this workout wasn´t really you.</h6></div>`
+    updateWorkoutInvite("http://localhost:8081/rest/updateWorkoutInvite");
+    showNumberOfWorkoutInvites(-1);
     setTimeout( () => test(container), 1000)
+
 }
 
 function test(container) {
@@ -35,6 +42,8 @@ function acceptInviteWorkout () {
     getmappingAcceptInviteWorkout("http://localhost:8081/rest/acceptWorkoutInvite/" + arg1)
     let container = document.getElementById("workoutInviteContainer" + arg1)
     container.innerHTML = ` <div class="modal-body mt-0"> <h6 class="modal-title">Yes, you'll crush this one!</h6> </div>`
+    updateWorkoutInvite("http://localhost:8081/rest/updateWorkoutInvite");
+    showNumberOfWorkoutInvites(-1);
     setTimeout( () => test(container), 1000)
 }
 
@@ -244,4 +253,25 @@ async function getmappingAcceptInviteWorkout(url) {
     }
     else console.log("unexpected error", response)
 }
+
+async function getmappingDeclineInviteWorkout(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        console.log("Sucess in declineInviteWorkout")
+    }
+    else console.log("unexpected error", response)
+}
+
+async function updateWorkoutInvite(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        console.log("Sucess in updateWorkoutInvite")
+    }
+    else console.log("unexpected error", response)
+}
+
 

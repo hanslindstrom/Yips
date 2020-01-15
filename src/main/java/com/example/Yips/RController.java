@@ -2,6 +2,7 @@ package com.example.Yips;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -162,6 +163,19 @@ public class RController {
         for(User user : groupRepository.getAllMembersWithGroupId(groupid))
             System.out.println("user in group " + user.getUsername());
         return groupRepository.getAllMembersWithGroupId(groupid);
+    }
+
+    @GetMapping ("/rest/updateWorkoutInvite")
+    public void updateWorkoutInvite (Model model, Authentication authentication) {
+        User user = userRepository.findByUsername(authentication.getName());
+        long userId = user.getId();
+        int listLength = workoutRepository.findNewWorkoutsWithUserId(userId).size();
+        List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserId(userId);
+
+        System.out.println("This is the listlength : " + listLength);
+
+        model.addAttribute("invitesToWorkout", workoutsInvite);
+        model.addAttribute("invitesToWorkoutLength", listLength);
     }
 
 
