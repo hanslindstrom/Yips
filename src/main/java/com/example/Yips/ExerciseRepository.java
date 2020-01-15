@@ -1,7 +1,6 @@
 package com.example.Yips;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -80,7 +79,7 @@ public class ExerciseRepository {
                     exerciseId= rs2.getLong("ID");
                 }
             }*/
-            exerciseId = findExerciseIdByExerciseName(exercise);
+            exerciseId = findExerciseIdByExercise(exercise);
             connectionRepository.userExerciseConnect(userId, exerciseId);
 
         } catch (SQLException e) {
@@ -88,7 +87,7 @@ public class ExerciseRepository {
         }
 
     }
-    public Long findExerciseIdByExerciseName (Exercise exercise) {
+    public Long findExerciseIdByExercise (Exercise exercise) {
         Long exerciseId=0L;
         List<Long>exerciseIdList = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
@@ -110,4 +109,69 @@ public class ExerciseRepository {
         return exerciseId;
     }
 
+    public Long findExerciseIdByExerciseName (String exerciseName) {
+        Long exerciseId=0L;
+        List<Long>exerciseIdList = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT ID FROM exercise WHERE NAME=?")){
+            ps.setString(1, exerciseName);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Long exerciseIdDB = rs.getLong("ID");
+                exerciseIdList.add(exerciseIdDB);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for(Long id:exerciseIdList) {
+            if(id>exerciseId) {
+                exerciseId=id;
+            }
+        }
+        return exerciseId;
+    }
+
+
+    public Exercise findExerciseById(Long exerciseId) {
+        Exercise exercise = new Exercise();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM exercise WHERE ID=?")){
+            ps.setLong(1,exerciseId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                exercise.setId(rs.getLong("ID"));
+                exercise.setName(rs.getString("NAME"));
+                exercise.setMeters(rs.getInt("METERS"));
+                exercise.setCalories(rs.getInt("CALORIES"));
+                exercise.setWeight(rs.getInt("WEIGHT"));
+                exercise.setReps(rs.getInt("REPS"));
+                exercise.setSets(rs.getInt("SETS"));
+                exercise.setCadence(rs.getInt("CADENCE"));
+                ps.executeQuery();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exercise;
+
+    }
+
+    // TODO update exercise
+    public void updateExercise(Exercise exercise) {
+        System.out.println("Inside update exercise method");
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE exercise SET NAME='"+exercise.getName()
+                            +"', SECONDS='"+exercise.getSeconds()
+                            +"', METERS='" +exercise.getMeters()+"', CALORIES='"+exercise.getCalories()
+                            +"', WEIGHT='"+exercise.getWeight()+"', REPS='"+exercise.getReps()
+                            +"', SETS='"+exercise.getSets()+"', CADENCE='"+exercise.getCadence()+"' WHERE ID="+exercise.getId())) {
+
+            ps.executeUpdate();
+            System.out.println("executed update exercise metod, with name " + exercise.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

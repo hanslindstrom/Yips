@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -89,14 +88,27 @@ public class WorkoutController {
         return "workout";
     }
     @PostMapping("/postexercise")
-    public String postExercise(@ModelAttribute Exercise exercise, Authentication authentication,HttpSession session) {
+    public String postExercise(@ModelAttribute Exercise exercise, Authentication authentication, HttpSession session) {
+        System.out.println("HANS Inside postmapping postexer, before, ex. name: " + exercise.getName());
+        System.out.println("Inside postmapping postexer, ex. id: " + exercise.getId());
+
+        //exercise.setId(exerciseRepository.findExerciseIdByExerciseName(exercise.getName()));
+
+        System.out.println("AFTER: Inside postmapping postexer, after, ex. id: " + exercise.getId());
         Long userId = userRepository.findByUsername(authentication.getName()).getId();
         Workout workout = (Workout)session.getAttribute("workout");
+        if(exercise.getId() == null){
+            exerciseRepository.addExercise(exercise, userId);
+            System.out.println("added exercise with name " + exercise.getName() + " with id " + exerciseRepository.findExerciseIdByExercise(exercise));
+            Long workoutId = workout.getId();
+            Long exerciseId = exerciseRepository.findExerciseIdByExercise(exercise);
+            connectionRepository.workoutExerciseConnect(workoutId,exerciseId);
+        }else {
+            exerciseRepository.updateExercise(exercise);
+            System.out.println("ELSE Ex update" + exercise.getName());
+        }
+//        Exercise origExerciseId = exerciseRepository.findExerciseById(exercise.getId());
 
-        exerciseRepository.addExercise(exercise, userId);
-        Long workoutId = workout.getId();
-        Long exerciseId = exerciseRepository.findExerciseIdByExerciseName(exercise);
-        connectionRepository.workoutExerciseConnect(workoutId,exerciseId);
         return "redirect:/workout";
     }
 

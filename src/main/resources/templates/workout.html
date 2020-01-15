@@ -34,7 +34,16 @@
             <span th:if="*{type}!='none'" th:text="*{type}"></span>
             <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
             <ul th:each="exercise:${exercises}">
-                <li th:text="${exercise.reps}+' '+${exercise.name}"></li>
+                    <!-- Title = link to edit exercise -->
+                    <h5 class="mt-3"  onclick="editexercise()" th:data-arg1="${exercise.name}"  data-toggle="modal" data-target="#newexercise" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
+                    <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
+                    <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
+                    <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
+                    <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
+                    <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
+                    <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
+                    <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
+            
             </ul>
 
         </div>
@@ -43,6 +52,7 @@
 
     <button type="button" class="btn color-contrast mr-2" data-toggle="modal" data-target="#newexercise">Add exercise</button>
     <button type="button" class="btn color-contrast ml-2" data-toggle="modal" data-target="#sendtogroup">Send workout to group</button>
+    <button type="button" class="btn color-contrast ml-2" data-target="#" href="userstartpage.html">Done</button>
 
     <div class="modal fade" id="newexercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -80,7 +90,7 @@
                             <input
                                     type="text"
                                     class="form-control mb-2"
-                                    placeholder="New exercise"
+                                    placeholder="Exercise name"
                                     id="newexercisename"
                                     name="newexercisename"
                                     th:field="*{name}"
@@ -200,6 +210,7 @@
 <div th:replace="fragments :: footer">
     Detta ska ersättas av ett fragment footer när Spring Boot körs!
 </div>
+<script src="mainfunction.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

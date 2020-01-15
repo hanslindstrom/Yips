@@ -274,4 +274,18 @@ async function updateWorkoutInvite(url) {
     else console.log("unexpected error", response)
 }
 
+function editexercise(){
+    let value = event.target.getAttribute('data-arg1');
+    console.log("value from data-arg1 " + value)
+    editexercisegetmapping("http://localhost:8081/rest/editExercise/"+ value)
+}
 
+async function editexercisegetmapping(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        console.log("Sucess in editexecisegetmapping")
+    }
+    else console.log("unexpected error", response)
+}

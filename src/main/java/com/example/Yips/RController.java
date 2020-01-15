@@ -81,7 +81,7 @@ public class RController {
             //Delete old connections
             connectionRepository.deleteUserExerciseConnection(currentUser.getId(),oldExerciseId);
 
-            newExercise.setId(exerciseRepository.findExerciseIdByExerciseName(newExercise));
+            newExercise.setId(exerciseRepository.findExerciseIdByExercise(newExercise));
             connectionRepository.workoutExerciseConnect(newWorkout.getId(), newExercise.getId());
             //user exercise connection happens when adding exercise, no need to connect.
         }
@@ -156,6 +156,25 @@ public class RController {
     public List<Group> getAllGroupsForUser (Authentication authentication){
         return groupRepository.findAllMyGroups(userRepository.findByUsername(authentication.getName()).getId());
     }
+
+    // TODO edit exercise and update old one
+    @GetMapping("/rest/editExercise/{exerciseName}")
+    public Exercise editExercise (@PathVariable String exerciseName, Model model, @ModelAttribute Exercise exercise) {
+        System.out.println("We get " + exerciseName);
+        Long exerciseIdToUpdate = exerciseRepository.findExerciseIdByExerciseName(exerciseName);
+        Exercise exerciseToUpdate = exerciseRepository.findExerciseById(exerciseIdToUpdate);
+        model.addAttribute("exercise", exerciseToUpdate);
+        System.out.println("added exercise to update to the model, id: " + exerciseToUpdate.getId());
+        return exerciseToUpdate;
+    }
+    // SAMI: delete @ModelAttribute
+
+
+//
+//    @PostMapping ("/rest/editExercise/{exerciseId}")
+//        public Exercise updateExercise (@PathVariable Long exerciseId,Model model, ModelAttribute Exercise exercise){
+//
+//        }
 
 
     @GetMapping ("/rest/getAllGroupMembers/{groupid}")

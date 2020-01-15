@@ -44,6 +44,10 @@ font-weight: bold;
 }
 
 
+.button-edit-exercise:hover {
+  color: black;
+  font-weight: bold;
+}
 .btn:hover {
   color: #414141;
   background-color: none;

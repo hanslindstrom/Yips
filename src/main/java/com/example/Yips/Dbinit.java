@@ -1,13 +1,11 @@
 package com.example.Yips;
 
 
-import org.hibernate.jdbc.Work;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,14 +76,14 @@ public class Dbinit implements CommandLineRunner {
         exercise.setSets(5);
         exercise.setReps(5);
         this.exerciseRepository.addExercise(exercise,4L);
-        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExerciseName(exercise));
+        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExercise(exercise));
 
         exercise = new Exercise();
         exercise.setName("double unders");
         exercise.setSeconds(120);
         exercise.setReps(100);
         this.exerciseRepository.addExercise(exercise,4L);
-        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExerciseName(exercise));
+        connectionRepository.workoutExerciseConnect(workoutDB3.getId(), exerciseRepository.findExerciseIdByExercise(exercise));
 
 
 
