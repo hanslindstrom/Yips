@@ -127,7 +127,7 @@ public class RController {
         inviteInfoList.add(inviteRepository.getAllInvitesWithUserId(user.getId()));
         inviteInfoList.add(listOfGroupInvites);
         inviteInfoList.add(listOfSenders);
-        System.out.println("this is all the invites we return to JS" + inviteInfoList);
+        System.out.println("this is all the invites we return to JS" + inviteInfoList.get(0));
         return inviteInfoList;
     }
 

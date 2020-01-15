@@ -69,18 +69,30 @@ async function showAllInvites() {
     let container = document.getElementById("inviteContainer")
     let textToPrint = "";
     if(array[0].length > 0) {
+        textToPrint += `<button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-medium mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newinvite"></button>
+        <div class="modal fade" th:id="newinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">YOUR NEW GROUP INVITES</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>  
+            </div> 
+            <div class="modal-body mt-0">
+             `
     for(let i = 0; i < array[1].length; i++) {
         console.log("Invite id should be: " + array[0][i].id)
         textToPrint +=
-    `<h2>Sender</h2>
-    <h4>${array[2][i]}</h4>
-    <h2>Group</h2>
-    <h4>${array[1][i]}</h4>
+    `                
+                        <h5 th:text="${array[2][i]} + ' sent you this nice invite."></h5>
+                        <h5 th:text="${array[1][i]} + ' sent you this nice invite."></h5>
+                        <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
+                        <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${array[0][i].id}"  id="acceptButton${array[0][i].id}" value="${array[0][i].id}">ACCEPT</button>
+                        <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${array[0][i].id}" id="declineButton${array[0][i].id}" value="${array[0][i].id}">DECLINE</button>
+                    
     
-    <button type="button" class="btn btn-secondary" id="acceptButton${array[0][i].id}" value="${array[0][i].id}" >Accept</button>
-    <button type="button" class="btn btn-secondary" id="declineButton${array[0][i].id}" value="${array[0][i].id}" >Decline</button>
      `
-     container.innerHTML = textToPrint;
 
     document.getElementById("declineButton"+array[0][i].id).addEventListener("click", nestingFunction = () => {
         declineButtonfunction(document.getElementById("declineButton" +array[0][i].id).value) })
@@ -89,7 +101,14 @@ async function showAllInvites() {
 
     })
         }
-         
+        textToPrint += `</div>
+        </div>
+    </div>
+</div>
+</div>
+</div>`
+container.innerHTML = textToPrint;
+
     }
     else
     container.innerHTML = 
@@ -103,8 +122,7 @@ async function showAllGroups(){
     if(array.length > 0) {
         for(let i = 0; i < array.length; i++) {
             let membersInGroup = await getAllMembersInGroup("http://localhost:8081/rest/getAllGroupMembers/" + array[i].id)
-            console.log("id " + membersInGroup[0].username)
-            console.log("id " + membersInGroup[1].username)
+            console.log("username of membersingroup " + membersInGroup[i].username)
 
           
 
