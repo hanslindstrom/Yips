@@ -12,8 +12,12 @@
 </head>
 <body>
 
+    <div th:replace="fragments :: header" class="mb-5">
+        Detta ska ersättas av ett fragment footer när Spring Boot körs!
+    </div>
+
 <div class="container container-group mt-5">
-    <div class="card color-medium">
+    <div class="card color-medium mt-5">
         <div class="card-header">
             <h2 class="mb-2 mt-2" th:text="${session.onegroup.name}">MY RUNNING GROUP</h2> 
         </div>
