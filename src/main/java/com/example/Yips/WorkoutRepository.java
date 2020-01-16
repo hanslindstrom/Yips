@@ -18,6 +18,38 @@ public class WorkoutRepository {
     @Autowired
     ConnectionRepository connectionRepository;
 
+    public List<Workout> findNewWorkoutsWithUserIdForJoel (Long userId) {
+        List<Workout>newWorkouts = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM WORKOUT JOIN USERWORKOUTCONNECTION ON WORKOUT.ID=USERWORKOUTCONNECTION.WORKOUTID WHERE USERID=? AND NEWDOINGDONE = ?")){
+            ps.setLong(1,userId);
+            ps.setString(2, "NEW");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Workout workout=new Workout();
+                workout.setId(rs.getLong("ID"));
+                workout.setName(rs.getString("NAME"));
+                if ( rs.getDate("WDATE") == null)
+                    continue;
+                workout.setDate(rs.getDate("WDATE").toLocalDate());
+                workout.setType(rs.getString("WTYPE"));
+                workout.setTime(rs.getInt("WTIME"));
+                workout.setPlace(rs.getString("PLACE"));
+                workout.setDescription(rs.getString("DESCRIPTION"));
+                workout.setCategory(rs.getString("CATEGORY"));
+                workout.setNewDoingDone(rs.getString("NEWDOINGDONE"));
+                newWorkouts.add(workout);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return newWorkouts;
+    }
+
     public List<Workout> findNewWorkoutsWithUserId (Long userId) {
         List<Workout>newWorkouts = new ArrayList<>();
         try (Connection conn = dataSource.getConnection();
@@ -143,8 +175,12 @@ public class WorkoutRepository {
                 long id = rs.getInt("id");
                 String name = rs.getString("name");
                 String category = rs.getString("category");
-                LocalDate date = rs.getDate("WDATE").toLocalDate();
-                workout.setDate(date);
+                String newdoingdone = rs.getString("NEWDOINGDONE");
+                if( rs.getDate("WDATE") != null) {
+                    LocalDate date = rs.getDate("WDATE").toLocalDate();
+                    workout.setDate(date);
+                }
+                workout.setNewDoingDone(newdoingdone);
                 workout.setId(id);
                 workout.setName(name);
                 workout.setCategory(category);

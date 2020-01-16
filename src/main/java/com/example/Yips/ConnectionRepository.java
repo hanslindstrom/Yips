@@ -63,6 +63,25 @@ public class ConnectionRepository {
         }
     }
 
+    public List<Long> findAllWorkoutIdsConnectedToUserWithUserId (Long userId) {
+        List<Long> workoutsIds = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERWORKOUTCONNECTION WHERE USERID = ? ")) {
+            ps.setString(1, userId.toString());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                long workoutId = rs.getInt("workoutid");
+                workoutsIds.add(workoutId);
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return workoutsIds;
+    }
+
+
     public void userExerciseConnect(Long userId, Long exerciseId) {
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO userexerciseconnection(USERID, EXERCISEID) VALUES (?,?)")) {

@@ -21,7 +21,6 @@ public class Workout implements Comparable<Workout> {
     private String description;
     private String category;
     private String newDoingDone;
-    private int daysToWorkout;
 
 
     public Workout(String name, String category) {
@@ -41,17 +40,7 @@ public class Workout implements Comparable<Workout> {
 
 
 //Not working.... Error with getting the specific workouts date...
-    public int getDaysToWorkout() {
-        LocalDate now2 = LocalDate.now();
-        System.out.println("this.Date" + this.date);
-        System.out.println("now 2 = " + now2);
-        System.out.println(this.date.compareTo(now2));
 
-      /*  LocalDate now = LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        workout.setDate(now);*/
-        return 2; //compareTo(workout);
-    }
 
 
 

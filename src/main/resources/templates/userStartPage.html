@@ -51,7 +51,7 @@
 
     <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast">WORKOUTS</h1>
 
-        <div th:if="${invitesToWorkoutLength > 0 }" id="bodyTest" th:data-arg1="${invitesToWorkoutLength}">
+        <div  id="bodyTest" th:data-arg1="${invitesToWorkoutLength}">
          <!-- Button for NEW WORKOUT INVITE -->
         
             <button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkoutinvite"></button>
@@ -83,44 +83,56 @@
 
        
     <!-- END OF NEW INVITES TO WORKOUT-->
-
+    <div class="container">
+        <div class="row mt-5 pt-3">
+            <div class="col-sm">
+                <div id="nextWorkoutContainer">
+                </div>
+            </div>
+            <div class="col-sm">
+                <div id="mostPreviousWorkoutContainer">
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!--Workout card - next workout-->
     <div class="container">
         <div class="row mt-5 pt-3">
             <div class="col-sm">
                 <div class="card color-contrast" th:object="${workout_mostRecent}">
                     <div th:if="${workout_mostRecent!=null}">
-                    <a class="text-color-dark workout-hover" th:href="'workout/' + *{id}">
-                        <div class="card-body">
-                            <h4 class="card-title d-flex justify-content-center">MOST RECENTLY DONE WORKOUT</h4>
-    <!--                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>-->
-                            <hr/>
-                            <h5  th:text="*{name}">LÖPNING 60MIN</h5>
-                            <p class="card-text" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
-                            <div th:if="${groupName_mostRecent_workout != null}" th:each="group : ${groupName_mostRecent_workout}">
-                                <h6 th:text="*{name}">JOHANS LÖPGRUPP</h6>
-                            </div>  
-                            <hr/>
-                            <div  th:if="${exerciseList_mostRecent != null}" th:each="exercise : ${exerciseList_mostRecent}">
-                                <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
-                                <button class="btn btn-sm color-dark mb-3 mt-3 more-info-exercise">More info</button>
-                                <div class="exercisecontainer">
-                                    <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
-                                    <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
-                                    <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
-                                    <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
-                                    <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
-                                    <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
-                                    <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
+                        <a class="text-color-dark workout-hover" th:href="'workout/' + *{id}">
+                            <div class="card-body">
+                                <h4 class="card-title d-flex justify-content-center">MOST RECENTLY DONE WORKOUT</h4>
+        <!--                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>-->
+                                <hr/>
+                                <h5  th:text="*{name}">LÖPNING 60MIN</h5>
+                                <p class="card-text" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
+                                <div th:if="${groupName_mostRecent_workout != null}" th:each="group : ${groupName_mostRecent_workout}">
+                                    <h6 th:text="*{name}">JOHANS LÖPGRUPP</h6>
+                                </div>  
+                                <hr/>
+                                <div  th:if="${exerciseList_mostRecent != null}" th:each="exercise : ${exerciseList_mostRecent}">
+                                    <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
+                                    <button class="btn btn-sm color-dark mb-3 mt-3 more-info-exercise">More info</button>
+                                    <div class="exercisecontainer">
+                                        <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
+                                        <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
+                                        <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
+                                        <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
+                                        <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
+                                        <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
+                                        <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
+                                    </div>
                                 </div>
+                        
+                                <hr/>
+                                <h5  th:if="*{date != null}" th:text="*{date}">2020-02-02</h5>
                             </div>
-                    
-                            <hr/>
-                            <h5  th:if="*{date != null}" th:text="*{date}">2020-02-02</h5>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
             </div>
 
             <!-- Workout card - previous workout -->

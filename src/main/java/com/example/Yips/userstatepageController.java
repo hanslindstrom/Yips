@@ -46,8 +46,8 @@ public class userstatepageController {
         model.addAttribute("listOfGoalsForUser", goalArrayList);
 
         //INVITE TO WORKOUT
-        int listLength = workoutRepository.findNewWorkoutsWithUserId(userId).size();
-        List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserId(userId);
+        int listLength = workoutRepository.findNewWorkoutsWithUserIdForJoel(userId).size();
+        List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserIdForJoel(userId);
         model.addAttribute("invitesToWorkout", workoutsInvite);
         model.addAttribute("invitesToWorkoutLength", listLength);
 
@@ -61,6 +61,7 @@ public class userstatepageController {
             if(workout.getNewDoingDone()==null) {
                 System.out.println("GOODBYE");
                 System.out.println(workout.getName());
+                continue;
             }
             if (workout.getNewDoingDone().equalsIgnoreCase("DONE")) {
                 doneWorkouts.add(workout);
@@ -104,7 +105,6 @@ public class userstatepageController {
 
         }
         //Hämtar alla grupper för en person.
-        System.out.println("My userId is: " + userId);
         model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));
         System.out.println("All my groups are: " + groupRepository.findAllMyGroups(userId));
 

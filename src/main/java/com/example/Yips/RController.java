@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -53,6 +54,7 @@ public class RController {
             connectionRepository.deleteUserExerciseConnection(currentUser.getId(),oldExerciseId);
         }
         connectionRepository.deleteUserWorkoutConnection(currentUser.getId(), oldWorkoutId);
+
     }
 
     @GetMapping ("/rest/acceptWorkoutInvite/{workoutId}")
@@ -60,7 +62,7 @@ public class RController {
         System.out.println("AAA Workout id to accept " + workoutId);
         Long oldWorkoutId = workoutId;
         Workout newWorkout = workoutRepository.findByWorkoutId(workoutId);
-        newWorkout.setNewDoingDone("Doing");
+        newWorkout.setNewDoingDone("DOING");
         System.out.println("Date in newWorkout " + newWorkout.getDate());
         List<Exercise> newExerciselist = connectionRepository.findExercisesInWorkoutByWorkoutId(newWorkout.getId());
         User currentUser = userRepository.findByUsername(authentication.getName());
@@ -203,13 +205,108 @@ public class RController {
     public void updateWorkoutInvite (Model model, Authentication authentication) {
         User user = userRepository.findByUsername(authentication.getName());
         long userId = user.getId();
-        int listLength = workoutRepository.findNewWorkoutsWithUserId(userId).size();
-        List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserId(userId);
+        List<Workout> workoutsInvite = workoutRepository.findNewWorkoutsWithUserIdForJoel(userId);
 
+        int listLength = workoutsInvite.size();
+        System.out.println("we are now updating workoutinivte list, which now is " + listLength);
         System.out.println("This is the listlength : " + listLength);
 
         model.addAttribute("invitesToWorkout", workoutsInvite);
         model.addAttribute("invitesToWorkoutLength", listLength);
+    }
+
+    @GetMapping ("/rest/getNextWorkouts")
+    public Workout getNextWorkouts (Authentication authentication) {
+        User user = userRepository.findByUsername(authentication.getName());
+        List<Long> workoutIds = connectionRepository.findAllWorkoutIdsConnectedToUserWithUserId(user.getId());
+        List<Workout> workouts = new ArrayList<>();
+        for (Long workoutId : workoutIds) {
+            if(workoutRepository.findByWorkoutId(workoutId).getDate() == null) {
+                continue;
+            }
+            else
+            workouts.add(workoutRepository.findByWorkoutId(workoutId));
+        }
+        Collections.sort(workouts);
+        System.out.println("this is the size of workoutIds: " + workoutIds.size());
+        System.out.println("this is the size of workouts: " + workouts.size());
+        List<Workout> doneWorkouts = new ArrayList<>();
+        List<Workout> nextWorkouts = new ArrayList<>();
+        for(Workout workout: workouts) {
+            if(workout.getNewDoingDone() == null) {
+                System.out.println("GOODBYE");
+                System.out.println("This is the newdoingdone" + workout.getNewDoingDone());
+                System.out.println(workout.getName());
+                continue;
+            }
+            if (workout.getNewDoingDone().equalsIgnoreCase("DONE")) {
+                doneWorkouts.add(workout);
+            } else if (workout.getNewDoingDone().equalsIgnoreCase("DOING")) {
+                nextWorkouts.add(workout);
+                System.out.println("We found a doing exercise!");
+            }
+        }
+        if(nextWorkouts.size() == 0) {
+            System.out.println("There is no new workouts ");
+            return new Workout();
+        }
+            else
+            System.out.println("next workout is.... " + nextWorkouts.get(nextWorkouts.size()-1).getName());
+        return nextWorkouts.get(nextWorkouts.size()-1);
+    }
+
+    @GetMapping ("/rest/getExerciseListNextWorkout/{workoutId}")
+    public List<Exercise> getExerciseListNextWorkout (@PathVariable Long workoutId) {
+        System.out.println("THis is the new workout to get exercise list " + workoutId);
+        List<Exercise> exercises = connectionRepository.findExercisesInWorkoutByWorkoutId(workoutId);
+        return exercises;
+    }
+
+    @GetMapping("/rest/getMostRecentWorkout")
+    public Workout getMostRecentWorkout (Authentication authentication) {
+        //GETS ALL WORKOUTS CONNECTED TO USERS AND SORTS ON DATE
+        User user = userRepository.findByUsername(authentication.getName());
+        List<Long> workoutIds = connectionRepository.findAllWorkoutIdsConnectedToUserWithUserId(user.getId());
+        List<Workout> workouts = new ArrayList<>();
+        for (Long workoutId : workoutIds) {
+            if(workoutRepository.findByWorkoutId(workoutId).getDate() == null) {
+                continue;
+            }
+            else
+                workouts.add(workoutRepository.findByWorkoutId(workoutId));
+        }
+        Collections.sort(workouts);
+
+        //SORTS WORKOUTS ON DOING OR NEW WORKOUT
+        List<Workout> doneWorkouts = new ArrayList<>();
+        for(Workout workout: workouts) {
+            if(workout.getNewDoingDone() == null) {
+                System.out.println("GOODBYE");
+                System.out.println("This is the newdoingdone" + workout.getNewDoingDone());
+                System.out.println(workout.getName());
+                continue;
+            }
+            if (workout.getNewDoingDone().equalsIgnoreCase("DONE")) {
+                doneWorkouts.add(workout);
+                System.out.println("We found a done exercise!");
+
+            }
+        }
+        if(doneWorkouts.size() == 0) {
+            System.out.println("There is no done workouts ");
+            return new Workout();
+        }
+        else
+            System.out.println("next workout is.... " + doneWorkouts.get(doneWorkouts.size()-1).getName());
+        return doneWorkouts.get(doneWorkouts.size()-1);
+
+    }
+
+    @GetMapping ("/rest/getExerciseListMostRecentWorkout/{workoutId}")
+    public List<Exercise> getExerciseListMostRecentWorkout (@PathVariable Long workoutId) {
+        System.out.println("THis is the most recent workout to get exercise list " + workoutId);
+        List<Exercise> exercises = connectionRepository.findExercisesInWorkoutByWorkoutId(workoutId);
+        return exercises;
     }
 
 

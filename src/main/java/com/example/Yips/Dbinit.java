@@ -64,7 +64,7 @@ public class Dbinit implements CommandLineRunner {
         this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("admin"));
         Workout workoutDB2 = workoutRepository.findByWorkoutname(workout2.getName());
         workoutDB2.setDate(LocalDate.of(2020,7,10));
-        workoutDB2.setNewDoingDone("DOING");
+        workoutDB2.setNewDoingDone("NEW");
         this.workoutRepository.updateWorkout(workoutDB2);
         connectionRepository.userWorkoutConnect("admin", workoutDB2.getId());
 
@@ -72,7 +72,7 @@ public class Dbinit implements CommandLineRunner {
         this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("admin"));
         Workout workoutDB3 = workoutRepository.findByWorkoutname(workout3.getName());
         workoutDB3.setDate(LocalDate.of(2020,1,10));
-        workoutDB3.setNewDoingDone("DOING");
+        workoutDB3.setNewDoingDone("NEW");
         this.workoutRepository.updateWorkout(workoutDB3);
         connectionRepository.userWorkoutConnect("admin", workoutDB3.getId());
 
