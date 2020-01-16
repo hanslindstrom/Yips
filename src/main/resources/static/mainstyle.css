@@ -261,3 +261,18 @@ color:#414141;
 background-color: #ff8438;
 text-decoration: none;
 }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.totop{
+margin-bottom: 2000px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
