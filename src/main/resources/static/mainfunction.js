@@ -1,11 +1,8 @@
-
-showAllInvites();
 showAllGroups();
+showNumberOfGroupInvites();
 showNumberOfWorkoutInvites();
-document.getElementById("sendbutton").addEventListener("click", sendInvite)
-function run() {
-    console.log("hej")
-}
+
+
 function showNumberOfWorkoutInvites(value) {
     let arg1 = document.getElementById("bodyTest").getAttribute('data-arg1')
     if(value == -1) {
@@ -47,73 +44,52 @@ function acceptInviteWorkout () {
     setTimeout( () => test(container), 1000)
 }
 
-
-
-async function declineButtonfunction (value) {
-    console.log("Acessed declinebutton function.")
-    console.log("value " + value)
-    await declineInvite("http://localhost:8081/rest/declineInvite/" + value)
-    console.log("I think you deleted a invite now..")
-    showAllInvites();
-}
-async function acceptButtonFunction (value) {
-    console.log("Accesed accept button function")
-    console.log("value " + value)
-    await acceptInvite("http://localhost:8081/rest/acceptInvite/" + value)
-    showAllInvites();
-    showAllGroups();
+function acceptInviteGroup () {
+    let arg1 = event.target.getAttribute('data-arg1');
+    getmappingAcceptInviteGroup("http://localhost:8081/rest/acceptInviteGroup/" + arg1)
+    let container = document.getElementById("groupInviteContainer" + arg1)
+    container.innerHTML = ` <div class="modal-body mt-0"> <h6 class="modal-title">These are your new buddies, get along now!</h6> </div>`
+    showNumberOfGroupInvites(true);
+    setTimeout( () => emptyClickedInvite(container), 3000)
+    setTimeout( () => showAllGroups(), 500)
 }
 
-async function showAllInvites() {
-    let array = await getAllInvites("http://localhost:8081/rest/getAllInvites")
-    let container = document.getElementById("inviteContainer")
-    let textToPrint = "";
-    if(array[0].length > 0) {
-        textToPrint += `<button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-medium mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newinvite"></button>
-        <div class="modal fade" th:id="newinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">YOUR NEW GROUP INVITES</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>  
-            </div> 
-            <div class="modal-body mt-0">
-             `
-    for(let i = 0; i < array[1].length; i++) {
-        console.log("Invite id should be: " + array[0][i].id)
-        textToPrint +=
-    `                
-                        <h5 th:text="${array[2][i]} + ' sent you this nice invite."></h5>
-                        <h5 th:text="${array[1][i]} + ' sent you this nice invite."></h5>
-                        <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
-                        <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${array[0][i].id}"  id="acceptButton${array[0][i].id}" value="${array[0][i].id}">ACCEPT</button>
-                        <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${array[0][i].id}" id="declineButton${array[0][i].id}" value="${array[0][i].id}">DECLINE</button>
-                    
-    
-     `
+function declineInviteGroup() {
+    let arg1 = event.target.getAttribute('data-arg1');
+    getmappingDeclineInviteGroup("http://localhost:8081/rest/declineInviteGroup/" + arg1)
+    let container = document.getElementById("groupInviteContainer" + arg1)
+    container.innerHTML = ` <div class="modal-body mt-0"> <h6 class="modal-title">Yeah I didn´t like those guys either. We will find better friends.</h6> </div>`
+    showNumberOfGroupInvites(true);
+    setTimeout( () => emptyClickedInvite(container), 3000)
+    setTimeout( () => showAllGroups(), 500)
+}
 
-    document.getElementById("declineButton"+array[0][i].id).addEventListener("click", nestingFunction = () => {
-        declineButtonfunction(document.getElementById("declineButton" +array[0][i].id).value) })
-    document.getElementById("acceptButton"+array[0][i].id).addEventListener("click", nestingFunction = () => {
-        acceptButtonFunction(document.getElementById("acceptButton" +array[0][i].id).value)
+function emptyClickedInvite (container) {
+    container.innerHTML = ``
+}
 
-    })
-        }
-        textToPrint += `</div>
-        </div>
-    </div>
-</div>
-</div>
-</div>`
-container.innerHTML = textToPrint;
-
+function showNumberOfGroupInvites(isLower) {
+    let arg1 = document.getElementById("groupInvite").getAttribute('data-arg1')
+    console.log("We want to decrease invites sent. " + isLower + " which currently is " + arg1)
+    if(isLower == true) {
+        arg1 = arg1-1;
     }
-    else
-    container.innerHTML = 
-    `<h2> You have no invite girlfriend </h2>`
+    console.log("Now arg1 is " + arg1)
+    let container = document.getElementById("showGroupInvites")
+    if(arg1 == 1) {
+        container.innerHTML = `Woop woop! You have 1 new group invite.`
+    }
+    else if(arg1 > 1) {
+        container.innerHTML = `Woop woop! You have ${arg1} new group invites.`
+    }
+    else 
+    container.innerHTML = `I´m sorry, no new group invites yet.. You can create your own group if you'd like.`
 }
+
+
+
+
+
 async function showAllGroups(){
     let array = await getAllGroups("http://localhost:8081/rest/getAllGroups")
     let container = document.getElementById("groupContainer")
@@ -121,11 +97,9 @@ async function showAllGroups(){
    
     if(array.length > 0) {
         for(let i = 0; i < array.length; i++) {
-            let membersInGroup = await getAllMembersInGroup("http://localhost:8081/rest/getAllGroupMembers/" + array[i].id)
-            console.log("username of membersingroup " + membersInGroup[i].username)
-
-          
-
+            let id = array[i].id
+            console.log(" id sent with getallgroupmembers " + id)
+           
 
             textToPrint += `<a class="color-medium" href="/group/${array[i].id}">
             <div class="card color-medium cardGroup">
@@ -137,6 +111,8 @@ async function showAllGroups(){
                         <hr/>
                         <h5 class="members-headline">Members</h5>
                         <ul class="list-group list-group-flush">`
+                        let membersInGroup = getAllMembersInGroup("http://localhost:8081/rest/getAllGroupMembers/" + id)
+                        setTimeout(function() {console.log("Maybe this works...")}, 300)
                     for(let a = 0; a < membersInGroup.length; a++) {
                          textToPrint += `<li class="list-group-item">${membersInGroup[a].username}</li>`
                     }
@@ -158,80 +134,7 @@ async function showAllGroups(){
 }
 
 
-async function sendInvite () {
-//Spara värdet
-    let memberName = document.getElementById("membername").value;
-    let result = await getInformation("http://localhost:8081/rest/getUser/" + memberName)
-    console.log("membername: " + memberName);
 
-    let responseText = "";
-    let responseTitle ="";
-    if(result.username !== null ){
-        responseTitle = "Successful!"
-        responseText = "An invite has been sent to: " + memberName;
-        
-    } else {
-        responseTitle = "Unsuccessful"
-        responseText = "There is no member with username: " + memberName;
-    }
-    
-    sendNewModal(responseTitle, responseText);
-}
-
-function sendNewModal(responseTitle, responseText){
-    let newModal = document.getElementById("newModal");
-
-    newModal.innerHTML = `<h1>${responseText}</h1>`
-}
-
-async function getInformation(url) {
-    let response = await fetch(url, {
-        method: "GET"
-    });
-    if (response.status === 200) {
-        let result = await response.json()
-        console.log(result)
-        //var objekt = JSON.parse(result)
-        return result
-    }
-    else console.log("unexpected error", response)
-}
-
-async function declineInvite(url) {
-    let response = await fetch(url, {
-        method: "DELETE"
-    });
-    if (response.status === 200) {
-        console.log("Deleted" + url)
-    }
-    else console.log("unexpected error", response)
-}
-
-async function acceptInvite(url) {
-    let response = await fetch(url, {
-        method: "GET"
-    });
-    if (response.status === 200) {
-        let result = await response.json()
-        console.log(result)
-        //var objekt = JSON.parse(result)
-        return result
-    }
-    else console.log("unexpected error ", response)
-}
-
-async function getAllInvites(url) {
-    let response = await fetch(url, {
-        method: "GET"
-    });
-    if (response.status === 200) {
-        let result = await response.json()
-        console.log(result)
-        //var objekt = JSON.parse(result)
-        return result
-    }
-    else console.log("unexpected error", response)
-}
 
 
 async function getAllGroups(url){
@@ -278,6 +181,26 @@ async function getmappingDeclineInviteWorkout(url) {
     });
     if (response.status === 200) {
         console.log("Sucess in declineInviteWorkout")
+    }
+    else console.log("unexpected error", response)
+}
+
+async function getmappingAcceptInviteGroup(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        console.log("Sucess in acceptinvitegroup")
+    }
+    else console.log("unexpected error", response)
+}
+
+async function getmappingDeclineInviteGroup(url) {
+    let response = await fetch(url, {
+        method: "GET"
+    });
+    if (response.status === 200) {
+        console.log("Sucess in acceptinvitegroup")
     }
     else console.log("unexpected error", response)
 }

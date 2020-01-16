@@ -92,8 +92,31 @@ public class userstatepageController {
 
 
         //Hämtar alla invites för en person.
-        ArrayList<String> listOfGroupInvites = new ArrayList<>();
-        ArrayList<String> listOfSenders = new ArrayList<>();
+        List<Invite> inviteList= inviteRepository.getAllInvitesWithUserId(userId);
+        if(inviteList == null) {
+            model.addAttribute("groupInvitesLength", 0);
+        }
+        model.addAttribute("groupInvitesLength", inviteList.size());
+
+        //En special lista skapas, med gruppnamn, inviteId och senderId. För att det är den datan vi vill displaya i userstartpage
+        List<String> groupSenderInvite2 = new ArrayList<>();
+        List<List> inviteInfo2 = new ArrayList<>();
+        String groupName2;
+        String senderName2;
+        Long inviteId2;
+
+        for (Invite invite : inviteList) {
+            groupName2 = groupRepository.findGroupById(invite.getGroupid()).getName();
+            senderName2 = userRepository.findByUserId(invite.getSenderid()).getUsername();
+            inviteId2 = invite.getId();
+            groupSenderInvite2.add(groupName2);
+            groupSenderInvite2.add(senderName2);
+            groupSenderInvite2.add(inviteId2.toString());
+
+            inviteInfo2.add(groupSenderInvite2);
+            System.out.println("groupname: " + groupName2 + " senderName " + senderName2 + "inviteId" + inviteId2);
+        }
+        model.addAttribute("inviteInfo2", inviteInfo2);
 
         List<String> groupSenderInvite = new ArrayList<>();
         List<List> inviteInfo = new ArrayList<>();

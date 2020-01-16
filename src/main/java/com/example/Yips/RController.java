@@ -100,8 +100,7 @@ public class RController {
     @GetMapping("/rest/getUser/{username}")
     public User getUser(@PathVariable String username, HttpSession session){
         User user = userRepository.findByUsername(username);
-        Group group = (Group)session.getAttribute("mygroup");
-        System.out.println("grupp id " + group.getId());
+        Group group = (Group)session.getAttribute("onegroup");
         if (user == null){
             return new User();
         }
@@ -111,6 +110,22 @@ public class RController {
         inviteRepository.saveInvite(groupId, senderId, recipientId);
         return user;
     }
+
+    @GetMapping ("/rest/acceptInviteGroup/{inviteId}")
+    public void acceptGroupInvite (@PathVariable long inviteId, Authentication authentication) {
+        Invite invite = inviteRepository.getInviteWithId(inviteId);
+        User user = userRepository.findByUsername(authentication.getName());
+        Group group = groupRepository.findGroupById(invite.getGroupid());
+        connectionRepository.connectNewMemberToGroup(group, user.getId());
+        inviteRepository.deleteInviteWithId(inviteId);
+    }
+
+    @GetMapping("/rest/declineInviteGroup/{inviteId}")
+    public void  declineGroupInvite (@PathVariable long inviteId) {
+        inviteRepository.deleteInviteWithId(inviteId);
+    }
+
+
     @GetMapping("/rest/getAllInvites")
     public List<List> getAllInvites(Authentication authentication){
         User user = userRepository.findByUsername(authentication.getName());

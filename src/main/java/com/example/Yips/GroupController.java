@@ -50,13 +50,10 @@ public class GroupController {
     @GetMapping("/group")
     public String seeMyGroup(HttpSession session) {
         Group group = (Group)session.getAttribute("onegroup");
-        System.out.println("Getmapping /group with id: " + group.getId());
         session.setAttribute("listOfMembers", groupRepository.getAllMembersWithGroup(group));
-        System.out.println("GetMapping for /group, name: " + group.getName());
         session.setAttribute("onegroup", groupRepository.findByGroupname(group.getName()));
         //session.setAttribute("ourgoal", goalRepository.getGoalByGroupId(group));
         //System.out.println("Goal: " + goalRepository.getGoalByGroupId(group));
-        System.out.println("session set attribute onegroup---" + groupRepository.findByGroupname(group.getName()));
         return "group";
     }
 

@@ -97,6 +97,9 @@ public class GroupRepository {
         }
     }
 
+
+
+
     public List<User> getAllMembersWithGroup(Group group){
         System.out.println("function getAllMembersWithGroupObject - group id: " + group.getId() + "group in parameter name: " + group.getName());
 //        Group dbGroup = findByGroupname(group.getName().toLowerCase());
