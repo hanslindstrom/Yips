@@ -33,7 +33,6 @@
 <div class="container mt-5 float-lg-none container-workout" th:object="${workout}">
     
     <div class="card color-contrast">
-        
         <div class="card-header mt-3">
             <h4 class="card-title" th:text="'Workout: '+*{name}">TEST NAME</h4>
         </div>
@@ -56,10 +55,6 @@
                         <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
                 
                 </ul>
-
-                
-                    
-
         </div>
 
         <div class="card-footer mt-5">
@@ -70,12 +65,12 @@
 
             <!-- Button ADD EXERCISE -->
             <div id="containeraddexercise" style="display: none;">
-                <button type="button" style="float:right" class="btn color-dark mr-2" data-toggle="modal" data-target="#newexercise">Add exercise</button>
+                <button type="button" style="float:right" class="btn color-dark" data-toggle="modal" data-target="#newexercise">Add exercise</button>
             </div>
 
             <!-- Button SEND WORKOUT-->
             <div id="containersendworkout" style="display: block;">
-                <button type="button" style="float:right" class="btn color-dark ml-2" data-toggle="modal" data-target="#sendtogroup">Send workout</button>
+                <button type="button" style="float:right" class="btn color-dark" data-toggle="modal" data-target="#sendtogroup">Send workout</button>
             </div>
         
         </div>
@@ -86,7 +81,7 @@
             <!-- COMPLETED WORKOUT button -->
             <div>
                 <form method="post" action="/doneworkout" th:object="${workout}">
-                    <button type="submit" class="btn btn-block color-contrast button-complete mt-4">COMPLETED WORKOUT</button>
+                    <button type="submit" class="btn btn-block color-contrast button-complete mt-4 pt-2 pb-2">COMPLETED WORKOUT</button>
                 </form>
             </div>
         

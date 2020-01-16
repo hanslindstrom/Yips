@@ -42,6 +42,10 @@ background-color: #414141;
   width: 800px;
 }
 
+.container-group  {
+  width: 800px;
+}
+
 a:hover, button:hover {
 color: #ff914c;
 background-color: none;
@@ -51,12 +55,12 @@ font-weight: bold;
 .button-complete {
   font-family: 'Tajawal', sans-serif;
   font-weight: bold;
+  font-size: 19px;
 }
 
 
 .button-complete:hover {
-
-  font-weight: bold;
+  font-size: 30px;
 }
 
 .button-edit-exercise:hover {
