@@ -25,41 +25,68 @@
     Detta ska ersättas av ett fragment footer när Spring Boot körs!
 </div>
 
-<div class="container mt-5 float-lg-none" th:object="${workout}">
-    <div class="card color-contrast mb-3">
-        <div class="card-header" th:text="Workout"></div>
-        <div class="card-body">
-                <h4 class="card-title" th:text="'Workout: '+*{name}"></h4>
-                <h4 class="card-title" th:text="'Date: '+*{date}"></h4>
-            <span th:if="*{type}!='none'" th:text="*{type}"></span>
-            <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
-            <ul th:each="exercise:${exercises}">
-                    <!-- Title = link to edit exercise -->
-                    <h5 class="mt-3"  th:data-arg1="${exercise.name}"  th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
-                    <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
-                    <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
-                    <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
-                    <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
-                    <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
-                    <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
-                    <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
-            
-            </ul>
+<!-- GO BACK TO START PAGE BUTTON -->
+<div>
+    <button href="/userStartPage.html" class="btn color-contrast mr-2">BACK TO HOME PAGE</button>
+</div>
 
+<div class="container mt-5 float-lg-none container-workout" th:object="${workout}">
+    
+    <div class="card color-contrast">
+        <div class="card-header mt-3">
+            <h4 class="card-title" th:text="'Workout: '+*{name}">TEST NAME</h4>
         </div>
 
+        <div class="card-body">
+            <h5 class="card-title" th:text="'Date: '+*{date}"></h4>
+            <span th:if="*{type}!='none'" th:text="*{type}"></span>
+            <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
+
+            
+                <ul th:each="exercise:${exercises}">
+                        <!-- Title = link to edit exercise -->
+                        <h5 class="mt-3"  th:data-arg1="${exercise.name}"  th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
+                        <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
+                        <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
+                        <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
+                        <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
+                        <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
+                        <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
+                        <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
+                
+                </ul>
+        </div>
+
+        <div class="card-footer mt-5">
+            <!-- EDIT SAVE BUTTON -->
+            <div>
+                <button id="editsaveworkout" class="btn color-dark mr-2" onclick="saveWorkout()" style="float:left">Edit workout</button>
+            </div>
+
+            <!-- Button ADD EXERCISE -->
+            <div id="containeraddexercise" style="display: none;">
+                <button type="button" style="float:right" class="btn color-dark" data-toggle="modal" data-target="#newexercise">Add exercise</button>
+            </div>
+
+            <!-- Button SEND WORKOUT-->
+            <div id="containersendworkout" style="display: block;">
+                <button type="button" style="float:right" class="btn color-dark" data-toggle="modal" data-target="#sendtogroup">Send workout</button>
+            </div>
+        
+        </div>
     </div>
 
-    <button type="button" class="btn color-contrast mr-2" data-toggle="modal" data-target="#newexercise">Add exercise</button>
-    <button type="button" class="btn color-contrast ml-2" data-toggle="modal" data-target="#sendtogroup">Send workout to group</button>
+        
 
+            <!-- COMPLETED WORKOUT button -->
+            <div>
+                <form method="post" action="/doneworkout" th:object="${workout}">
+                    <button type="submit" class="btn btn-block color-contrast button-complete mt-4 pt-2 pb-2">COMPLETED WORKOUT</button>
+                </form>
+            </div>
+        
 
-    <form method="post" action="/doneworkout" th:object="${workout}">
-
-    <button type="submit" class="btn color-contrast ml-2">Done</button>
-    </form>
-
-
+      
 
     <div class="modal fade" id="newexercise" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -218,6 +245,8 @@
     Detta ska ersättas av ett fragment footer när Spring Boot körs!
 </div>
 <script src="mainfunction.js"></script>
+
+<script src="workoutfunction.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
