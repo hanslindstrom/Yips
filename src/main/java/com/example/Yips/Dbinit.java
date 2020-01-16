@@ -52,23 +52,29 @@ public class Dbinit implements CommandLineRunner {
 
         //Add some initial workouts...
         Workout workout = new Workout("Långlöp", "Löpning");
-        this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("dan"));
+        this.workoutRepository.saveWorkout(workout, userRepository.findByUsername("admin"));
         Workout workoutDB = workoutRepository.findByWorkoutname(workout.getName());
-        workoutDB.setDate(LocalDate.of(2020,6,15));
-        //workoutDB.setNewDoingDone("new");
+        workoutDB.setDate(LocalDate.of(2020,1,1));
+        workoutDB.setNewDoingDone("DONE");
         this.workoutRepository.updateWorkout(workoutDB);
+        connectionRepository.userWorkoutConnect("admin", workoutDB.getId());
+
 
         Workout workout2 = new Workout("Långsim", "Simning");
-        this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("dan"));
+        this.workoutRepository.saveWorkout(workout2, userRepository.findByUsername("admin"));
         Workout workoutDB2 = workoutRepository.findByWorkoutname(workout2.getName());
         workoutDB2.setDate(LocalDate.of(2020,7,10));
+        workoutDB2.setNewDoingDone("DOING");
         this.workoutRepository.updateWorkout(workoutDB2);
+        connectionRepository.userWorkoutConnect("admin", workoutDB2.getId());
 
         Workout workout3 = new Workout("Kortlöp", "Löpning");
-        this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("dan"));
+        this.workoutRepository.saveWorkout(workout3, userRepository.findByUsername("admin"));
         Workout workoutDB3 = workoutRepository.findByWorkoutname(workout3.getName());
         workoutDB3.setDate(LocalDate.of(2020,1,10));
+        workoutDB3.setNewDoingDone("DOING");
         this.workoutRepository.updateWorkout(workoutDB3);
+        connectionRepository.userWorkoutConnect("admin", workoutDB3.getId());
 
         //Add exercise
         Exercise exercise = new Exercise();

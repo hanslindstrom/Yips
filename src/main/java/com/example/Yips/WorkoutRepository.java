@@ -75,11 +75,12 @@ public class WorkoutRepository {
 
         return workouts;
     }
-    public List<Workout>workoutDateList () {
+    public List<Workout>workoutDateList (Long userId) {
         List<Workout> workoutDateList = new ArrayList<>();
         Workout workout = new Workout();
         try (Connection conn = dataSource.getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout")) {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM workout JOIN USERWORKOUTCONNECTION ON WORKOUT.ID=USERWORKOUTCONNECTION.WORKOUTID WHERE USERID=?")) {
+            ps.setLong(1,userId);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 workout = new Workout();
@@ -87,6 +88,7 @@ public class WorkoutRepository {
                 Date date = rs.getDate("WDATE");
                 String name = rs.getString("NAME");
                 String description = rs.getString("DESCRIPTION");
+                String newDoingDone = rs.getString("NEWDOINGDONE");
 
                 if(date == null)
                     continue;   //Sometimes empty workouts are created, and this becomes a null pointer exception
@@ -94,6 +96,7 @@ public class WorkoutRepository {
                 workout.setName(name);
                 LocalDate lDate=date.toLocalDate();
                 workout.setDate(lDate);
+                workout.setNewDoingDone(newDoingDone);
                 workoutDateList.add(workout);
 
                 }

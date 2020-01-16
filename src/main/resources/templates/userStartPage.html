@@ -21,8 +21,11 @@
         Detta ska ersättas av ett fragment header när Spring Boot körs!
     </div>
 -->
+  <div th:replace="fragments :: header">
+      Detta ska ersättas av ett fragment header när Spring Boot körs!
+  </div>
     
-    <nav class="navbar navbar-expand-sm mb-3">
+    <!--<nav class="navbar navbar-expand-sm mb-3">
         <div class="container">
           <a class="navbar-brand text-color-medium" href="login">YIPS</a>
           <button
@@ -44,7 +47,7 @@
   
           </div>
         </div>
-      </nav>
+      </nav>-->
 
     <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast">WORKOUTS</h1>
 
@@ -86,6 +89,7 @@
         <div class="row mt-5 pt-3">
             <div class="col-sm">
                 <div class="card color-contrast" th:object="${workout_mostRecent}">
+                    <div th:if="${workout_mostRecent!=null}">
                     <a class="text-color-dark workout-hover" th:href="'workout/' + *{id}">
                         <div class="card-body">
                             <h4 class="card-title d-flex justify-content-center">MOST RECENTLY DONE WORKOUT</h4>
@@ -117,10 +121,11 @@
                     </a>
                 </div>
             </div>
+            </div>
 
             <!-- Workout card - previous workout -->
             <div class="col-sm">
-                <div class="card color-contrast" th:object="${workout_next}">
+                <div class="card color-contrast" th:object="${workout_next}" th:if="${workout_next!=null}">
                     <a  class="text-color-dark workout-hover" th:href="'workout/' + *{id}">
                         <div class="card-body" >
                         

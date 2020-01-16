@@ -1,5 +1,6 @@
 package com.example.Yips;
 
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -52,26 +53,43 @@ public class userstatepageController {
 
 
         //WORKOUTS
-        List<Workout> workouts = workoutRepository.workoutDateList();
+        List<Workout> workouts = workoutRepository.workoutDateList(userId);
         Collections.sort(workouts);
-
-        Workout workoutMostRecent = workouts.get(workouts.size()-1);
-        List<Long> groupIds = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
-        List<Group> groupList = new ArrayList<>();
-        if(groupIds.size() > 0) {
-            System.out.println("test " + connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
-            for (int i = 0; i < groupIds.size(); i++)
-                groupList.add(groupRepository.findGroupById(groupIds.get(i)));
-            model.addAttribute("groupName_mostRecent_workout", groupList);
+        List<Workout> doneWorkouts = new ArrayList<>();
+        List<Workout> nextWorkouts = new ArrayList<>();
+        for(Workout workout: workouts) {
+            if(workout.getNewDoingDone()==null) {
+                System.out.println("GOODBYE");
+                System.out.println(workout.getName());
+            }
+            if (workout.getNewDoingDone().equalsIgnoreCase("DONE")) {
+                doneWorkouts.add(workout);
+            } else if (workout.getNewDoingDone().equalsIgnoreCase("DOING")) {
+                nextWorkouts.add(workout);
+            }
         }
-        else
-            model.addAttribute("groupName_mostRecent_workout",  null);
-        model.addAttribute("workout_mostRecent", workoutMostRecent);
-        model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutMostRecent.getId()));
+
+        if(doneWorkouts.size()>0) {
+            Workout workoutMostRecent = doneWorkouts.get(doneWorkouts.size() - 1);
+
+            List<Long> groupIds = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId());
+
+            List<Group> groupList = new ArrayList<>();
+            if (groupIds.size() > 0) {
+                System.out.println("test " + connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutMostRecent.getId()).get(0));
+                for (int i = 0; i < groupIds.size(); i++)
+                    groupList.add(groupRepository.findGroupById(groupIds.get(i)));
+                model.addAttribute("groupName_mostRecent_workout", groupList);
+            } else
+                model.addAttribute("groupName_mostRecent_workout", null);
+            model.addAttribute("workout_mostRecent", workoutMostRecent);
+            model.addAttribute("exerciseList_mostRecent", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutMostRecent.getId()));
+        }
+        Workout workoutNext = new Workout();
+        if(nextWorkouts.size()>0) {
+            workoutNext = nextWorkouts.get(0);
 
 
-
-        Workout workoutNext = workouts.get(0);
         List<Long> groupIds2 = connectionRepository.findGroupsIdsConnectedToWorkoutByWorkoutId(workoutNext.getId());
         List<Group> groupList2 = new ArrayList<>();
         if(groupIds2.size() > 0) {
@@ -84,7 +102,7 @@ public class userstatepageController {
         model.addAttribute("workout_next", workoutNext);
         model.addAttribute("exerciseList_workout_next", connectionRepository.findExercisesInWorkoutByWorkoutId(workoutNext.getId()));
 
-
+        }
         //Hämtar alla grupper för en person.
         System.out.println("My userId is: " + userId);
         model.addAttribute("listofGroups", groupRepository.findAllMyGroups(userId));
@@ -185,6 +203,8 @@ public class userstatepageController {
         System.out.println("----LEAVING POSTMAPPING redirect -----");
         return "redirect:/group";
     }
+
+
 
 
 
