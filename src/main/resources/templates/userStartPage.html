@@ -55,7 +55,7 @@
          <!-- Button for NEW WORKOUT INVITE -->
         
             <button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkoutinvite"></button>
-            <hr/>
+            
             <!-- New WORKOUT INVITE Modal-->
             <div class="modal fade" th:id="newworkoutinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -171,11 +171,12 @@
                 </div>
         </div>
     </div> 
-</div>
-    <!-- End of workout cards --></a>
-
+    
     <!-- Button for NEW WORKOUT -->
     <button type="button" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkout">ADD WORKOUT</button>
+
+</div>
+    <!-- End of workout cards --></a>
 
     <!-- New Workout Modal-->
     <div class="modal fade" id="newworkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -244,8 +245,8 @@
         
            
     <div id="groupInvite"  th:data-arg1="${groupInvitesLength}">
-        <button type="button" id="showGroupInvites" th:data-arg1="${groupInvitesLength}" class="btn btn-block color-medium mt-3 mb-3 pt-3 pb-3 button-add-group" data-toggle="modal" data-target="#newgroupinvite"></button>
-        <hr/>
+        <button type="button" id="showGroupInvites" th:data-arg1="${groupInvitesLength}" class="btn btn-block color-medium mt-3 mb-5 pt-3 pb-3 button-add-group" data-toggle="modal" data-target="#newgroupinvite"></button>
+
         <!-- New GROUP INVITE Modal-->
         <div class="modal fade" id="newgroupinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -480,7 +481,9 @@
     <!-- End of modal -->
     </div>
 <!-- End of group button-->
-
+  <button class="btn btn-block mt-5 mb-2 opacity-header">
+      <a class="text-color-contrast " href="#">Scroll to Top</a>
+  </button>
 <!-- INVITES -->
         
 

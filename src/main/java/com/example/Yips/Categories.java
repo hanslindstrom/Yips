@@ -13,6 +13,8 @@ public class Categories {
             add("Running");
             add("Swimming");
             add("Cycling");
+            add("Cardio");
+            add("Strength");
         }
     };
 

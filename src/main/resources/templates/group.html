@@ -11,49 +11,57 @@
 
 </head>
 <body>
+<div th:replace="fragments :: header"></div>
 
-<div class="container">
-
-    <div class="jumbotron onegroup color-medium mt-5 mb-4">
-        <!-- GROUP NAME -->
-        <h2 class="mb-4" th:text="${session.onegroup.name}">MY RUNNING GROUP</h2> 
-    
-        <!-- List of members -->
-        <h5>Members</h5> 
-        <ul class="list-group list-group-horizontal-sm color-medium" th:if="${session.listOfMembers != 0}" >
-            <li class="list-group-item list-members" th:each="member : ${session.listOfMembers}">
-                <h6 th:text="${member.username}">Sami The Cyclist</h6>
-            </li>
-        </ul>
-        <div id="newModal"></div>
-     <!-- BUTTON FOR add member MODAL -->
-     <button type="button" class="btn color-dark text-color-medium mt-5 button-add-member" data-toggle="modal" data-target="#addMember">Add member to group</button>
-
+    <div th:replace="fragments :: header" class="mb-5">
+        Detta ska ersättas av ett fragment footer när Spring Boot körs!
     </div>
+
+<div class="container container-group mt-5">
+    <div class="card color-medium mt-5">
+        <div class="card-header">
+            <h2 class="mb-2 mt-2" th:text="${session.onegroup.name}">MY RUNNING GROUP</h2> 
+        </div>
+
+        <div class="card-body">
+            <!-- List of members -->
+            <h5>MEMBERS</h5> 
+            <ul class="list-group list-group-horizontal-sm color-medium" th:if="${session.listOfMembers != 0}" >
+                <li class="list-group-item list-members" th:each="member : ${session.listOfMembers}">
+                    <h6 th:text="${member.username}">Sami The Cyclist</h6>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-footer">
+           <!-- BUTTON FOR add member MODAL -->
+        	<button type="button" class="btn color-dark text-color-medium button-add-member" data-toggle="modal" data-target="#addMember">Add member to group</button>
+
+        </div>
 
 <!-- Modal to add member-->
-    <div class="modal fade" id="addMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-color-medium" >
-                    <h5 class="modal-title" id="exampleModalLabel">Add member</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="membername" class="col-form-label">Who would you like to add?</label>
-                            <input type="text" class="form-control" id="membername" placeholder="Member alias...">
-                        </div>
-                        <button type="button" class="btn btn-block mt-2 color-medium text-color-dark mb-2 mt-4" data-dismiss="modal" id="sendbutton">Send invite</button>
-                    </form>
-                </div>
-            
+<div class="modal fade" id="addMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-color-medium" >
+                <h5 class="modal-title" id="exampleModalLabel">Add member</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="membername" class="col-form-label">Who would you like to add?</label>
+                        <input type="text" class="form-control" id="membername" placeholder="Member alias...">
+                    </div>
+                    <button type="button" class="btn btn-block mt-2 color-medium text-color-dark mb-2 mt-4" data-dismiss="modal" id="sendbutton">Send invite</button>
+                </form>
+            </div>
+        
         </div>
     </div>
+</div>
 <!-- End of modal -->
     
 

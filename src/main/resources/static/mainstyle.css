@@ -37,12 +37,31 @@ background-color: #414141;
   height: 100%;
 }
 
+
+.container-workout {
+  width: 800px;
+}
+
+.container-group  {
+  width: 800px;
+}
+
 a:hover, button:hover {
 color: #ff914c;
 background-color: none;
 font-weight: bold;
 }
 
+.button-complete {
+  font-family: 'Tajawal', sans-serif;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+
+.button-complete:hover {
+  font-size: 30px;
+}
 
 .button-edit-exercise:hover {
   color: black;
@@ -260,4 +279,19 @@ font-family: 'Roboto', sans-serif;
 color:#414141;
 background-color: #ff8438;
 text-decoration: none;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.totop{
+margin-bottom: 2000px;
+}
+
+html {
+  scroll-behavior: smooth;
 }

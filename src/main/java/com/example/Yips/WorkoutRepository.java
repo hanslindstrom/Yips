@@ -180,6 +180,14 @@ public class WorkoutRepository {
                     LocalDate date = rs.getDate("WDATE").toLocalDate();
                     workout.setDate(date);
                 }
+		String type = rs.getString("WTYPE");
+                int time = rs.getInt("WTIME");
+                String place = rs.getString("PLACE");
+                String description = rs.getString("DESCRIPTION");
+                workout.setPlace(place);
+                workout.setDescription(description);
+                workout.setTime(time);
+                workout.setType(type);
                 workout.setNewDoingDone(newdoingdone);
                 workout.setId(id);
                 workout.setName(name);
