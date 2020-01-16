@@ -136,7 +136,7 @@ async function showAllGroups(){
         }
         else
         container.innerHTML = 
-        `<h2> You have no groups girlfriend </h2>`
+        ``
 }
 async function showNextWorkoutSuccess(nextWorkout) {
     
