@@ -144,6 +144,14 @@ public class WorkoutRepository {
                 String name = rs.getString("name");
                 String category = rs.getString("category");
                 LocalDate date = rs.getDate("WDATE").toLocalDate();
+                String type = rs.getString("WTYPE");
+                int time = rs.getInt("WTIME");
+                String place = rs.getString("PLACE");
+                String description = rs.getString("DESCRIPTION");
+                workout.setPlace(place);
+                workout.setDescription(description);
+                workout.setTime(time);
+                workout.setType(type);
                 workout.setDate(date);
                 workout.setId(id);
                 workout.setName(name);
