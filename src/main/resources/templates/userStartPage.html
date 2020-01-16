@@ -232,12 +232,12 @@
         
            
     <div id="groupInvite"  th:data-arg1="${groupInvitesLength}">
-        <button type="button" id="showGroupInvites" th:data-arg1="${groupInvitesLength}" class="btn btn-block color-medium mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newgroupinvite"></button>
+        <button type="button" id="showGroupInvites" th:data-arg1="${groupInvitesLength}" class="btn btn-block color-medium mt-3 mb-3 pt-3 pb-3 button-add-group" data-toggle="modal" data-target="#newgroupinvite"></button>
         <hr/>
         <!-- New GROUP INVITE Modal-->
         <div class="modal fade" id="newgroupinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content modal-content-group">
                     <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">YOUR NEW GROUP INVITES</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -246,7 +246,7 @@
                     </div>  
                         <div th:each="invite : ${inviteInfo2}" th:id="'groupInviteContainer' + ${invite[2]}" >
 
-                        <div class="modal-body mt-0">
+                        <div class="modal-body modal-body-group mt-0">
                                 <h5 th:text="${invite[1]}"></h5>
                                 <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
                                 <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${invite[2]}" onclick="acceptInviteGroup()">ACCEPT</button>
