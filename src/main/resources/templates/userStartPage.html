@@ -21,8 +21,11 @@
         Detta ska ersättas av ett fragment header när Spring Boot körs!
     </div>
 -->
+  <div th:replace="fragments :: header">
+      Detta ska ersättas av ett fragment header när Spring Boot körs!
+  </div>
     
-    <nav class="navbar navbar-expand-sm mb-3">
+    <!--<nav class="navbar navbar-expand-sm mb-3">
         <div class="container">
           <a class="navbar-brand text-color-medium" href="login">YIPS</a>
           <button
@@ -44,7 +47,7 @@
   
           </div>
         </div>
-      </nav>
+      </nav>-->
 
     <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast">WORKOUTS</h1>
 
