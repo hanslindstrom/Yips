@@ -55,7 +55,7 @@
          <!-- Button for NEW WORKOUT INVITE -->
         
             <button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkoutinvite"></button>
-            <hr/>
+            
             <!-- New WORKOUT INVITE Modal-->
             <div class="modal fade" th:id="newworkoutinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -159,11 +159,12 @@
                 </div>
         </div>
     </div> 
-</div>
-    <!-- End of workout cards --></a>
-
+    
     <!-- Button for NEW WORKOUT -->
     <button type="button" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkout">ADD WORKOUT</button>
+
+</div>
+    <!-- End of workout cards --></a>
 
     <!-- New Workout Modal-->
     <div class="modal fade" id="newworkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
