@@ -30,7 +30,7 @@
     <button href="/userStartPage.html" class="btn color-contrast mr-2">BACK TO HOME PAGE</button>
 </div>
 
-<div class="container mt-5 float-lg-none container-workout" th:object="${workout}">
+<div class="container mt-5 float-lg-none  container-workout" th:object="${workout}">
     
     <div class="card color-contrast">
         <div class="card-header mt-3">
@@ -38,7 +38,7 @@
         </div>
 
         <div class="card-body">
-            <h5 class="card-title" th:text="'Date: '+*{date}"></h4>
+            <h4 class="card-title" th:text="'Date: '+*{date}"></h4>
             <span th:if="*{type}!='none'" th:text="*{type}"></span>
             <span th:if="*{time}!='none'" th:text="*{time}+' minutes'"></span>
 
