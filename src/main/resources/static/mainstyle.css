@@ -37,12 +37,27 @@ background-color: #414141;
   height: 100%;
 }
 
+
+.container-workout {
+  width: 800px;
+}
+
 a:hover, button:hover {
 color: #ff914c;
 background-color: none;
 font-weight: bold;
 }
 
+.button-complete {
+  font-family: 'Tajawal', sans-serif;
+  font-weight: bold;
+}
+
+
+.button-complete:hover {
+
+  font-weight: bold;
+}
 
 .button-edit-exercise:hover {
   color: black;
