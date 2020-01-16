@@ -1,506 +1,440 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous" />
-    <link rel="stylesheet" href="../static/mainstyle.css" th:href="@{/mainstyle.css}">
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Tajawal&display=swap" rel="stylesheet">
-
-
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="../static/mainstyle.css"
+      th:href="@{/mainstyle.css}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto|Tajawal&display=swap"
+      rel="stylesheet"
+    />
 
     <title>Workout</title>
-</head>
+  </head>
 
-<body class="bodyclass">
-  <!--  <div th:replace="fragments :: header">
-        Detta ska ersättas av ett fragment header när Spring Boot körs!
-    </div>
--->
-  <div th:replace="fragments :: header">
+  <body class="bodyclass">
+    <div th:replace="fragments :: header">
       Detta ska ersättas av ett fragment header när Spring Boot körs!
-  </div>
-    
-    <!--<nav class="navbar navbar-expand-sm mb-3">
-        <div class="container">
-          <a class="navbar-brand text-color-medium" href="login">YIPS</a>
-          <button
-            class="navbar-toggler"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item" >
-                <a class="nav-link text-color-medium " href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-color-medium" href="#">Contact</a>
-              </li>
-            </ul>
-  
+    </div>
+
+    <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast">
+      WORKOUTS
+    </h1>
+
+    <div id="bodyTest" th:data-arg1="${invitesToWorkoutLength}">
+      <!-- Button for NEW WORKOUT INVITE -->
+
+      <button
+        type="button"
+        id="showNumberOfWorkoutInvites"
+        th:data-arg1="${invitesToWorkoutLength}"
+        class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout"
+        data-toggle="modal"
+        data-target="#newworkoutinvite"
+      ></button>
+
+      <!-- New WORKOUT INVITE Modal-->
+      <div
+        class="modal fade"
+        th:id="newworkoutinvite"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                YOUR NEW WORKOUTS
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div
+              th:each="workout : ${invitesToWorkout}"
+              th:id="'workoutInviteContainer' + ${workout.id}"
+            >
+              <div class="modal-body mt-0">
+                <h5 th:text="${workout.name}"></h5>
+                <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
+                <button
+                  class="btn btn-sm button-add-user mt-2 mt-5"
+                  th:data-arg1="${workout.id}"
+                  onclick="acceptInviteWorkout()"
+                >
+                  ACCEPT
+                </button>
+                <button
+                  class="btn btn-sm button-add-user mt-2 mt-5"
+                  th:data-arg1="${workout.id}"
+                  onclick="declineInviteWorkout()"
+                >
+                  DECLINE
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </nav>-->
+      </div>
+    </div>
+    <!-- End of WORKOUT INVITE modal -->
 
-    <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-contrast">WORKOUTS</h1>
-
-        <div  id="bodyTest" th:data-arg1="${invitesToWorkoutLength}">
-         <!-- Button for NEW WORKOUT INVITE -->
-        
-            <button type="button" id="showNumberOfWorkoutInvites" th:data-arg1="${invitesToWorkoutLength}" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkoutinvite"></button>
-            
-            <!-- New WORKOUT INVITE Modal-->
-            <div class="modal fade" th:id="newworkoutinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">YOUR NEW WORKOUTS</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>  
-                        </div>  
-                            <div th:each="workout : ${invitesToWorkout}" th:id="'workoutInviteContainer' + ${workout.id}" >
-
-                            <div class="modal-body mt-0">
-                                    <h5 th:text="${workout.name}"></h5>
-                                    <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
-                                    <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${workout.id}" onclick="acceptInviteWorkout()">ACCEPT</button>
-                                    <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${workout.id}" onclick="declineInviteWorkout()">DECLINE</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End of WORKOUT INVITE modal -->
-
-       
     <!-- END OF NEW INVITES TO WORKOUT-->
     <div class="container">
-        <div class="row mt-5 pt-3">
-            <div class="col-sm">
-                <div id="nextWorkoutContainer">
-                </div>
-            </div>
-            <div class="col-sm">
-                <div id="mostPreviousWorkoutContainer">
-                </div>
-            </div>
+      <div class="row mt-5 pt-3">
+        <div class="col-sm">
+          <div id="nextWorkoutContainer"></div>
         </div>
+        <div class="col-sm">
+          <div id="mostPreviousWorkoutContainer"></div>
+        </div>
+      </div>
+      
+    <button
+    type="button"
+    class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout"
+    data-toggle="modal"
+    data-target="#newworkout"
+  >
+    ADD WORKOUT
+  </button>
     </div>
+
     
-    <!--Workout card - next workout-->
-    <div class="container">
-        <div class="row mt-5 pt-3">
-            <div class="col-sm">
-                <div class="card color-contrast" th:object="${workout_mostRecent}">
-                    <div th:if="${workout_mostRecent!=null}">
-                        <a class="text-color-dark workout-hover" th:href="'workout/' + *{id}">
-                            <div class="card-body">
-                                <h4 class="card-title d-flex justify-content-center">MOST RECENTLY DONE WORKOUT</h4>
-        <!--                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>-->
-                                <hr/>
-                                <h5  th:text="*{name}">LÖPNING 60MIN</h5>
-                                <p class="card-text" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
-                                <div th:if="${groupName_mostRecent_workout != null}" th:each="group : ${groupName_mostRecent_workout}">
-                                    <h6 th:text="*{name}">JOHANS LÖPGRUPP</h6>
-                                </div>  
-                                <hr/>
-                                <div  th:if="${exerciseList_mostRecent != null}" th:each="exercise : ${exerciseList_mostRecent}">
-                                    <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
-                                    <button class="btn btn-sm color-dark mb-3 mt-3 more-info-exercise">More info</button>
-                                    <div class="exercisecontainer">
-                                        <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
-                                        <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
-                                        <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
-                                        <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
-                                        <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
-                                        <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
-                                        <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
-                                    </div>
-                                </div>
-                        
-                                <hr/>
-                                <h5  th:if="*{date != null}" th:text="*{date}">2020-02-02</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Workout card - previous workout -->
-            <div class="col-sm">
-                <div class="card color-contrast" th:object="${workout_next}" th:if="${workout_next!=null}">
-                    <a  class="text-color-dark workout-hover" th:href="'workout/' + *{id}">
-                        <div class="card-body" >
-                        
-
-                            <h4 class="card-title d-flex justify-content-center">UPCOMING WORKOUT</h4>
-    <!--                        <h6 class="card-title d-flex justify-content-center" th:text="'IN ' + *{daysToWorkout} + ' DAYS'">IN 123 DAYS</h6>-->
-                            <hr/>
-                            <h5  th:text="*{name}">LÖPNING 60MIN</h5>
-                            <p class="card-text" th:text="*{description}">This is a workout for people working in the Sumpa area who wants to get fit.</p>
-                            <div th:if="${groupName_next_workout != null}" th:each="group : ${groupName_next_workout}">
-                                <h6 th:text="*{name}">JOHANS LÖPGRUPP</h6>
-                            </div>                          
-                            <hr/>
-                            <div  th:if="${exerciseList_workout_next != null}" th:each="exercise : ${exerciseList_workout_next}">
-                                <h5 class="mt-3" th:if="${exercise.name != null}" th:text="${exercise.name}">Exercise 1</h5>
-                                <button class="btn btn-sm color-dark mb-3 mt-3 more-info-exercise">More info</button>
-                                <div class="exercisecontainer">
-                                    <p th:if="${exercise.seconds != 0}" th:text="'seconds: ' + ${exercise.seconds}"></p>
-                                    <p th:if="${exercise.meters != 0}" th:text="'meters: ' + ${exercise.meters}"></p>
-                                    <p th:if="${exercise.calories != 0}" th:text="'calories: ' + ${exercise.calories}"></p>
-                                    <p th:if="${exercise.weight != 0}" th:text="'weigth: ' + ${exercise.weight}"></p>
-                                    <p th:if="${exercise.reps != 0}" th:text="'reps: ' + ${exercise.reps}"></p>
-                                    <p th:if="${exercise.sets != 0}" th:text="'sets: ' + ${exercise.sets}"></p>
-                                    <p th:if="${exercise.cadence != 0}" th:text="'cadence: ' + ${exercise.cadence}"></p>
-                                </div>
-                            </div>
-                            <hr/>
-                            <h5 th:if="*{date != null}" th:text="*{date}">2020-02-02</h5>
-                        </div>
-                    </a>
-                </div>
-        </div>
-    </div> 
-    
-    <!-- Button for NEW WORKOUT -->
-    <button type="button" class="btn btn-block color-contrast mt-3 mb-3 pt-3 pb-3 button-add-workout" data-toggle="modal" data-target="#newworkout">ADD WORKOUT</button>
-
-</div>
-    <!-- End of workout cards --></a>
 
     <!-- New Workout Modal-->
-    <div class="modal fade" id="newworkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Workout</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body mt-0">
-                    <form th:object="${workout}" method="POST" action="/postworkout">
-                        <!--class="form-inline ml-auto"-->
-                        <div class="form-group">
+    <div
+      class="modal fade"
+      id="newworkout"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Workout</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mt-0">
+            <form th:object="${workout}" method="POST" action="/postworkout">
+              <!--class="form-inline ml-auto"-->
+              <div class="form-group">
+                <input
+                  type="hidden"
+                  class="form-control mb-2"
+                  name="workoutid"
+                  th:field="*{id}"
+                />
+              </div>
+              <div class="form-group">
+                <label for="workoutname">Workout name</label>
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  placeholder="My workout"
+                  id="workoutname"
+                  name="workoutname"
+                  th:field="*{name}"
+                />
+                <label for="workoutdate">Workout Date</label>
+                <input
+                  type="date"
+                  class="form-control mb-2"
+                  placeholder="Workout Date"
+                  id="workoutdate"
+                  name="workoutdate"
+                  th:field="*{date}"
+                />
+                <label for="workouttype">Workout type</label>
+                <select
+                  id="workouttype"
+                  th:field="*{type}"
+                  name="workouttype"
+                  class="form-control mb-2"
+                >
+                  <option value="none">None</option>
+                  <option value="amrap">Amrap</option>
+                  <option value="fortime">For time</option>
+                  <option value="emom">EMOM</option>
+                </select>
+                <label for="timetocomplete">Minutes to complete workout</label>
+                <input
+                  type="number"
+                  class="form-control mb-2"
+                  placeholder="45"
+                  id="timetocomplete"
+                  name="timetocomplete"
+                  th:field="*{time}"
+                />
+                <label for="place">Place</label>
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  placeholder="Kista Nod"
+                  id="place"
+                  name="place"
+                  th:field="*{place}"
+                />
+                <label for="description">Description</label>
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  placeholder="Long distance running..."
+                  id="description"
+                  name="description"
+                  th:field="*{description}"
+                />
+                <label for="category">Category</label>
 
-                            <input type="hidden" class="form-control mb-2" name="workoutid" th:field="*{id}" />
-                        </div>
-                        <div class="form-group">
-                            <label for="workoutname">Workout name</label>
-                            <input type="text" class="form-control mb-2" placeholder="My workout" id="workoutname"
-                                name="workoutname" th:field="*{name}" />
-                            <label for="workoutdate">Workout Date</label>
-                            <input type="date" class="form-control mb-2" placeholder="Workout Date" id="workoutdate"
-                                name="workoutdate" th:field="*{date}" />
-                            <label for="workouttype">Workout type</label>
-                            <select id="workouttype" th:field="*{type}" name="workouttype" class="form-control mb-2">
-                                <option value="none">None</option>
-                                <option value="amrap">Amrap</option>
-                                <option value="fortime">For time</option>
-                                <option value="emom">EMOM</option>
+                <select th:field="*{category}" class="form-control mb-2">
+                  <option
+                    th:each="category : ${categories}"
+                    th:value="${category}"
+                    th:text="${category}"
+                  ></option>
+                </select>
+              </div>
 
-                            </select>
-                            <label for="timetocomplete">Minutes to complete workout</label>
-                            <input type="number" class="form-control mb-2" placeholder="45"
-                                id="timetocomplete" name="timetocomplete" th:field="*{time}" />
-                            <label for="place">Place</label>
-                            <input type="text" class="form-control mb-2" placeholder="Kista Nod" id="place" name="place"
-                                th:field="*{place}" />
-                            <label for="description">Description</label>
-                            <input type="text" class="form-control mb-2" placeholder="Long distance running..." id="description"
-                                name="description" th:field="*{description}" />
-                            <label for="category">Category</label>
-
-                        <select th:field="*{category}" class="form-control mb-2">
-                            <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
-                        </select>
-
-                        </div>
-
-                        <button class="btn btn-block mt-2 color-contrast text-color-dark mb-2 mt-4">Create workout</button>
-                    </form>
-
-                    
-                </div>
-
-            </div>
+              <button
+                class="btn btn-block mt-2 color-contrast text-color-dark mb-2 mt-4"
+              >
+                Create workout
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     <!-- End of modal -->
 
     <!-- GROUPS -->
-    <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-medium">GROUPS</h1>
+    <h1 class="d-flex justify-content-center mt-5 pt-5 text-color-medium">
+      GROUPS
+    </h1>
 
-        
-           
-    <div id="groupInvite"  th:data-arg1="${groupInvitesLength}">
-        <button type="button" id="showGroupInvites" th:data-arg1="${groupInvitesLength}" class="btn btn-block color-medium mt-3 mb-5 pt-3 pb-3 button-add-group" data-toggle="modal" data-target="#newgroupinvite"></button>
+    <div id="groupInvite" th:data-arg1="${groupInvitesLength}">
+      <button
+        type="button"
+        id="showGroupInvites"
+        th:data-arg1="${groupInvitesLength}"
+        class="btn btn-block color-medium mt-3 mb-5 pt-3 pb-3 button-add-group"
+        data-toggle="modal"
+        data-target="#newgroupinvite"
+      ></button>
 
-        <!-- New GROUP INVITE Modal-->
-        <div class="modal fade" id="newgroupinvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content modal-content-group">
-                    <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">YOUR NEW GROUP INVITES</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>  
-                    </div>  
-                        <div th:each="invite : ${inviteInfo2}" th:id="'groupInviteContainer' + ${invite[2]}" >
-
-                        <div class="modal-body modal-body-group mt-0">
-                                <h5 th:text="${invite[1]}"></h5>
-                                <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
-                                <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${invite[2]}" onclick="acceptInviteGroup()">ACCEPT</button>
-                                <button class="btn btn-sm button-add-user mt-2 mt-5" th:data-arg1="${invite[2]}" onclick="declineInviteGroup()">DECLINE</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- New GROUP INVITE Modal-->
+      <div
+        class="modal fade"
+        id="newgroupinvite"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content modal-content-group">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                YOUR NEW GROUP INVITES
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div
+              th:each="invite : ${inviteInfo2}"
+              th:id="'groupInviteContainer' + ${invite[2]}"
+            >
+              <div class="modal-body modal-body-group mt-0">
+                <h5 th:text="${invite[1]}"></h5>
+                <!--With th:data-arg1 skickas en variabel till den benämnda JS funktionen. -->
+                <button
+                  class="btn btn-sm button-add-user mt-2 mt-5"
+                  th:data-arg1="${invite[2]}"
+                  onclick="acceptInviteGroup()"
+                >
+                  ACCEPT
+                </button>
+                <button
+                  class="btn btn-sm button-add-user mt-2 mt-5"
+                  th:data-arg1="${invite[2]}"
+                  onclick="declineInviteGroup()"
+                >
+                  DECLINE
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div> 
-   
+      </div>
+    </div>
+
     <!-- End of WORKOUT INVITE modal -->
 
-<!-- END OF NEW INVITES TO WORKOUT-->
-    
-    <div class="container" id="inviteContainer">
-    </div>
+    <!-- END OF NEW INVITES TO WORKOUT-->
+
+    <div class="container" id="inviteContainer"></div>
 
     <div class="container">
-        <div class="card-columns">
-            <div id="groupContainer">
+      <div class="card-columns">
+        <div id="groupContainer"></div>
 
-            </div>
-
-            <!-- thymeleaf if: One card for one group: clickable -->
-            <a href="#">
-                <div class="card color-medium cardGroup">
-                    <div class="card-body">
-                        <h4 class="card-title">Vårt gruppnamn</h4>
-                        <hr/>
-                        <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                        
-                        <div class="members">
-                            <hr/>
-                            <h5 class="members-headline">Members</h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">First item</li>
-                                <li class="list-group-item">Second item</li>
-                                <li class="list-group-item">Third item</li>
-                                <li class="list-group-item">Fourth item</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        
-            <!-- END OF group card -->
-
-            
-            <!-- thymeleaf if: One card for one group: clickable -->
-            <a href="#">
-                <div class="card color-medium mygroup">
-                    <div class="card-body">
-                        <h4 class="card-title">Vårt gruppnamn</h4>
-                        <hr/>
-                        <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                        <hr/>
-                        <h5 class="members-headline">Members</h5>
-                        <div class="members">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">First item</li>
-                                <li class="list-group-item">Second item</li>
-                                <li class="list-group-item">Third item</li>
-                                <li class="list-group-item">Fourth item</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <!-- END OF group card -->
-
-            
-            <!-- thymeleaf if: One card for one group: clickable -->
-            <a href="#">
-                <div class="card color-medium mygroup">
-                    <div class="card-body">
-                        <h4 class="card-title">Vårt gruppnamn</h4>
-                        <hr/>
-                        <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                        <hr/>
-                        <h5 class="members-headline">Members</h5>
-                        <div class="members">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">First item</li>
-                                <li class="list-group-item">Second item</li>
-                                <li class="list-group-item">Third item</li>
-                                <li class="list-group-item">Fourth item</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <!-- END OF group card -->
-
-            
-
-            <!-- thymeleaf if: One card for one group: clickable -->
-            <a href="#">
-                <div class="card color-medium mygroup">
-                    <div class="card-body">
-                        <h4 class="card-title">Vårt gruppnamn</h4>
-                        <hr/>
-                        <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej. Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                        <hr/>
-                        <h5 class="members-headline">Members</h5>
-                        <div class="members">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">First item</li>
-                                <li class="list-group-item">Second item</li>
-                                <li class="list-group-item">Third item</li>
-                                <li class="list-group-item">Fourth item</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <!-- END OF group card -->
-            
-    
-            <!-- thymeleaf if: One card for one group: clickable -->
-            <a href="#">
-                <div class="card color-medium mygroup">
-                    <div class="card-body">
-                        <h4 class="card-title">Vårt gruppnamn</h4>
-                        <hr/>
-                        <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                        <hr/>
-                        <h5 class="members-headline">Members</h5>
-                        <div class="members">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">First item</li>
-                                <li class="list-group-item">Second item</li>
-                                <li class="list-group-item">Third item</li>
-                                <li class="list-group-item">Fourth item</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <!-- END OF group card -->
-
-
-            
-            <!-- thymeleaf if: One card for one group: clickable -->
-            <a href="#">
-                <div class="card color-medium mygroup">
-                    <div class="card-body">
-                        <h4 class="card-title">Vårt gruppnamn</h4>
-                        <hr/>
-                        <p class="card-text">Gruppens beskrivning. Hämtas via thymeleaf hej svej.</p>
-                        <hr/>
-                        <h5 class="members-headline">Members</h5>
-                        <div class="members">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">First item</li>
-                                <li class="list-group-item">Second item</li>
-                                <li class="list-group-item">Third item</li>
-                                <li class="list-group-item">Fourth item</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <!-- END OF group card -->
-
-
-        
-          </div>
-          <!-- END OF group columns -->
+        <!-- END OF group card -->
+      </div>
+      <!-- END OF group columns -->
     </div>
-
 
     <!-- END OF GROUPS-->
 
-     <!--   Skapa grupp modal  -->
-     <div class="container">
-        <button type="button" class="btn btn-block mt-3 mb-3 pt-3 pb-3 button-add-group" data-toggle="modal" data-target="#newgroup">CREATE GROUP</button>
+    <!--   Skapa grupp modal  -->
+    <div class="container">
+      <button
+        type="button"
+        class="btn btn-block mt-3 mb-3 pt-3 pb-3 button-add-group"
+        data-toggle="modal"
+        data-target="#newgroup"
+      >
+        CREATE GROUP
+      </button>
 
-        <div class="modal fade" id="newgroup" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-color-medium" id="groupModalLabel">New Group</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button> 
-                    </div>
-
-                    <div class="modal-body">
-                        <form th:object="${group}" method="POST" action="/newgroup">
-                            <!--class="form-inline ml-auto"-->
-                            <div class="form-group">
-
-                                <input type="hidden" class="form-control mb-2" name="id" th:field="*{id}" />
-                            </div>
-                            <div class="form-group">
-                                <label for="groupname">Group name</label>
-                                <input type="text" class="form-control mb-2" placeholder="Yips group" id="groupname"
-                                    name="groupname" th:field="*{name}" />
-
-                                <label for="category">Category</label>
-                                <select th:field="*{category}" class="form-control mb-2">
-                                    <option th:each="category : ${categories}" th:value="${category}"
-                                        th:text="${category}" id="groupCategory"></option>
-                                </select>
-
-                                <label for="description">Description</label>
-                                <input type="text" class="form-control mb-2" placeholder="My group description..."
-                                    id="groupDescription" name="description" th:field="*{description}" />
-                            </div>
-                            <button class="btn btn-block mt-2 color-medium text-color-dark mb-2 mt-4">Create group</button>
-
-                        </form>
-                    </div>
-                </div>
+      <div
+        class="modal fade"
+        id="newgroup"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="groupModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-color-medium" id="groupModalLabel">
+                New Group
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+
+            <div class="modal-body">
+              <form th:object="${group}" method="POST" action="/newgroup">
+                <!--class="form-inline ml-auto"-->
+                <div class="form-group">
+                  <input
+                    type="hidden"
+                    class="form-control mb-2"
+                    name="id"
+                    th:field="*{id}"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="groupname">Group name</label>
+                  <input
+                    type="text"
+                    class="form-control mb-2"
+                    placeholder="Yips group"
+                    id="groupname"
+                    name="groupname"
+                    th:field="*{name}"
+                  />
+
+                  <label for="category">Category</label>
+                  <select th:field="*{category}" class="form-control mb-2">
+                    <option
+                      th:each="category : ${categories}"
+                      th:value="${category}"
+                      th:text="${category}"
+                      id="groupCategory"
+                    ></option>
+                  </select>
+
+                  <label for="description">Description</label>
+                  <input
+                    type="text"
+                    class="form-control mb-2"
+                    placeholder="My group description..."
+                    id="groupDescription"
+                    name="description"
+                    th:field="*{description}"
+                  />
+                </div>
+                <button
+                  class="btn btn-block mt-2 color-medium text-color-dark mb-2 mt-4"
+                >
+                  Create group
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
 
-    <!-- End of modal -->
+      <!-- End of modal -->
     </div>
-<!-- End of group button-->
-  <button class="btn btn-block mt-5 mb-2 opacity-header">
+    <!-- End of group button-->
+    <button class="btn btn-block mt-5 mb-2 opacity-header">
       <a class="text-color-contrast " href="#">Scroll to Top</a>
-  </button>
-<!-- INVITES -->
-        
-
+    </button>
+    <!-- INVITES -->
 
     <div th:replace="fragments :: footer">
-        Detta ska ersättas av ett fragment footer när Spring Boot körs!
+      Detta ska ersättas av ett fragment footer när Spring Boot körs!
     </div>
     <script src="mainfunction.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
-        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
-</body>
-
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

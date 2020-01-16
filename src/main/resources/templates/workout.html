@@ -22,7 +22,7 @@
     <title>Workout</title>
 </head>
 <body>
-<div th:replace="fragments :: header">
+<div th:replace="fragments :: header" class="mb-5">
     Detta ska ersättas av ett fragment footer när Spring Boot körs!
 </div>
 
@@ -30,7 +30,7 @@
 
 <div class="container mt-5 float-lg-none  container-workout" th:object="${workout}">
     
-    <div class="card color-contrast">
+    <div class="card color-contrast mt-5">
         <div class="card-header pt-4">
             <h4 class="card-title" th:text="'Workout: '+*{name}">TEST NAME</h4>
         </div>

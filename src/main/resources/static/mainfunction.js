@@ -20,7 +20,7 @@ function showNumberOfWorkoutInvites(value) {
         container.innerHTML = `Woop woop! You have ${numberOfWorkoutInvites} new workouts.`
     }
     else 
-    container.innerHTML = `I´m sorry, no new workouts yet.. You can create your own if you'd like.`
+    container.innerHTML = `No new workouts, maybe create one for yourself?`
 }
 function declineInviteWorkout () {
     let arg1 = event.target.getAttribute('data-arg1');
@@ -89,7 +89,7 @@ function showNumberOfGroupInvites(isLower) {
         container.innerHTML = `Woop woop! You have ${arg1} new group invites.`
     }
     else 
-    container.innerHTML = `I´m sorry, no new group invites yet.. You can create your own group if you'd like.`
+    container.innerHTML = `Sorry, no new group invites..`
 }
 
 
